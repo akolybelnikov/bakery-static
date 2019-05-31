@@ -5,6 +5,7 @@ import styled from "styled-components"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm } from "../utils/typography"
+import { Carousel } from '../components/carousel'
 
 const Image = styled(Img)`
   margin: 0 auto;
@@ -18,13 +19,13 @@ class BlogIndex extends React.Component {
   render() {
     const { data } = this.props
     const siteTitle = data.site.siteMetadata.title
+    const offers = data.allContentfulOffer.edges
     const categories = data.allContentfulCategory.edges
-
-    // console.log(categories)
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
         <SEO title="Главная страница" />
+        <Carousel offers={offers} />
         {categories.map(({ node }, idx) => {
           const title = node.label
           return (
@@ -37,7 +38,7 @@ class BlogIndex extends React.Component {
                 {/* <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
                   {title}
                 </Link> */}
-                {node.label}
+                {title}
               </h3>
               <Image fluid={node.image.fluid} />
             </div>
@@ -71,7 +72,29 @@ export const pageQuery = graphql`
               srcSetWebp
               srcWebp
               base64
+              aspectRatio
             }
+          }
+        }
+      }
+    }
+    allContentfulOffer(filter: { node_locale: { eq: "ru" } }) {
+      edges {
+        node {
+          image {
+            fluid(maxWidth: 960) {
+              sizes
+              src
+              srcSet
+              srcSetWebp
+              srcWebp
+              base64
+              aspectRatio
+            }
+          }
+          createdAt(formatString: "DD-MM-YYYY")
+          content {
+            content
           }
         }
       }

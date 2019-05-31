@@ -7376,6 +7376,11 @@ lodash.flattendeep@^4.4.0:
   resolved "https://registry.yarnpkg.com/lodash.flattendeep/-/lodash.flattendeep-4.4.0.tgz#fb030917f86a3134e5bc9bec0d69e0013ddfedb2"
   integrity sha1-+wMJF/hqMTTlvJvsDWngAT3f7bI=
 
+lodash.flowright@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.flowright/-/lodash.flowright-3.5.0.tgz#2b5fff399716d7e7dc5724fe9349f67065184d67"
+  integrity sha1-K1//OZcW1+fcVyT+k0n2cGUYTWc=
+
 lodash.foreach@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.foreach/-/lodash.foreach-4.5.0.tgz#1a6a35eace401280c7f06dddec35165ab27e3e53"
@@ -11790,15 +11795,15 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typeface-merriweather@0.0.72:
+typeface-roboto-slab@^0.0.72:
   version "0.0.72"
-  resolved "https://registry.yarnpkg.com/typeface-merriweather/-/typeface-merriweather-0.0.72.tgz#2b990f5293252052d51d170c82d3892319ff0555"
-  integrity sha512-gO0+fcZ1fTyKUsYY1ltYOOTI6FmBGeEdyIfeQg9NL8aInndk0feiJJVJsKHm/DiyYrnQEezraAQhz/KQoqMGtw==
+  resolved "https://registry.yarnpkg.com/typeface-roboto-slab/-/typeface-roboto-slab-0.0.72.tgz#8316b370a7b80af4aab339c957a467ca84b38aa1"
+  integrity sha512-KaRFzz42wh7qMWsAZGt1Yih3H6zf+cyUjn6T+LWnMdxLm+fmsznnP/CX9rwIq2vLhlkUuCrVxfLO8OlgSauzgw==
 
-typeface-montserrat@0.0.54:
+typeface-roboto@^0.0.54:
   version "0.0.54"
-  resolved "https://registry.yarnpkg.com/typeface-montserrat/-/typeface-montserrat-0.0.54.tgz#3fc338db6428d73485b75aa7bd2af8c9a55b9ab3"
-  integrity sha512-Typhap0PWT299+Va0G/8ZtycHMXrH4gBWKfiW977KEBx5rXUUCa70gvqLx1fdA0WAo6bhSAQmo8uc+QFAmjPww==
+  resolved "https://registry.yarnpkg.com/typeface-roboto/-/typeface-roboto-0.0.54.tgz#8f02c9a18d1cfa7f49381a6ff0d21ff061f38ad2"
+  integrity sha512-sOFA1FXgP0gOgBYlS6irwq6hHYA370KE3dPlgYEJHL3PJd5X8gQE0RmL79ONif6fL5JZuGDj+rtOrFeOqz5IZQ==
 
 typography-breakpoint-constants@^0.16.19:
   version "0.16.19"
@@ -11810,10 +11815,10 @@ typography-normalize@^0.16.19:
   resolved "https://registry.yarnpkg.com/typography-normalize/-/typography-normalize-0.16.19.tgz#58e0cf12466870c5b27006daa051fe7307780660"
   integrity sha512-vtnSv/uGBZVbd4e/ZhZB9HKBgKKlWQUXw74+ADIHHxzKp27CEf8PSR8TX1zF2qSyQ9/qMdqLwXYz8yRQFq9JLQ==
 
-typography-theme-wordpress-2016@^0.16.19:
+typography-theme-ocean-beach@^0.16.19:
   version "0.16.19"
-  resolved "https://registry.yarnpkg.com/typography-theme-wordpress-2016/-/typography-theme-wordpress-2016-0.16.19.tgz#de2ecf20fc4f51db9ca2b149a731d31d8ca9c9ab"
-  integrity sha512-J7AWs8mHQyCtAzvhTs1QcAuzv1QoYsue0xw5U430fBxUystWLQba9OphcycFshgDbm6B/k5ge0d4feYp9xOJ2A==
+  resolved "https://registry.yarnpkg.com/typography-theme-ocean-beach/-/typography-theme-ocean-beach-0.16.19.tgz#712115be5d7351abf9c2973b944d9eb862c3bb0b"
+  integrity sha512-UawUuvxUxu9jjipfqkzakMwvSXHBZdovORWPLFAXg9vl2EN3nvE1W0s6XTdDVrDUvgPkwUJ67CaCrFlQlIv+/g==
   dependencies:
     gray-percentage "^2.0.0"
     typography-breakpoint-constants "^0.16.19"
