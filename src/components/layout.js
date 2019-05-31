@@ -1,7 +1,8 @@
-import { Link } from "gatsby";
-import React from "react";
-import { ThemeProvider } from "styled-components";
-import { rhythm, scale } from "../utils/typography";
+import { Link } from "gatsby"
+import React from "react"
+import { ThemeProvider } from "styled-components"
+import Footer from "../components/footer"
+import { rhythm, scale } from "../utils/typography"
 
 const theme = {
   colors: {
@@ -28,7 +29,7 @@ export default ({ location, title, children }) => {
             boxShadow: `none`,
             textDecoration: `none`,
             color: `inherit`,
-            backgroundImage: `none`
+            backgroundImage: `none`,
           }}
           to={`/`}
         >
@@ -69,10 +70,7 @@ export default ({ location, title, children }) => {
       >
         <header>{header}</header>
         <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer>
+        <Footer />
       </div>
     </ThemeProvider>
   )

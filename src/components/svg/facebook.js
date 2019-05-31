@@ -1,4 +1,6 @@
-const FacebookIcon = props => {
+import React from "react"
+
+export default ({ width, height }) => {
   return (
     <svg
       version="1.1"
@@ -9,8 +11,8 @@ const FacebookIcon = props => {
       viewBox="0 0 408.788 408.788"
       style={{ enableBackground: `new 0 0 408.788 408.788` }}
       xmlSpace="preserve"
-      width={props.width}
-      height={props.height}
+      width={width}
+      height={height}
     >
       <path
         fill="#475993"
@@ -37,7 +39,5 @@ const FacebookIcon = props => {
       <g />
       <g />
     </svg>
-  );
-};
-
-export default FacebookIcon;
+  )
+}

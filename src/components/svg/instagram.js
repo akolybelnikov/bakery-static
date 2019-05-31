@@ -1,4 +1,6 @@
-const InstagramIcon = props => {
+import React from "react"
+
+export default ({ width, height }) => {
   return (
     <svg
       version="1.1"
@@ -9,8 +11,8 @@ const InstagramIcon = props => {
       viewBox="0 0 551.034 551.034"
       style={{ enableBackground: `new 0 0 551.034 551.034` }}
       xmlSpace="preserve"
-      width={props.width}
-      height={props.height}
+      width={width}
+      height={height}
     >
       <g>
         <linearGradient
@@ -71,12 +73,7 @@ const InstagramIcon = props => {
           <stop offset="0.6" style={{ stopColor: `#C21975` }} />
           <stop offset="1" style={{ stopColor: `#7024C4` }} />
         </linearGradient>
-        <circle
-          fill="url(#SVGID_3_)"
-          cx="418.31"
-          cy="134.07"
-          r="34.15"
-        />
+        <circle fill="url(#SVGID_3_)" cx="418.31" cy="134.07" r="34.15" />
       </g>
       <g />
       <g />
@@ -94,7 +91,5 @@ const InstagramIcon = props => {
       <g />
       <g />
     </svg>
-  );
-};
-
-export default InstagramIcon;
+  )
+}

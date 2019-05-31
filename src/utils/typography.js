@@ -1,10 +1,14 @@
 import Typography from "typography"
 import oceanBeachTheme from 'typography-theme-ocean-beach'
+import { blue } from "ansi-colors";
 
 oceanBeachTheme.overrideThemeStyles = () => {
   return {
     "a.gatsby-resp-image-link": {
       boxShadow: `none`,
+    },
+    "a": {
+      color: `#5E1839`
     }
   }
 }
