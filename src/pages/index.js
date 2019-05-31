@@ -1,40 +1,45 @@
+import { graphql } from "gatsby"
+import Img from "gatsby-image"
 import React from "react"
-import { Link, graphql } from "gatsby"
-
-import Bio from "../components/bio"
+import styled from "styled-components"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm } from "../utils/typography"
+
+const Image = styled(Img)`
+  margin: 0 auto;
+  height: 450px;
+  @media all and (max-width: 320px) {
+    height: 300px;
+  }
+`
 
 class BlogIndex extends React.Component {
   render() {
     const { data } = this.props
     const siteTitle = data.site.siteMetadata.title
-    const posts = data.allMarkdownRemark.edges
+    const categories = data.allContentfulCategory.edges
+
+    // console.log(categories)
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
-        <SEO title="All posts" />
-        <Bio />
-        {posts.map(({ node }) => {
-          const title = node.frontmatter.title || node.fields.slug
+        <SEO title="Главная страница" />
+        {categories.map(({ node }, idx) => {
+          const title = node.label
           return (
-            <div key={node.fields.slug}>
+            <div key={idx}>
               <h3
                 style={{
                   marginBottom: rhythm(1 / 4),
                 }}
               >
-                <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
+                {/* <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
                   {title}
-                </Link>
+                </Link> */}
+                {node.label}
               </h3>
-              <small>{node.frontmatter.date}</small>
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: node.frontmatter.description || node.excerpt,
-                }}
-              />
+              <Image fluid={node.image.fluid} />
             </div>
           )
         })}
@@ -52,17 +57,21 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    allContentfulCategory(filter: { node_locale: { eq: "ru" } }) {
       edges {
         node {
-          excerpt
-          fields {
-            slug
-          }
-          frontmatter {
-            date(formatString: "MMMM DD, YYYY")
-            title
-            description
+          name
+          label
+          image {
+            id
+            fluid(maxWidth: 960) {
+              sizes
+              src
+              srcSet
+              srcSetWebp
+              srcWebp
+              base64
+            }
           }
         }
       }
