@@ -14,8 +14,9 @@ const Image = styled(Img)`
   margin: 0 auto;
   height: 450px;
   @media all and (max-width: 320px) {
-    height: 300px;
+    height: 400px;
   }
+  border-radius: 8px;
 `
 
 const AutoPlaySwipeView = flowRight(
@@ -45,21 +46,20 @@ const Carousel = ({ offers }) => {
         return (
           <Slide key={index}>
             <Card
-              fontWeight="bold"
               width={1}
               borderRadius={8}
               boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
             >
               <Image fluid={item.node.image.fluid} />
               <Text
-                fontSize={[2, 3, 4]}
-                fontWeight="bold"
+                fontSize={[3, 4]}
+                fontWeight="bolder"
                 color="primary"
                 p={[2, 3, 4]}
                 textAlign="center"
                 lineHeight={[1.5, 1.75, 2]}
-                bg="rgba(255,255,255,0.50)"
-                style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}
+                bg="rgba(244, 229, 216, 0.50)"
+                style={{ position: "absolute", top: 0, left: 0, right: 0 }}
               >
                 {item.node.content.content}
               </Text>
