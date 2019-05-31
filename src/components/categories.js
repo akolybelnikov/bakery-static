@@ -1,14 +1,7 @@
 import Img from "gatsby-image"
-import flowRight from "lodash.flowright"
 import React from "react"
-import SwipeableViews from "react-swipeable-views"
-import { autoPlay, bindKeyboard } from "react-swipeable-views-utils"
-import { Flex, Box, Text } from "rebass"
+import { Box, Flex, Text } from "rebass"
 import styled from "styled-components"
-
-const Slide = styled.div`
-  position: relative;
-`
 
 const Image = styled(Img)`
   margin: 0 auto;
@@ -30,7 +23,7 @@ export default ({ categories }) => {
       {categories.map(({ node }, idx) => {
         const title = node.label
         return (
-          <Box key={idx} px={2} py={2} width={[1, 1 / 3]}>
+          <Box key={idx} p={2} width={[1, 1 / 3]}>
             <Image fluid={node.image.fluid} />
             <Text
               px={1}

@@ -16,7 +16,6 @@ const Image = styled(Img)`
   @media all and (max-width: 320px) {
     height: 400px;
   }
-  border-radius: 8px;
 `
 
 const AutoPlaySwipeView = flowRight(
@@ -58,7 +57,7 @@ const Carousel = ({ offers }) => {
                 p={[2, 3, 4]}
                 textAlign="center"
                 lineHeight={[1.5, 1.75, 2]}
-                bg="rgba(244, 229, 216, 0.50)"
+                bg="rgba(244, 229, 216, 0.60)"
                 style={{ position: "absolute", top: 0, left: 0, right: 0 }}
               >
                 {item.node.content.content}

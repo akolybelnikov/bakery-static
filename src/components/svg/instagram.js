@@ -1,3 +1,5 @@
+import React from "react"
+
 const InstagramIcon = props => {
   return (
     <svg
@@ -71,12 +73,7 @@ const InstagramIcon = props => {
           <stop offset="0.6" style={{ stopColor: `#C21975` }} />
           <stop offset="1" style={{ stopColor: `#7024C4` }} />
         </linearGradient>
-        <circle
-          fill="url(#SVGID_3_)"
-          cx="418.31"
-          cy="134.07"
-          r="34.15"
-        />
+        <circle fill="url(#SVGID_3_)" cx="418.31" cy="134.07" r="34.15" />
       </g>
       <g />
       <g />
@@ -94,7 +91,7 @@ const InstagramIcon = props => {
       <g />
       <g />
     </svg>
-  );
-};
+  )
+}
 
-export default InstagramIcon;
+export default InstagramIcon
