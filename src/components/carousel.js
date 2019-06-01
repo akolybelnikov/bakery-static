@@ -47,8 +47,8 @@ const Carousel = ({ offers }) => {
             <Card width={1} boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)">
               <Image fluid={item.node.image.fluid} />
               <Card
-                width={[9 / 10, 3 / 4, 1 / 2]}
-                mx={[`5%`, `12.5%`, `25%`]}
+                width={[9 / 10, 3 / 4]}
+                mx={[`5%`, `12.5%`]}
                 boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
                 borderRadius={12}
                 bg="rgba(244, 229, 216, 0.7)"
@@ -56,9 +56,9 @@ const Carousel = ({ offers }) => {
               >
                 <Text
                   fontSize={[3, 4]}
-                  fontWeight={["bolder", "normal"]}
                   color="primary"
-                  p={[2, 3, 4]}
+                  px={[3, 4]}
+                  py={[2, 3, 4]}
                   textAlign="center"
                   lineHeight={[1.5, 1.75, 2]}
                 >

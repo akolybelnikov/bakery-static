@@ -1,6 +1,6 @@
 import Img from "gatsby-image"
 import React from "react"
-import { Box, Flex, Text } from "rebass"
+import { Box, Flex, Heading } from "rebass"
 import styled from "styled-components"
 
 const Image = styled(Img)`
@@ -24,21 +24,21 @@ export default ({ categories }) => {
         const title = node.label
         return (
           <Box key={idx} p={2} width={[1, 1 / 3]}>
-            <Text
+            <Heading
               px={1}
-              py={2}
+              py={3}
               textAlign={"center"}
               fontSize={4}
               fontWeight={"bolder"}
               color="primary"
               bg="secondary"
-              style={{ fontStyle: "italic"}}
+              style={{opacity: 0.95}}
             >
               {/* <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
                   {title}
                 </Link> */}
               {title}
-            </Text>
+            </Heading>
             <Image fluid={node.image.fluid} />
           </Box>
         )

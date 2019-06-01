@@ -1,16 +1,10 @@
 import React from "react"
+import { Box } from "rebass"
 import { ThemeProvider } from "styled-components"
 import Footer from "../components/footer"
-import { rhythm, scale } from "../utils/typography"
 import Header from "../components/header"
-import { Box, Flex, Text } from "rebass"
-
-const theme = {
-  colors: {
-    primary: "#5E1839",
-    secondary: "#F4E5D8",
-  },
-}
+import { theme } from "../utils/styles"
+import { rhythm } from "../utils/typography"
 
 export default ({ location, title, children }) => {
   const rootPath = `${__PATH_PREFIX__}/`
@@ -24,7 +18,7 @@ export default ({ location, title, children }) => {
         pb={3}
         pt={1}
         style={{
-          maxWidth: rhythm(35)
+          maxWidth: rhythm(35),
         }}
       >
         <Header />
