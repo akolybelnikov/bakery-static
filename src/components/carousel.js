@@ -44,24 +44,27 @@ const Carousel = ({ offers }) => {
       {offers.map((item, index) => {
         return (
           <Slide key={index}>
-            <Card
-              width={1}
-              borderRadius={8}
-              boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
-            >
+            <Card width={1} boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)">
               <Image fluid={item.node.image.fluid} />
-              <Text
-                fontSize={[3, 4]}
-                fontWeight={['bolder', 'normal']}
-                color="primary"
-                p={[2, 3, 4]}
-                textAlign="center"
-                lineHeight={[1.5, 1.75, 2]}
-                bg="rgba(244, 229, 216, 0.60)"
-                style={{ position: "absolute", top: 0, left: 0, right: 0 }}
+              <Card
+                width={[9 / 10, 3 / 4, 1 / 2]}
+                mx={[`5%`, `12.5%`, `25%`]}
+                boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
+                borderRadius={12}
+                bg="rgba(244, 229, 216, 0.7)"
+                style={{ position: "absolute", top: 10 }}
               >
-                {item.node.content.content}
-              </Text>
+                <Text
+                  fontSize={[3, 4]}
+                  fontWeight={["bolder", "normal"]}
+                  color="primary"
+                  p={[2, 3, 4]}
+                  textAlign="center"
+                  lineHeight={[1.5, 1.75, 2]}
+                >
+                  {item.node.content.content}
+                </Text>
+              </Card>
             </Card>
           </Slide>
         )

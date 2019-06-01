@@ -20,9 +20,11 @@ export default ({ location, title, children }) => {
     <ThemeProvider theme={theme}>
       <Box
         mx="auto"
+        px={3}
+        pb={3}
+        pt={1}
         style={{
-          maxWidth: rhythm(35),
-          padding: `${rhythm(1)} ${rhythm(3 / 4)}`,
+          maxWidth: rhythm(35)
         }}
       >
         <Header />
