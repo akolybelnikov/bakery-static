@@ -1,6 +1,5 @@
-import { Link } from "gatsby"
 import React from "react"
-import { Flex, Box, Text } from "rebass"
+import { Box, Flex, Text } from "rebass"
 import styled from "styled-components"
 import FacebookIcon from "./svg/facebook"
 import InstagramIcon from "./svg/instagram"
@@ -76,12 +75,12 @@ export default () => {
             Все права защищены
           </StyledLink>
           <StyledLink
-            href="http://copyright.ru"
+            href="https://copyright.ru"
             target="_blank"
             rel="noopener noreferrer"
           >
             <img
-              src="http://copyright.ru/images/TMCIMG/copyright_2.gif"
+              src="https://copyright.ru/images/TMCIMG/copyright_2.gif"
               alt="www.copyright.ru"
               title="Copyright защита прав"
             />
