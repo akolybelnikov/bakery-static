@@ -16,6 +16,10 @@ const Image = styled(Img)`
   @media all and (max-width: 320px) {
     height: 400px;
   }
+  img {
+    object-position: center bottom !important;
+    margin: 0;
+  }
 `
 
 const AutoPlaySwipeView = flowRight(

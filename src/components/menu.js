@@ -10,6 +10,7 @@ const StyledLink = styled(Link)`
   color: inherit;
   backgroundimage: none;
   text-transform: uppercase;
+  letter-spacing: 1px;
 `
 
 export default () => {
