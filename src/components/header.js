@@ -1,11 +1,10 @@
-import { StaticQuery, graphql } from "gatsby"
-import React from "react"
-import { Box, Flex, Text, Heading } from "rebass"
+import { graphql, Link, StaticQuery } from "gatsby"
 import Img from "gatsby-image"
-import styled from "styled-components"
-import { Link } from "gatsby"
+import React from "react"
 import Responsive from "react-responsive"
-import Menu from './menu'
+import { Flex, Text } from "rebass"
+import styled from "styled-components"
+import Menu from "./menu"
 
 const Mobile = props => <Responsive {...props} maxWidth={767} />
 const Default = props => <Responsive {...props} minWidth={768} />

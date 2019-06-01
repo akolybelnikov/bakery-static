@@ -7,8 +7,8 @@ import { theme } from "../utils/styles"
 import { rhythm } from "../utils/typography"
 
 export default ({ location, title, children }) => {
-  const rootPath = `${__PATH_PREFIX__}/`
-  const path = location.pathname
+  // const rootPath = `${__PATH_PREFIX__}/`
+  // const path = location.pathname
 
   return (
     <ThemeProvider theme={theme}>
