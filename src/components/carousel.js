@@ -17,8 +17,10 @@ const Image = styled(Img)`
     height: 400px;
   }
   img {
-    object-position: center bottom !important;
     margin: 0;
+    @media all and (max-width: 767px) {
+      object-position: center bottom !important;
+    }
   }
 `
 
