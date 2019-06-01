@@ -40,12 +40,24 @@ export default () => {
       </Flex>
       <Flex justifyContent="space-around" mx={-2}>
         <Box>
-          <Text />
-          <FacebookIcon width={36} />
+          <a
+            aria-label="Facebook link"
+            href="https://www.facebook.com/CONFERTRU.RU"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FacebookIcon width={36} />
+          </a>
         </Box>
         <Box>
-          <Text />
-          <InstagramIcon width={36} />
+          <a
+            aria-label="Instagram link"
+            href="https://www.instagram.com/confertru.ru"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <InstagramIcon width={36} />
+          </a>
         </Box>
       </Flex>
       <Flex flexDirection="column" mx={-2} my={4}>
