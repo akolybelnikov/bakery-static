@@ -38,7 +38,7 @@ export default () => {
           <span>в воскресенье: с 9.00 до 18.00</span>
         </Flex>
       </Flex>
-      <Flex justifyContent="space-around" mx={-2}>
+      <Flex justifyContent={[`center`, `space-around`]}>
         <Box>
           <StyledLink
             aria-label="Facebook link"
@@ -46,7 +46,9 @@ export default () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <FacebookIcon width={36} />
+            <Box mr={5}>
+              <FacebookIcon width={36} />
+            </Box>
           </StyledLink>
         </Box>
         <Box>
@@ -56,7 +58,9 @@ export default () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InstagramIcon width={36} />
+            <Box>
+              <InstagramIcon width={36} />
+            </Box>
           </StyledLink>
         </Box>
       </Flex>
