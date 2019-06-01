@@ -1,6 +1,56 @@
-// const path = require(`path`)
-// const { createFilePath } = require(`gatsby-source-filesystem`)
+const path = require(`path`)
 
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions
+
+  return new Promise((resolve, reject) => {
+    graphql(`
+      {
+        allContentfulCategory(filter: { node_locale: { eq: "ru" } }) {
+          edges {
+            node {
+              name
+            }
+          }
+        }
+        allContentfulProduct(
+          filter: { node_locale: { eq: "ru" }, status: { eq: "active" } }
+        ) {
+          edges {
+            node {
+              id
+              category {
+                name
+              }
+            }
+          }
+        }
+      }
+    `).then(result => {
+      result.data.allContentfulCategory.edges.map(({ node }) => {
+        createPage({
+          path: node.name,
+          component: path.resolve(`./src/templates/category.js`),
+          context: {
+            name: node.name,
+          },
+        })
+      })
+      result.data.allContentfulProduct.edges.map(({ node }) => {
+        createPage({
+          path: `${node.category.name}/${node.id}`,
+          component: path.resolve(`./src/templates/product.js`),
+          context: {
+            id: node.id,
+          },
+        })
+      })
+      resolve()
+    })
+  })
+}
+
+// const { createFilePath } = require(`gatsby-source-filesystem`)
 // exports.createPages = ({ graphql, actions }) => {
 //   const { createPage } = actions
 

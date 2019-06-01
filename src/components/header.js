@@ -11,7 +11,7 @@ const Default = props => <Responsive {...props} minWidth={768} />
 
 const Image = styled(Img)`
   width: 150px;
-  @media all and (max-width: 320px) {
+  @media all and (max-width: 767px) {
     width: 100px;
   }
   img {

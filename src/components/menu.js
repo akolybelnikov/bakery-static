@@ -2,7 +2,8 @@ import { Link } from "gatsby"
 import React, { useState } from "react"
 import { slide as Menu } from "react-burger-menu"
 import styled from "styled-components"
-import { menuStyles } from "../utils/styles"
+import { menuStyles, theme } from "../utils/styles"
+import { rhythm } from "../utils/typography"
 
 const StyledLink = styled(Link)`
   boxshadow: none;
@@ -33,10 +34,18 @@ export default () => {
       <StyledLink onClick={toggleMenu} to={`/cakes`}>
         Кондитерка
       </StyledLink>
-      <StyledLink onClick={toggleMenu} to={`/bread`}>
+      <StyledLink
+        style={{
+          paddingBlockEnd: rhythm(1.5),
+          borderBlockEnd: `${rhythm(0.05)} solid ${theme.colors.primary}`,
+        }}
+        onClick={toggleMenu}
+        to={`/bread`}
+      >
         Хлеб и Булочки
       </StyledLink>
-      <StyledLink onClick={toggleMenu} to={`/news`}>
+
+      <StyledLink style={{paddingBlockStart: rhythm(1),}} onClick={toggleMenu} to={`/news`}>
         Все новости
       </StyledLink>
       <StyledLink onClick={toggleMenu} to={`/about`}>
