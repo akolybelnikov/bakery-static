@@ -40,7 +40,7 @@ export default () => {
               >
                 <Image fluid={logo} />
               </Link>
-              <Flex mr={-3} mt={-1}>
+              <Flex mr={[-3, -3, 0]} mt={-1}>
                 <Mobile>
                   <Menu />
                 </Mobile>
