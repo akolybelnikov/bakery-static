@@ -52,7 +52,7 @@ const Carousel = ({ offers }) => {
               <Image fluid={item.node.image.fluid} />
               <Text
                 fontSize={[3, 4]}
-                fontWeight="bolder"
+                fontWeight={['bolder', 'normal']}
                 color="primary"
                 p={[2, 3, 4]}
                 textAlign="center"

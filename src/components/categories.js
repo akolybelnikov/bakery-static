@@ -24,7 +24,6 @@ export default ({ categories }) => {
         const title = node.label
         return (
           <Box key={idx} p={2} width={[1, 1 / 3]}>
-            <Image fluid={node.image.fluid} />
             <Text
               px={1}
               py={2}
@@ -40,6 +39,7 @@ export default ({ categories }) => {
                 </Link> */}
               {title}
             </Text>
+            <Image fluid={node.image.fluid} />
           </Box>
         )
       })}
