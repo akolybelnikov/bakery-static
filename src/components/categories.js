@@ -32,7 +32,7 @@ export default ({ categories }) => {
               fontWeight={"bolder"}
               color="primary"
               bg="secondary"
-              style={{ textTransform: "lowercase" }}
+              style={{ fontStyle: "italic"}}
             >
               {/* <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
                   {title}
