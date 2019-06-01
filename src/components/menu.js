@@ -28,6 +28,16 @@ export default () => {
       onStateChange={state => stateChangeHandler(state)}
       burgerButtonClassName={"no-outline"}
     >
+      <StyledLink
+        style={{
+          paddingBlockEnd: rhythm(1.5),
+          borderBlockEnd: `${rhythm(0.05)} solid ${theme.colors.primary}`,
+        }}
+        onClick={toggleMenu}
+        to={`/offers`}
+      >
+        Спецпредложения
+      </StyledLink>
       <StyledLink onClick={toggleMenu} to={`/order`}>
         На заказ
       </StyledLink>
