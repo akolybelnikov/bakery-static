@@ -2,8 +2,8 @@ import { Link } from "gatsby"
 import React from "react"
 import { Flex, Box, Text } from "rebass"
 import styled from "styled-components"
-import FacebookIcon from "./SVG/Facebook"
-import InstagramIcon from "./SVG/Instagram"
+import FacebookIcon from "./SVG/facebook"
+import InstagramIcon from "./SVG/instagram"
 
 const StyledLink = styled.a`
   background-image: none;
