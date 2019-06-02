@@ -6,8 +6,8 @@ import { Flex, Text } from "rebass"
 import styled from "styled-components"
 import Menu from "./menu"
 
-const Mobile = props => <Responsive {...props} maxWidth={767} />
-const Default = props => <Responsive {...props} minWidth={768} />
+const Mobile = props => <Responsive {...props} maxWidth={768} />
+const Default = props => <Responsive {...props} minWidth={769} />
 
 const Image = styled(Img)`
   width: 150px;
@@ -40,7 +40,7 @@ export default () => {
               >
                 <Image fluid={logo} />
               </Link>
-              <Flex mr={[-3, -3, 0]} mt={-1}>
+              <Flex mr={[-4, -4, 1]} mt={-1}>
                 <Mobile>
                   <Menu />
                 </Mobile>

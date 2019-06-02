@@ -10,7 +10,7 @@ export default ({ data, location }) => {
 
   return (
     <Layout location={location} title={pageTitle}>
-      <SEO title="pageTitle" />
+      <SEO title={pageTitle} />
       <Heading>{pageTitle}</Heading>
       {edges &&
         edges.map((news, idx) => (

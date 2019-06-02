@@ -62,7 +62,7 @@ export default () => {
         О нас
       </StyledLink>
       <StyledLink onClick={toggleMenu} to={`/contact`}>
-        Контакт
+      Наши координаты
       </StyledLink>
     </Menu>
   )
