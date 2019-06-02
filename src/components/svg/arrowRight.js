@@ -8,8 +8,11 @@ export default ({ width, height, fill }) => {
       height={height}
       viewBox="0 0 24 24"
     >
-      <path fill="none" d="M0 0h24v24H0z" />
-      <path fill={fill} d="M16.01 11H4v2h12.01v3L20 12l-3.99-4z" />
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path
+        fill={fill}
+        d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+      />
     </svg>
   )
 }
