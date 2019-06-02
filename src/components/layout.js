@@ -16,7 +16,7 @@ export default ({ location, title, children }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <>
+      <Box id="outer-container">
         <Mobile>
           <Menu />
         </Mobile>
@@ -31,10 +31,10 @@ export default ({ location, title, children }) => {
           }}
         >
           <Header />
-          <main>{children}</main>
+          <main id="page-wrap">{children}</main>
           <Footer />
         </Box>
-      </>
+      </Box>
     </ThemeProvider>
   )
 }

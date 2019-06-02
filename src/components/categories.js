@@ -1,6 +1,6 @@
 import Img from "gatsby-image"
 import React from "react"
-import { Box, Flex, Heading } from "rebass"
+import { Card, Flex, Heading } from "rebass"
 import styled from "styled-components"
 
 const Image = styled(Img)`
@@ -15,6 +15,7 @@ const Image = styled(Img)`
   @media all and (max-width: 420px) {
     height: 350px;
   }
+  border-radius: 8px;
 `
 
 export default ({ categories }) => {
@@ -23,7 +24,16 @@ export default ({ categories }) => {
       {categories.map(({ node }, idx) => {
         const title = node.label
         return (
-          <Box key={idx} p={2} width={[1, 1 / 3]}>
+          <Card
+            bg="secondary"
+            key={idx}
+            p={2}
+            width={[95 / 100, 3 / 10]}
+            boxShadow="0 2px 16px rgba(0,0,0,0.25)"
+            borderRadius={8}
+            mb={3}
+            mx='auto'
+          >
             <Heading
               px={1}
               py={3}
@@ -31,8 +41,7 @@ export default ({ categories }) => {
               fontSize={4}
               fontWeight={"bolder"}
               color="primary"
-              bg="secondary"
-              style={{opacity: 0.95}}
+              style={{ opacity: 0.95 }}
             >
               {/* <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
                   {title}
@@ -40,7 +49,7 @@ export default ({ categories }) => {
               {title}
             </Heading>
             <Image fluid={node.image.fluid} />
-          </Box>
+          </Card>
         )
       })}
     </Flex>

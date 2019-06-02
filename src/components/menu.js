@@ -27,13 +27,14 @@ export default () => {
       styles={menuStyles}
       isOpen={menuOpenState}
       onStateChange={state => stateChangeHandler(state)}
-      burgerButtonClassName={"no-outline"}
+      pageWrapId={"page-wrap"}
+      outerContainerId={"outer-container"}
     >
       <StyledLink
         style={{
           paddingBlockEnd: rhythm(1.5),
           borderBlockEnd: `${rhythm(0.05)} solid ${theme.colors.primary}`,
-          outline: `none`
+          outline: `none`,
         }}
         onClick={toggleMenu}
         to={`/offers`}

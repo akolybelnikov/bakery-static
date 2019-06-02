@@ -10,6 +10,7 @@ const StyledLink = styled.a`
   span {
     margin: 0 10px;
   }
+  cursor: pointer;
 `
 
 export default () => {
@@ -58,9 +59,7 @@ export default () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Box>
-              <InstagramIcon width={36} />
-            </Box>
+            <InstagramIcon width={36} />
           </StyledLink>
         </Box>
       </Flex>

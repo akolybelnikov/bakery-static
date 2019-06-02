@@ -1,25 +1,32 @@
 import { GoogleApiWrapper, Map, Marker } from "google-maps-react"
 import React from "react"
-import { Box, Heading } from "rebass"
+import withSizes from "react-sizes"
+import { Heading } from "rebass"
 import styled from "styled-components"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import mapStyles from "../utils/googlemap"
-import withSizes from "react-sizes"
+import { rhythm } from "../utils/typography"
 
 const MapContainer = styled.div`
   height: 60vh;
-  div {
-    max-width: 95% !important;
-  }
   div:nth-child(1) {
-    @media all and (min-width: 769px) {
+    max-width: 95% !important;
+    @media all and (orientation: landscape) {
       margin: 0 auto !important;
+    }
+    @media all and (min-width: 600px) {
+      margin: 0 auto !important;
+    }
+    @media all and (min-width: 1000px) {
+      margin: 0 auto !important;
+      max-width: ${rhythm(33)} !important;
     }
   }
 `
 const style = {
-  width: "100%",
+  maxWidth: rhythm(35),
+  width: "95%",
   height: "60%",
 }
 
@@ -36,31 +43,29 @@ const Contact = ({ google, location, isMobile }) => {
       <Heading color="primary" pb={3}>
         {pageTitle}
       </Heading>
-      <Box>
-        <MapContainer>
-          <Map
-            styles={mapStyles}
-            style={style}
-            google={google}
-            zoom={15}
-            scrollwheel={false}
-            streetViewControl={false}
-            mapTypeControl={false}
-            fullscreenControl={false}
-            initialCenter={{
-              lat: 55.715226,
-              lng: 37.797472,
-            }}
-          >
-            <Marker
-              title={"Все Булочки Тут"}
-              name={"Все Булочки Тут"}
-              position={{ lat: 55.715226, lng: 37.797472 }}
-            />
-            <Marker />
-          </Map>
-        </MapContainer>
-      </Box>
+      <MapContainer>
+        <Map
+          styles={mapStyles}
+          style={style}
+          google={google}
+          zoom={15}
+          scrollwheel={false}
+          streetViewControl={false}
+          mapTypeControl={false}
+          fullscreenControl={false}
+          initialCenter={{
+            lat: 55.715226,
+            lng: 37.797472,
+          }}
+        >
+          <Marker
+            title={"Все Булочки Тут"}
+            name={"Все Булочки Тут"}
+            position={{ lat: 55.715226, lng: 37.797472 }}
+          />
+          <Marker />
+        </Map>
+      </MapContainer>
     </Layout>
   )
 }
