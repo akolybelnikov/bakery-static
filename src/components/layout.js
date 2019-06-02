@@ -30,7 +30,7 @@ export default ({ location, title, children }) => {
             overflowX: `hidden`,
           }}
         >
-          <Header />
+          <Header location={location} />
           <main id="page-wrap">{children}</main>
           <Footer />
         </Box>

@@ -2,8 +2,9 @@ import { graphql, Link, StaticQuery } from "gatsby"
 import Img from "gatsby-image"
 import React from "react"
 import Responsive from "react-responsive"
-import { Flex, Text } from "rebass"
+import { Flex } from "rebass"
 import styled from "styled-components"
+import Navbar from "../components/navbar"
 
 const Default = props => <Responsive {...props} minWidth={769} />
 
@@ -17,7 +18,7 @@ const Image = styled(Img)`
   }
 `
 
-export default () => {
+export default ({ location }) => {
   return (
     <StaticQuery
       query={logoQuery}
@@ -34,16 +35,19 @@ export default () => {
                     textDecoration: `none`,
                     color: `inherit`,
                     backgroundImage: `none`,
+                    flex: `0 0 20%`,
                   }}
                   to={`/`}
                 >
                   <Image fluid={logo} />
                 </Link>
-                <Flex>
+                <Flex
+                  justifyContent="center"
+                  alignItems="center"
+                  style={{ flex: `auto` }}
+                >
                   <Default>
-                    <Flex alignItems="center">
-                      <Text>This is default</Text>
-                    </Flex>
+                    <Navbar location={location} />
                   </Default>
                 </Flex>
               </Flex>
