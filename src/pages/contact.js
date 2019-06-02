@@ -1,27 +1,42 @@
 import { GoogleApiWrapper, Map, Marker } from "google-maps-react"
 import React from "react"
-import { Flex, Heading } from "rebass"
+import { Box, Heading } from "rebass"
 import styled from "styled-components"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import mapStyles from "../utils/googlemap"
+import withSizes from "react-sizes"
 
 const MapContainer = styled.div`
   height: 60vh;
+  div {
+    max-width: 95% !important;
+  }
+  div:nth-child(1) {
+    @media all and (min-width: 769px) {
+      margin: 0 auto !important;
+    }
+  }
 `
 const style = {
-  width: "95%",
+  width: "100%",
   height: "60%",
 }
 
-const Contact = ({ google, location }) => {
+const mapSizesToProps = ({ width }) => ({
+  isMobile: width < 767,
+})
+
+const Contact = ({ google, location, isMobile }) => {
   const pageTitle = `Наши координаты`
 
   return (
     <Layout location={location} title={pageTitle}>
       <SEO title={pageTitle} />
-      <Heading color="primary" pb={3}>{pageTitle}</Heading>
-      <Flex justifyContent="felx-start">
+      <Heading color="primary" pb={3}>
+        {pageTitle}
+      </Heading>
+      <Box>
         <MapContainer>
           <Map
             styles={mapStyles}
@@ -45,10 +60,10 @@ const Contact = ({ google, location }) => {
             <Marker />
           </Map>
         </MapContainer>
-      </Flex>
+      </Box>
     </Layout>
   )
 }
 export default GoogleApiWrapper({
   apiKey: process.env.GATSBY_GOOGLE_API,
-})(Contact)
+})(withSizes(mapSizesToProps)(Contact))

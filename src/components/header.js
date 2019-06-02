@@ -4,9 +4,7 @@ import React from "react"
 import Responsive from "react-responsive"
 import { Flex, Text } from "rebass"
 import styled from "styled-components"
-import Menu from "./menu"
 
-const Mobile = props => <Responsive {...props} maxWidth={768} />
 const Default = props => <Responsive {...props} minWidth={769} />
 
 const Image = styled(Img)`
@@ -27,31 +25,30 @@ export default () => {
         const logo = data.logo.childImageSharp.fluid
 
         return (
-          <header>
-            <Flex justifyContent="space-between">
-              <Link
-                style={{
-                  boxShadow: `none`,
-                  textDecoration: `none`,
-                  color: `inherit`,
-                  backgroundImage: `none`,
-                }}
-                to={`/`}
-              >
-                <Image fluid={logo} />
-              </Link>
-              <Flex mr={[-4, -4, 1]} mt={-1}>
-                <Mobile>
-                  <Menu />
-                </Mobile>
-                <Default>
-                  <Flex alignItems="center">
-                    <Text>This is default</Text>
-                  </Flex>
-                </Default>
+          <>
+            <header>
+              <Flex justifyContent="space-between">
+                <Link
+                  style={{
+                    boxShadow: `none`,
+                    textDecoration: `none`,
+                    color: `inherit`,
+                    backgroundImage: `none`,
+                  }}
+                  to={`/`}
+                >
+                  <Image fluid={logo} />
+                </Link>
+                <Flex>
+                  <Default>
+                    <Flex alignItems="center">
+                      <Text>This is default</Text>
+                    </Flex>
+                  </Default>
+                </Flex>
               </Flex>
-            </Flex>
-          </header>
+            </header>
+          </>
         )
       }}
     />

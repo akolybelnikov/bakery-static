@@ -10,7 +10,7 @@ const menuStyles = {
     position: "fixed",
     width: "32px",
     height: "28px",
-    right: "36px",
+    right: "28px",
     top: "36px",
   },
   bmBurgerBars: {
@@ -37,7 +37,7 @@ const menuStyles = {
   },
   bmMenu: {
     background: theme.colors.secondary,
-    padding: "2.5em 1.5em 0",
+    padding: "2.5em 1.5em",
     fontSize: "1.15em",
   },
   bmMorphShape: {
@@ -46,12 +46,13 @@ const menuStyles = {
   bmItemList: {
     color: "#b8b7ad",
     padding: "0.8em",
+    height: `auto`,
   },
   bmItem: {
     padding: "1em 0",
     color: theme.colors.primary,
     backgroundImage: `none`,
-    textShadow: `none`
+    textShadow: `none`,
   },
   bmOverlay: {
     background: "rgba(0, 0, 0, 0.3)",

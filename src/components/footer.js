@@ -15,7 +15,7 @@ const StyledLink = styled.a`
 export default () => {
   return (
     <footer>
-      <Flex flexWrap="wrap" mx={-2} my={4}>
+      <Flex flexWrap="wrap" mx={[-2, 2]} my={4}>
         <Flex flexDirection="column" p={2} width={[1, 1 / 4]}>
           <Text color="primary" fontWeight="bolder">
             Наш адрес:
