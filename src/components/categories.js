@@ -1,8 +1,21 @@
+import { Link } from "gatsby"
 import Img from "gatsby-image"
 import React from "react"
 import { Card, Flex, Heading } from "rebass"
 import styled from "styled-components"
+import ArrowRight from "../components/svg/arrowRight"
+import { theme } from "../utils/styles"
 
+const StyledLink = styled(Link)`
+  background-image: none;
+  text-shadow: none;
+  margin: 12px 0 4px;
+  text-align: right;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 4px 8px 0;
+`
 const Image = styled(Img)`
   margin: 0 auto;
   height: 350px;
@@ -32,7 +45,7 @@ export default ({ categories }) => {
             boxShadow="0 2px 16px rgba(0,0,0,0.25)"
             borderRadius={8}
             mb={3}
-            mx='auto'
+            mx="auto"
           >
             <Heading
               px={1}
@@ -49,6 +62,15 @@ export default ({ categories }) => {
               {title}
             </Heading>
             <Image fluid={node.image.fluid} />
+            <Flex justifyContent="flex-end">
+              <StyledLink to={`/${node.name}`}>
+                <ArrowRight
+                  width="32"
+                  height="32"
+                  fill={theme.colors.primary}
+                />
+              </StyledLink>
+            </Flex>
           </Card>
         )
       })}

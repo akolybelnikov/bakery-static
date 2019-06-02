@@ -53,7 +53,7 @@ export default () => {
           {posts.map((post, i) => (
             <Card
               key={i}
-              width={[1, 48 / 100, 23 / 100]}
+              width={[96 / 100, 48 / 100, 23 / 100]}
               mx="auto"
               p={2}
               mb={3}

@@ -50,15 +50,15 @@ const Carousel = ({ offers }) => {
       {offers.map((item, index) => {
         return (
           <Slide key={index}>
-            <Card width={1} boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)">
+            <Card width={1}>
               <Image fluid={item.node.image.fluid} />
               <Card
                 width={[9 / 10, 3 / 4]}
                 mx={[`5%`, `12.5%`]}
                 boxShadow="0 2px 16px rgba(0,0,0,0.75)"
                 borderRadius={12}
-                bg="rgba(244, 229, 216, 0.75)"
-                style={{ position: "absolute", top: 10 }}
+                bg="rgba(244, 229, 216, 0.65)"
+                style={{ position: "absolute", top: `50%`, transform: `translateY(-50%)` }}
               >
                 <Text
                   fontSize={[3, 4]}

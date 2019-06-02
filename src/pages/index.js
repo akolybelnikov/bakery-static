@@ -1,12 +1,10 @@
-import { graphql, Link } from "gatsby"
-import React from "react"
-import { Flex } from "rebass"
-import { Carousel } from "../components/carousel"
-import Categories from "../components/categories"
-import Layout from "../components/layout"
-import SEO from "../components/seo"
-import ArrowRight from "../components/svg/arrowRight"
-import { theme } from "../utils/styles"
+import { graphql, Link } from "gatsby";
+import React from "react";
+import { Flex } from "rebass";
+import { Carousel } from "../components/carousel";
+import Categories from "../components/categories";
+import Layout from "../components/layout";
+import SEO from "../components/seo";
 
 export default ({ data, location }) => {
   const siteTitle = data.site.siteMetadata.title
@@ -17,7 +15,7 @@ export default ({ data, location }) => {
     <Layout location={location} title={siteTitle}>
       <SEO title="Главная страница" />
       <Carousel offers={offers} />
-      <Flex justifyContent="center" pt={1} pb={3}>
+      <Flex justifyContent="center" mb={4} mt={1} pt={1} pb={3}>
         <Link
           to={`/offers`}
           style={{
@@ -32,7 +30,6 @@ export default ({ data, location }) => {
           >
             Все спецпредложения
           </span>
-          <ArrowRight width="32" height="32" fill={theme.colors.primary} />
         </Link>
       </Flex>
       <Categories categories={categories} />
