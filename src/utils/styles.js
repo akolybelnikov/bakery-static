@@ -1,7 +1,46 @@
+const primary = "#5E1839"
+const secondary = "#F4E5D8"
+const secondaryWashed = "rgba(244, 229, 216, 0.65)"
+
 const theme = {
   colors: {
-    primary: "#5E1839",
-    secondary: "#F4E5D8",
+    primary,
+    secondary,
+    secondaryWashed,
+  },
+  buttons: {
+    primary: {
+      color: primary,
+      backgroundColor: "#fff",
+    },
+    secondary: {
+      color: secondary,
+      backgroundColor: "#fff",
+    },
+    outline: {
+      color: primary,
+      backgroundColor: "transparent",
+      boxShadow: "inset 0 0 0 1px",
+      width: 'auto',
+      minWidth: '145px',
+      fontWeight: 300,
+      "&:hover": {
+        boxShadow: "inset 0 0 0 2px",
+        fontWeight: 500,
+      },
+      borderRadius: "4px",
+      "&:focus": {
+        outline: "none",
+        boxShadow: "inset 0 0 0 2px",
+        fontWeight: 500,
+      },
+      "&:active": {
+        outline: "none",
+        boxShadow: "inset 0 0 0 2px",
+        fontWeight: 500,
+      },
+      transition: "all 200ms ease-in",
+    },
   },
 }
 

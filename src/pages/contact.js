@@ -13,7 +13,7 @@ const MapContainer = styled.div`
   div:nth-child(1) {
     max-width: 95% !important;
     @media all and (orientation: landscape) {
-      margin: 0 auto !important;
+      margin: 0 auto !important;‚
     }
     @media all and (min-width: 600px) {
       margin: 0 auto !important;
@@ -29,10 +29,6 @@ const style = {
   width: "95%",
   height: "60%",
 }
-
-const mapSizesToProps = ({ width }) => ({
-  isMobile: width < 767,
-})
 
 const Contact = ({ google, location, isMobile }) => {
   const pageTitle = `Наши координаты`
@@ -71,4 +67,4 @@ const Contact = ({ google, location, isMobile }) => {
 }
 export default GoogleApiWrapper({
   apiKey: process.env.GATSBY_GOOGLE_API,
-})(withSizes(mapSizesToProps)(Contact))
+})(Contact)

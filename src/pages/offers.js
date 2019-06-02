@@ -11,11 +11,13 @@ export default ({ data, location }) => {
   return (
     <Layout location={location} title={pageTitle}>
       <SEO title="pageTitle" />
-      <Heading>{pageTitle}</Heading>
+      <Heading color="primary" mb={4}>
+        {pageTitle}
+      </Heading>
       {edges &&
-        edges.map((offer, idx) => (
+        edges.map(({ node: { content: { content } } }, idx) => (
           <Flex flexDirection={`column`} key={idx}>
-            <Text>{offer.node.content.content}</Text>
+            <Text>{content}</Text>
           </Flex>
         ))}
     </Layout>
@@ -25,7 +27,7 @@ export default ({ data, location }) => {
 export const pageQuery = graphql`
   query {
     allContentfulOffer(
-        filter: { node_locale: { eq: "ru" }, status: { eq: "active" } }
+      filter: { node_locale: { eq: "ru" }, status: { eq: "active" } }
     ) {
       edges {
         node {

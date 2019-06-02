@@ -42,7 +42,6 @@ export default ({ location }) => {
                   <Image fluid={logo} />
                 </Link>
                 <Flex
-                  justifyContent="center"
                   alignItems="center"
                   style={{ flex: `auto` }}
                 >

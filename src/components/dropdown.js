@@ -7,21 +7,23 @@ import { theme } from "../utils/styles"
 const animatedComponents = makeAnimated()
 
 const styles = {
-  control: styles => ({
+  control: (styles, { isFocused, isSelected }) => ({
     ...styles,
     minWidth: `200px`,
-    borderColor: theme.colors.complimentary,
-    boxShadow: theme.colors.complimentary,
-    "&:focus": {
-      borderColor: theme.colors.complimentary,
-    },
+    color: theme.colors.primary,
+    borderColor: "transparent",
+    transition: "all 200ms ease-in",
+    fontWeight: (isFocused || isSelected) ? 500 : 300,
+    boxShadow: (isFocused || isSelected) ? "inset 0 0 0 2px" :  "inset 0 0 0 1px",
     "&:hover": {
-      borderColor: theme.colors.primary,
+      boxShadow: "inset 0 0 0 2px",
+      fontWeight: 500,
     },
   }),
   input: styles => ({
     ...styles,
     color: theme.colors.primary,
+    margin: "4px 0",
   }),
   option: (styles, { isFocused, isSelected }) => ({
     ...styles,
@@ -31,6 +33,22 @@ const styles = {
       : isFocused
       ? theme.colors.secondary
       : null,
+  }),
+  dropdownIndicator: styles => ({
+    ...styles,
+    "&:focus": {
+      color: theme.colors.primary,
+    },
+    "&:active": {
+      color: theme.colors.primary,
+    },
+    "&:hover": {
+      color: theme.colors.primary,
+    },
+  }),
+  indicatorSeparator: styles => ({
+    ...styles,
+    backgroundColor: theme.colors.primary,
   }),
   placeholder: styles => ({ ...styles, color: theme.colors.primary }),
   singleValue: styles => ({ ...styles, color: theme.colors.primary }),
@@ -58,8 +76,7 @@ export default ({ location }) => {
     label: edge.node.label,
   }))
 
-  const selectedOption =
-    categories.find(category => category.value === path) || null
+  const selectedOption = categories.find(category => category.value === path)
 
   const handleChange = option => {
     navigate(`/${option.value}`)
@@ -72,7 +89,7 @@ export default ({ location }) => {
       styles={styles}
       defaultValue={selectedOption}
       onChange={handleChange}
-      placeholder="Наша продукция"
+      placeholder="Продукция"
     />
   )
 }

@@ -13,9 +13,9 @@ export default ({ data, location }) => {
       <SEO title={pageTitle} />
       <Heading>{pageTitle}</Heading>
       {edges &&
-        edges.map((news, idx) => (
+        edges.map(({ node: { content: { content } } }, idx) => (
           <Flex key={idx}>
-            <Text>{news.node.content.content}</Text>
+            <Text>{content}</Text>
           </Flex>
         ))}
     </Layout>

@@ -9,7 +9,7 @@ import { theme } from "../utils/styles"
 const StyledLink = styled(Link)`
   background-image: none;
   text-shadow: none;
-  margin: 12px 0 4px;
+  margin: 12px 12px 4px;
   text-align: right;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
   border-radius: 50%;
@@ -28,7 +28,6 @@ const Image = styled(Img)`
   @media all and (max-width: 420px) {
     height: 350px;
   }
-  border-radius: 8px;
 `
 
 export default ({ categories }) => {
@@ -40,7 +39,7 @@ export default ({ categories }) => {
           <Card
             bg="secondary"
             key={idx}
-            p={2}
+            py={2}
             width={[95 / 100, 3 / 10]}
             boxShadow="0 2px 16px rgba(0,0,0,0.25)"
             borderRadius={8}
