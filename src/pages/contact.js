@@ -1,6 +1,5 @@
 import { GoogleApiWrapper, Map, Marker } from "google-maps-react"
 import React from "react"
-import withSizes from "react-sizes"
 import { Heading } from "rebass"
 import styled from "styled-components"
 import Layout from "../components/layout"
@@ -12,14 +11,8 @@ const MapContainer = styled.div`
   height: 60vh;
   div:nth-child(1) {
     max-width: 95% !important;
-    @media all and (orientation: landscape) {
-      margin: 0 auto !important;‚
-    }
-    @media all and (min-width: 600px) {
-      margin: 0 auto !important;
-    }
+    margin: 0 auto !important;
     @media all and (min-width: 1000px) {
-      margin: 0 auto !important;
       max-width: ${rhythm(33)} !important;
     }
   }
@@ -30,8 +23,15 @@ const style = {
   height: "60%",
 }
 
-const Contact = ({ google, location, isMobile }) => {
+const Contact = ({ google, location }) => {
+  window.addEventListener("error", function(event) {
+    console.error(event)
+  })
   const pageTitle = `Наши координаты`
+
+  const onready = (props, map) => {
+    console.log(props, map)
+  }
 
   return (
     <Layout location={location} title={pageTitle}>
@@ -53,6 +53,7 @@ const Contact = ({ google, location, isMobile }) => {
             lat: 55.715226,
             lng: 37.797472,
           }}
+          onReady={onready}
         >
           <Marker
             title={"Все Булочки Тут"}

@@ -28,8 +28,20 @@ export default () => {
           <Text color="primary" fontWeight="bolder">
             Наши номера телефона:
           </Text>
-          <span>+7 (926) 982-35-72</span>
-          <span>+7 (926) 629-87-26</span>
+          <StyledLink
+            href="tel:+79269823572"
+            target="_self"
+            name="phone number"
+          >
+            +7 (926) 982-35-72
+          </StyledLink>
+          <StyledLink
+            href="tel:+79266298726"
+            target="_self"
+            name="phone number"
+          >
+            +7 (926) 629-87-26
+          </StyledLink>
         </Flex>
         <Flex flexDirection="column" p={2} width={[1, 1 / 2]}>
           <Text color="primary" fontWeight="bolder">

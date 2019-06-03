@@ -43,7 +43,7 @@ export default ({ categories }) => {
             width={[95 / 100, 3 / 10]}
             boxShadow="0 2px 16px rgba(0,0,0,0.25)"
             borderRadius={8}
-            mb={3}
+            mb={4}
             mx="auto"
           >
             <Heading

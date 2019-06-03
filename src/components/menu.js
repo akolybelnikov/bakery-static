@@ -57,16 +57,12 @@ export default () => {
       >
         Хлеб и Булочки
       </StyledLink>
-
       <StyledLink
         style={{ paddingBlockStart: rhythm(1) }}
         onClick={toggleMenu}
-        to={`/news`}
+        to={`/about`}
       >
-        Все новости
-      </StyledLink>
-      <StyledLink onClick={toggleMenu} to={`/about`}>
-        О нас
+        Новости
       </StyledLink>
       <StyledLink onClick={toggleMenu} to={`/contact`}>
         Наши координаты

@@ -1,12 +1,18 @@
 const primary = "#5E1839"
 const secondary = "#F4E5D8"
 const secondaryWashed = "rgba(244, 229, 216, 0.65)"
+const primaryBR2 = "#9f7182"
+const primaryBR3 = "#BF9FAA"
+const primaryBR4 = "#DECED4"
 
 const theme = {
   colors: {
     primary,
     secondary,
     secondaryWashed,
+    primaryBR2,
+    primaryBR3,
+    primaryBR4,
   },
   buttons: {
     primary: {

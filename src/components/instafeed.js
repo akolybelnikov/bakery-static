@@ -53,10 +53,10 @@ export default () => {
           {posts.map((post, i) => (
             <Card
               key={i}
-              width={[96 / 100, 48 / 100, 23 / 100]}
+              width={[96 / 100, 46 / 100]}
               mx="auto"
               p={2}
-              mb={3}
+              mb={4}
               bg="secondary"
               borderRadius={8}
               boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
