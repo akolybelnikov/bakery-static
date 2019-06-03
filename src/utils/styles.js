@@ -17,7 +17,8 @@ const theme = {
   buttons: {
     primary: {
       color: primary,
-      backgroundColor: "#fff",
+      backgroundColor: secondaryWashed,
+      boxShadow: 'inset 0 2px 16px',
     },
     secondary: {
       color: secondary,
@@ -28,8 +29,10 @@ const theme = {
       backgroundColor: "transparent",
       boxShadow: "inset 0 0 0 1px",
       width: 'auto',
-      minWidth: '145px',
+      minWidth: '125px',
       fontWeight: 300,
+      marginBottom: 8,
+      fontSize: 15,
       "&:hover": {
         boxShadow: "inset 0 0 0 2px",
         fontWeight: 500,

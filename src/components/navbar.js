@@ -11,15 +11,15 @@ export default ({ location }) => {
       alignItems="center"
       flexWrap="wrap"
     >
+      <Button onClick={() => navigate("/")} variant="outline">
+        В начало
+      </Button>
       <Dropdown location={location} />
       <Button onClick={() => navigate("/offers/")} variant="outline">
         Предложения
       </Button>
       <Button onClick={() => navigate("/about/")} variant="outline">
         Новости
-      </Button>
-      <Button onClick={() => navigate("/contact/")} variant="outline">
-        Координаты
       </Button>
     </Flex>
   )

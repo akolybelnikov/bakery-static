@@ -11,9 +11,15 @@ const MapContainer = styled.div`
   height: 60vh;
   div:nth-child(1) {
     max-width: 95% !important;
-    margin: 0 auto !important;
+    @media all and (min-width: 600px) and (orientation: portrait) {
+      margin: 0 auto !important;
+    }
+    @media all and (orientation: landscape) {
+      margin: 0 auto !important;
+    }
     @media all and (min-width: 1000px) {
       max-width: ${rhythm(33)} !important;
+      margin: 0 auto !important;
     }
   }
 `
@@ -24,14 +30,7 @@ const style = {
 }
 
 const Contact = ({ google, location }) => {
-  window.addEventListener("error", function(event) {
-    console.error(event)
-  })
   const pageTitle = `Наши координаты`
-
-  const onready = (props, map) => {
-    console.log(props, map)
-  }
 
   return (
     <Layout location={location} title={pageTitle}>
@@ -53,7 +52,6 @@ const Contact = ({ google, location }) => {
             lat: 55.715226,
             lng: 37.797472,
           }}
-          onReady={onready}
         >
           <Marker
             title={"Все Булочки Тут"}

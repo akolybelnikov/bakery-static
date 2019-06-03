@@ -18,9 +18,9 @@ const StyledCard = styled(Card)`
     flex-direction: column;
   }
   background: linear-gradient(
-    135deg,
-    ${props => props.theme.colors.primaryBR4} 25%,
-    ${props => props.theme.colors.primaryBR2} 100%
+    125deg,
+    white 20%,
+    ${props => props.theme.colors.primaryBR3} 100%
   );
 `
 
@@ -35,9 +35,8 @@ const Image = styled(Img)`
     object-position: center top !important;
   }
 `
-const AutoPlaySwipeView = flowRight(
-  bindKeyboard,
-  autoPlay
+const SwipeView = flowRight(
+  bindKeyboard
 )(SwipeableViews)
 
 export default ({ news }) => {
@@ -46,7 +45,7 @@ export default ({ news }) => {
 
   return (
     <Box style={{ position: `relative` }}>
-      <AutoPlaySwipeView
+      <SwipeView
         interval={12000}
         onChangeIndex={handleSlideChange}
         index={activeIndex}
@@ -64,8 +63,8 @@ export default ({ news }) => {
             index
           ) => {
             return (
-              <Slide width={1}>
-                <StyledCard key={index} borderRadius={12}>
+              <Slide width={1} key={index}>
+                <StyledCard borderRadius={12}>
                   <Image fluid={fluid} />
                   <Text
                     fontSize={3}
@@ -81,7 +80,7 @@ export default ({ news }) => {
             )
           }
         )}
-      </AutoPlaySwipeView>
+      </SwipeView>
       <Pagination
         dots={news.length}
         index={activeIndex}

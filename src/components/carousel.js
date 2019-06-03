@@ -33,14 +33,7 @@ const AutoPlaySwipeView = flowRight(
 
 const Carousel = ({ offers }) => {
   const [activeIndex, setActiveIndex] = React.useState(0)
-
-  // const maxIndex = offers.length - 1
-
   const handleSlideChange = curr => setActiveIndex(curr)
-
-  // const handleBack = () => setActiveIndex(activeIndex - 1)
-
-  // const handleNext = () => setActiveIndex(activeIndex + 1)
 
   return (
     <Box style={{ position: `relative` }}>

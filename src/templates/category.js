@@ -8,8 +8,6 @@ export default ({ data, location }) => {
   const category = data.contentfulCategory
   const pageTitle = data.contentfulCategory.label
 
-  // console.log(category, location)
-
   return (
     <Layout location={location} title={pageTitle}>
       <SEO title={pageTitle} />

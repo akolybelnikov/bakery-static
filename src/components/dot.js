@@ -1,5 +1,5 @@
 import React from "react"
-import {theme} from '../utils/styles'
+import { theme } from "../utils/styles"
 
 const styles = {
   root: {
@@ -16,7 +16,7 @@ const styles = {
     height: 16,
     width: 16,
     borderRadius: 8,
-    margin: 6
+    margin: 6,
   },
   active: {
     backgroundColor: theme.colors.primary,
@@ -37,8 +37,8 @@ export default ({ onClick, index, active }) => {
   }
 
   return (
-    <button type="button" style={styles.root} onClick={handleClick}>
+    <a style={styles.root} onClick={handleClick}>
       <div style={styleDot} />
-    </button>
+    </a>
   )
 }

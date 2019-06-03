@@ -3,6 +3,8 @@ import { Box, Flex, Text } from "rebass"
 import styled from "styled-components"
 import FacebookIcon from "./svg/facebook"
 import InstagramIcon from "./svg/instagram"
+import GoogleMapIcon from "./svg/googlemap"
+import { Link } from "gatsby"
 
 const StyledLink = styled.a`
   background-image: none;
@@ -13,37 +15,47 @@ const StyledLink = styled.a`
   cursor: pointer;
 `
 
+const PhoneButton = styled.a`
+  color: ${props => props.theme.colors.primary};
+  background: ${props => props.theme.colors.secondaryWashed};
+  padding: 6px 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  width: fit-content;
+  cursor: pointer;
+`
+
 export default () => {
   return (
     <footer>
       <Flex flexWrap="wrap" mx={[-2, 2]} my={4}>
-        <Flex flexDirection="column" p={2} width={[1, 1 / 4]}>
+        <Flex flexDirection="column" p={2} width={[1, 3 / 10]}>
           <Text color="primary" fontWeight="bolder">
             Наш адрес:
           </Text>
           <span>109377, г.Москва</span>
           <span>Рязанский проспект, 58/1</span>
         </Flex>
-        <Flex flexDirection="column" p={2} width={[1, 1 / 4]}>
+        <Flex flexDirection="column" p={2} width={[1, 3 / 10]}>
           <Text color="primary" fontWeight="bolder">
             Наши номера телефона:
           </Text>
-          <StyledLink
+          <PhoneButton
             href="tel:+79269823572"
             target="_self"
             name="phone number"
           >
             +7 (926) 982-35-72
-          </StyledLink>
-          <StyledLink
+          </PhoneButton>
+          <PhoneButton
             href="tel:+79266298726"
             target="_self"
             name="phone number"
           >
             +7 (926) 629-87-26
-          </StyledLink>
+          </PhoneButton>
         </Flex>
-        <Flex flexDirection="column" p={2} width={[1, 1 / 2]}>
+        <Flex flexDirection="column" p={2} width={[1, 4 / 10]}>
           <Text color="primary" fontWeight="bolder">
             Наши часы работы:
           </Text>
@@ -51,7 +63,14 @@ export default () => {
           <span>в воскресенье: с 9.00 до 18.00</span>
         </Flex>
       </Flex>
-      <Flex justifyContent={[`center`, `space-around`]}>
+      <Flex justifyContent={[`flex-start`, `space-around`]} alignItems='center'>
+        <Box>
+          <Link aria-label="Google maps link" to={`/contact`}>
+            <Box mr={[5]}>
+              <GoogleMapIcon width={48} />
+            </Box>
+          </Link>
+        </Box>
         <Box>
           <StyledLink
             aria-label="Facebook link"
@@ -59,7 +78,7 @@ export default () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Box mr={5}>
+            <Box mr={[5]}>
               <FacebookIcon width={36} />
             </Box>
           </StyledLink>
