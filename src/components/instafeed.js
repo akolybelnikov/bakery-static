@@ -50,50 +50,66 @@ export default () => {
       )}
       {posts.length && (
         <Flex flexWrap="wrap">
-          {posts.map((post, i) => (
-            <Card
-              key={i}
-              width={[96 / 100, 46 / 100]}
-              mx="auto"
-              p={2}
-              mb={4}
-              bg="secondary"
-              borderRadius={8}
-              boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
-            >
-              <Flex justifyContent="space-between" mb={2}>
-                <Text>
-                  <Moment unix locale="ru" format="LL">
-                    {post.created_time}
-                  </Moment>
-                </Text>
-                <StyledLink
-                  aria-label="Instagram link"
-                  href={post.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
+          {posts.map(
+            (
+              {
+                created_time,
+                images: {
+                  standard_resolution: { url },
+                },
+                caption,
+                link,
+              },
+              i
+            ) => {
+              const lastSpace = caption.text.substring(0, 150).lastIndexOf(" ")
+
+              return (
+                <Card
+                  key={i}
+                  width={[96 / 100, 46 / 100]}
+                  mx="auto"
+                  p={2}
+                  mb={4}
+                  bg="secondary"
+                  borderRadius={8}
+                  boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
                 >
-                  <InstagramIcon width={24} />
-                </StyledLink>
-              </Flex>
-              <StyledImage
-                src={post.images.standard_resolution.url}
-                alt="instagram post image"
-                borderRadius={2}
-              />
-              <Text style={{ wordBreak: "break-word" }}>
-                {post.caption && post.caption.text.substring(0, 150)} ...
-                <StyledLink
-                  aria-label="Instagram link"
-                  href={post.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  &nbsp; &nbsp; &nbsp; читать дальше.
-                </StyledLink>
-              </Text>
-            </Card>
-          ))}
+                  <Flex justifyContent="space-between" mb={2}>
+                    <Text>
+                      <Moment unix locale="ru" format="LL">
+                        {created_time}
+                      </Moment>
+                    </Text>
+                    <StyledLink
+                      aria-label="Instagram link"
+                      href={link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <InstagramIcon width={24} />
+                    </StyledLink>
+                  </Flex>
+                  <StyledImage
+                    src={url}
+                    alt="instagram post image"
+                    borderRadius={2}
+                  />
+                  <Text style={{ wordBreak: "break-word" }}>
+                    {caption && caption.text.substring(0, lastSpace)} ...
+                    <StyledLink
+                      aria-label="Instagram link"
+                      href={link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      &nbsp; &nbsp; &nbsp; читать дальше.
+                    </StyledLink>
+                  </Text>
+                </Card>
+              )
+            }
+          )}
         </Flex>
       )}
     </>

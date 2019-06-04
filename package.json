@@ -36,6 +36,7 @@
     "react-helmet": "^5.2.1",
     "react-moment": "^0.9.2",
     "react-responsive": "^6.1.2",
+    "react-responsive-modal": "^4.0.1",
     "react-select": "^3.0.3",
     "react-sizes": "^2.0.0",
     "react-spring": "^8.0.20",

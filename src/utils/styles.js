@@ -20,9 +20,13 @@ const theme = {
       backgroundColor: secondaryWashed,
       boxShadow: 'inset 0 2px 16px',
     },
-    secondary: {
-      color: secondary,
-      backgroundColor: "#fff",
+    clear: {
+      color: primary,
+      backgroundColor: "transparent",
+      boxShadow: '0 0 0 transparent',
+      outline: 'none',
+      width: 'auto',
+      fontSize: 16,
     },
     outline: {
       color: primary,

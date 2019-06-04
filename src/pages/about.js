@@ -5,6 +5,11 @@ import Instafeed from "../components/instafeed"
 import Layout from "../components/layout"
 import Newsfeed from "../components/newsfeed"
 import SEO from "../components/seo"
+import Responsive from "react-responsive"
+import MobileNewsfeed from "../components/mobilenewsfeed"
+
+const Default = props => <Responsive {...props} minWidth={568} />
+const Mobile = props => <Responsive {...props} maxWidth={567} />
 
 export default ({ data, location }) => {
   const pageTitle = `Наши новости`
@@ -17,7 +22,12 @@ export default ({ data, location }) => {
         Наши новости
       </Heading>
       <Box mb={[4, 5]}>
-        <Newsfeed news={edges} />
+        <Default>
+          <Newsfeed news={edges} />
+        </Default>
+        <Mobile>
+          <MobileNewsfeed news={edges} />
+        </Mobile>
       </Box>
       <Heading color="primary" pb={4}>
         Мы на Инстаграм
