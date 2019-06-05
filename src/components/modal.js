@@ -13,12 +13,16 @@ const modalStyles = {
     boxShadow: "0 0 0 transparent",
     outline: "none",
     background: theme.colors.secondary,
+    borderRadius: 12,
   },
 }
 
 export default ({ children }) => {
   const [open, setOpen] = useState(false)
   const toggle = () => setOpen(!open)
+
+  const lastSpace = content.substring(0, 225).lastIndexOf(" ")
+
 
   return (
     <Modal
@@ -33,6 +37,18 @@ export default ({ children }) => {
         />
       }
       children={children}
-    />
+    >
+      {content.substring(0, lastSpace)}
+      {content.length > 225 && (
+        <>
+          <span> ...</span>
+          <Text>
+            <StyledLink onClick={toggle} role="button">
+              читать дальше
+            </StyledLink>
+          </Text>
+        </>
+      )}
+    </Modal>
   )
 }

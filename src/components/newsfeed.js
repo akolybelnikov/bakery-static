@@ -27,7 +27,7 @@ export default ({ news }) => {
   const handleSlideChange = curr => setActiveIndex(curr)
 
   return (
-    <Box style={{ position: `relative` }}>
+    <Box mb={4} px={3} style={{ position: `relative` }}>
       <SwipeView
         interval={12000}
         onChangeIndex={handleSlideChange}
@@ -51,10 +51,11 @@ export default ({ news }) => {
                   <Image fluid={fluid} />
                   <Flex alignItems="center">
                     <Text
+                      style={{minHeight: 'fit-content'}}
                       fontSize={3}
                       color="primary"
                       px={3}
-                      py={2}
+                      py={4}
                       textAlign={["center"]}
                       lineHeight={[1.3, 1.5, 1.65]}
                     >
@@ -72,7 +73,7 @@ export default ({ news }) => {
         index={activeIndex}
         onChangeIndex={handleSlideChange}
         bottom={10}
-        right={10}
+        right={20}
       />
     </Box>
   )

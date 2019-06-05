@@ -1,15 +1,23 @@
-import { graphql } from "gatsby"
-import React from "react"
-import { Box, Heading } from "rebass"
-import Instafeed from "../components/instafeed"
-import Layout from "../components/layout"
-import Newsfeed from "../components/newsfeed"
-import SEO from "../components/seo"
-import Responsive from "react-responsive"
-import MobileNewsfeed from "../components/mobilenewsfeed"
+import { graphql } from "gatsby";
+import React from "react";
+import Responsive from "react-responsive";
+import { Heading } from "rebass";
+import Instafeed from "../components/instafeed";
+import Layout from "../components/layout";
+import MobileNewsfeed from "../components/mobilenewsfeed";
+import Newsfeed from "../components/newsfeed";
+import SEO from "../components/seo";
 
-const Default = props => <Responsive {...props} minWidth={568} />
-const Mobile = props => <Responsive {...props} maxWidth={567} />
+const Default = props => <Responsive {...props} minWidth={1025} />
+const Mobile = props => (
+  <Responsive {...props} maxWidth={767} orientation={"portrait"} />
+)
+const TouchLandscape = props => (
+  <Responsive {...props} maxWidth={1024} orientation={"landscape"} />
+)
+const TabletPortrait = props => (
+  <Responsive {...props} minWidth={768} orientation={"portrait"} />
+)
 
 export default ({ data, location }) => {
   const pageTitle = `Наши новости`
@@ -21,14 +29,18 @@ export default ({ data, location }) => {
       <Heading color="primary" pb={4}>
         Наши новости
       </Heading>
-      <Box mb={[4, 5]}>
-        <Default>
-          <Newsfeed news={edges} />
-        </Default>
-        <Mobile>
-          <MobileNewsfeed news={edges} />
-        </Mobile>
-      </Box>
+      <Default>
+        <Newsfeed news={edges} />
+      </Default>
+      <TouchLandscape>
+        <Newsfeed news={edges} />
+      </TouchLandscape>
+      <TabletPortrait>
+        <Newsfeed news={edges} />
+      </TabletPortrait>
+      <Mobile>
+        <MobileNewsfeed news={edges} />
+      </Mobile>
       <Heading color="primary" pb={4}>
         Мы на Инстаграм
       </Heading>

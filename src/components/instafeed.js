@@ -11,9 +11,9 @@ const StyledImage = styled(Image)`
   transition: opacity 0.25s ease-in;
 `
 const StyledLink = styled.a`
-  background-image: none;
   cursor: pointer;
   text-shadow: none;
+  background-image: none;
 `
 
 export default () => {
@@ -62,7 +62,7 @@ export default () => {
               },
               i
             ) => {
-              const lastSpace = caption.text.substring(0, 150).lastIndexOf(" ")
+              const lastSpace = caption.text.substring(0, 170).lastIndexOf(" ")
 
               return (
                 <Card
@@ -95,15 +95,19 @@ export default () => {
                     alt="instagram post image"
                     borderRadius={2}
                   />
-                  <Text style={{ wordBreak: "break-word" }}>
-                    {caption && caption.text.substring(0, lastSpace)} ...
+                  <Text p={2} style={{ wordBreak: "break-word" }}>
+                    {caption && caption.text.substring(0, lastSpace)}
+                    &nbsp;...&nbsp;
                     <StyledLink
+                      style={{
+                        backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 1px, #950451 1px, #950451 2px, rgba(0, 0, 0, 0) 2px)`,
+                      }}
                       aria-label="Instagram link"
                       href={link}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      &nbsp; &nbsp; &nbsp; читать дальше.
+                      читать дальше.
                     </StyledLink>
                   </Text>
                 </Card>
