@@ -8,7 +8,7 @@ import { theme } from "../utils/styles"
 import { rhythm } from "../utils/typography"
 import Menu from "./menu"
 
-const Mobile = props => <Responsive {...props} maxWidth={768} />
+const Mobile = props => <Responsive {...props} maxWidth={899} />
 
 export default ({ location, title, children }) => {
   // const rootPath = `${__PATH_PREFIX__}/`

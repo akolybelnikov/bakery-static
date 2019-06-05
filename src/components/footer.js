@@ -29,14 +29,24 @@ export default () => {
   return (
     <footer>
       <Flex flexWrap="wrap" mx={[-2, 2]} my={4}>
-        <Flex flexDirection="column" p={2} width={[1, 3 / 10]}>
+        <Flex flexDirection="column" p={2} width={[1, 3.33 / 10]}>
+          <Text color="primary" fontWeight="bolder">
+            Наш адрес эл. почты:
+          </Text>
+          <PhoneButton
+            href="mailto:confert76@gmail.com?Subject=Контакт со службой поддержки"
+            target="_self"
+            name="email"
+          >
+            confert76@gmail.ru
+          </PhoneButton>
           <Text color="primary" fontWeight="bolder">
             Наш адрес:
           </Text>
           <span>109377, г.Москва</span>
           <span>Рязанский проспект, 58/1</span>
         </Flex>
-        <Flex flexDirection="column" p={2} width={[1, 3 / 10]}>
+        <Flex flexDirection="column" p={2} width={[1, 3.33 / 10]}>
           <Text color="primary" fontWeight="bolder">
             Наши номера телефона:
           </Text>
@@ -55,7 +65,7 @@ export default () => {
             +7 (926) 629-87-26
           </PhoneButton>
         </Flex>
-        <Flex flexDirection="column" p={2} width={[1, 4 / 10]}>
+        <Flex flexDirection="column" p={2} width={[1, 3.33 / 10]}>
           <Text color="primary" fontWeight="bolder">
             Наши часы работы:
           </Text>
@@ -63,7 +73,7 @@ export default () => {
           <span>в воскресенье: с 9.00 до 18.00</span>
         </Flex>
       </Flex>
-      <Flex justifyContent={[`flex-start`, `space-around`]} alignItems='center'>
+      <Flex justifyContent={[`flex-start`, `space-around`]} alignItems="center">
         <Box>
           <Link aria-label="Google maps link" to={`/contact`}>
             <Box mr={[5]}>

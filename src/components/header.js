@@ -6,7 +6,7 @@ import { Flex } from "rebass"
 import styled from "styled-components"
 import Navbar from "../components/navbar"
 
-const Default = props => <Responsive {...props} minWidth={769} />
+const Default = props => <Responsive {...props} minWidth={900} />
 
 const Image = styled(Img)`
   width: 150px;

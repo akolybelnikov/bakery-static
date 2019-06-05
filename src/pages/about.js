@@ -8,12 +8,9 @@ import MobileNewsfeed from "../components/mobilenewsfeed";
 import Newsfeed from "../components/newsfeed";
 import SEO from "../components/seo";
 
-const Default = props => <Responsive {...props} minWidth={1024} />
+const Default = props => <Responsive {...props} minWidth={768} />
 const Mobile = props => (
-  <Responsive {...props} maxWidth={1023} orientation={"portrait"} />
-)
-const TouchLandscape = props => (
-  <Responsive {...props} maxWidth={1023} orientation={"landscape"} />
+  <Responsive {...props} maxWidth={767}/>
 )
 
 export default ({ data, location }) => {
@@ -29,9 +26,6 @@ export default ({ data, location }) => {
       <Default>
         <Newsfeed news={edges} />
       </Default>
-      <TouchLandscape>
-        <Newsfeed news={edges} />
-      </TouchLandscape>
       <Mobile>
         <MobileNewsfeed news={edges} />
       </Mobile>
@@ -48,12 +42,13 @@ export const pageQuery = graphql`
     allContentfulNews(
       filter: { node_locale: { eq: "ru" }, status: { eq: "active" } }
       sort: { fields: date, order: DESC }
+      limit: 4
     ) {
       edges {
         node {
           date(formatString: "DD / MM / YYYY")
           image {
-            fluid(maxWidth: 700) {
+            fluid(maxWidth: 900) {
               aspectRatio
               base64
               sizes

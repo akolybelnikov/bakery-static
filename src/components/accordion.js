@@ -1,14 +1,16 @@
-import React, { useState, useCallback } from "react"
-import { Spring, config, animated } from "react-spring/renderprops"
+import React, { useState } from "react"
+import { animated, Spring } from "react-spring/renderprops"
 import styled from "styled-components"
-import { Heading, Text, Flex, Button } from "rebass"
+import Up from "./svg/arrowDropUp"
+import Down from "./svg/arrowDropDown"
+import { theme } from "../utils/styles"
+import { Flex } from "rebass"
 
 const AccordionMain = styled.div``
 
-const AccordionTitle = styled.div``
-
-const AccordionOuterContent = styled.div`
-  overflow: hidden;
+const StyledLink = styled.a`
+  background-image: none;
+  text-shadow: none;
 `
 
 const AccordionInnerContent = styled.div``
@@ -19,14 +21,10 @@ export default ({ children }) => {
 
   return (
     <AccordionMain>
-      <AccordionTitle>
-        <Button onClick={handleClick}>click</Button>
-      </AccordionTitle>
       <Spring
-        from={{ height: 0, opacity: 0 }}
+        from={{ height: 120}}
         to={{
-          height: open ? "auto" : 0,
-          opacity: open ? 1 : 0,
+          height: open ? "auto" : 120,
         }}
       >
         {style => (
@@ -35,6 +33,15 @@ export default ({ children }) => {
           </animated.div>
         )}
       </Spring>
+      <Flex justifyContent="center" alignItems="center">
+        <StyledLink onClick={handleClick}>
+          {!open ? (
+            <Down width={40} height={40} fill={theme.colors.primary} />
+          ) : (
+            <Up width={40} height={40} fill={theme.colors.primary} />
+          )}
+        </StyledLink>
+      </Flex>
     </AccordionMain>
   )
 }
