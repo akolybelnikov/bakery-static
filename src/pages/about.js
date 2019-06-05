@@ -8,15 +8,12 @@ import MobileNewsfeed from "../components/mobilenewsfeed";
 import Newsfeed from "../components/newsfeed";
 import SEO from "../components/seo";
 
-const Default = props => <Responsive {...props} minWidth={1025} />
+const Default = props => <Responsive {...props} minWidth={1024} />
 const Mobile = props => (
-  <Responsive {...props} maxWidth={767} orientation={"portrait"} />
+  <Responsive {...props} maxWidth={1023} orientation={"portrait"} />
 )
 const TouchLandscape = props => (
-  <Responsive {...props} maxWidth={1024} orientation={"landscape"} />
-)
-const TabletPortrait = props => (
-  <Responsive {...props} minWidth={768} orientation={"portrait"} />
+  <Responsive {...props} maxWidth={1023} orientation={"landscape"} />
 )
 
 export default ({ data, location }) => {
@@ -35,9 +32,6 @@ export default ({ data, location }) => {
       <TouchLandscape>
         <Newsfeed news={edges} />
       </TouchLandscape>
-      <TabletPortrait>
-        <Newsfeed news={edges} />
-      </TabletPortrait>
       <Mobile>
         <MobileNewsfeed news={edges} />
       </Mobile>
