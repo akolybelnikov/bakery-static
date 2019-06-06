@@ -3,7 +3,7 @@ import React from "react"
 import { Flex, Heading, Text, Card } from "rebass"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Img from "gatsby-image"
+import Img from "gatsby-image/withIEPolyfill"
 import styled from "styled-components"
 import { theme } from "../utils/styles"
 

@@ -1,4 +1,4 @@
-import Img from "gatsby-image"
+import Img from "gatsby-image/withIEPolyfill"
 import React from "react"
 import { Card, Flex, Text, Box } from "rebass"
 import styled from "styled-components"
@@ -38,14 +38,14 @@ export default ({ news }) => {
               key={index}
               width={1}
               mx={[0, "auto"]}
-              my={2}
+              my={3}
               borderRadius={12}
             >
               <Image fluid={fluid} />
               <Accordion min={135}>
                 <Flex alignItems="center">
                   <Text
-                    fontSize={[2, 3]}
+                    fontSize={[3]}
                     color="primary"
                     px={3}
                     py={[3]}

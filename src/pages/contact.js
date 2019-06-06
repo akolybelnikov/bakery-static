@@ -10,6 +10,8 @@ import { rhythm } from "../utils/typography"
 const MapContainer = styled.div`
   height: 70vh;
   div:nth-child(1) {
+    height: 70vh !important;
+    width: 96% !important;
     max-width: 96% !important;
     @media all and (min-width: 600px) and (orientation: portrait) {
       margin: 0 auto !important;
@@ -26,7 +28,7 @@ const MapContainer = styled.div`
 const style = {
   maxWidth: rhythm(35),
   width: "96%",
-  height: "70%",
+  height: "100%",
 }
 
 const Contact = ({ google, location }) => {

@@ -25,8 +25,15 @@ const theme = {
       backgroundColor: "transparent",
       boxShadow: '0 0 0 transparent',
       outline: 'none',
-      width: 'auto',
-      fontSize: 16,
+      width: '100%',
+      fontSize: 20,
+      lineHeight: 1.5,
+      fontWeight: 400,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-around',
+      cursor: 'pointer'
+
     },
     outline: {
       color: primary,

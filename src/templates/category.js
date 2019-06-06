@@ -1,17 +1,34 @@
 import { graphql } from "gatsby"
 import React from "react"
+import Responsive from "react-responsive"
 import { Heading } from "rebass"
 import Layout from "../components/layout"
+import MobileProductFeed from "../components/mobileproducts"
+import ProductFeed from "../components/products"
 import SEO from "../components/seo"
 
-export default ({ data, location }) => {
-  const category = data.contentfulCategory
-  const pageTitle = data.contentfulCategory.label
+const Default = props => <Responsive {...props} minWidth={768} />
+const Mobile = props => <Responsive {...props} maxWidth={767} />
 
+export default ({
+  data: {
+    contentfulCategory: { label, product },
+  },
+  location,
+}) => {
   return (
-    <Layout location={location} title={pageTitle}>
-      <SEO title={pageTitle} />
-      <Heading px={3} color="primary">{pageTitle}</Heading>
+    <Layout location={location} title={label}>
+      <SEO title={label} />
+      <Heading px={3} color="primary">
+        {label}
+      </Heading>
+
+      <Default>
+        <ProductFeed location={location} products={product} />
+      </Default>
+      <Mobile>
+        <MobileProductFeed location={location} products={product} />
+      </Mobile>
     </Layout>
   )
 }
@@ -23,8 +40,11 @@ export const pageQuery = graphql`
       label
       product {
         id
+        category {
+          name
+        }
         image {
-          fluid(maxWidth: 300) {
+          fluid(maxWidth: 900) {
             sizes
             src
             srcSet
@@ -32,6 +52,11 @@ export const pageQuery = graphql`
             srcWebp
             base64
             aspectRatio
+          }
+        }
+        description {
+          internal {
+            content
           }
         }
         filling {

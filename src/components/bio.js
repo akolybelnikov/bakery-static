@@ -1,5 +1,5 @@
 import { graphql, StaticQuery } from "gatsby"
-import Image from "gatsby-image"
+import Image from "gatsby-image/withIEPolyfill"
 import React from "react"
 import { rhythm } from "../utils/typography"
 

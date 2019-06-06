@@ -1,4 +1,4 @@
-import Img from "gatsby-image"
+import Img from "gatsby-image/withIEPolyfill"
 import flowRight from "lodash.flowright"
 import React from "react"
 import SwipeableViews from "react-swipeable-views"

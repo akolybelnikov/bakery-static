@@ -13,18 +13,6 @@ exports.createPages = ({ graphql, actions }) => {
             }
           }
         }
-        allContentfulProduct(
-          filter: { node_locale: { eq: "ru" }, status: { eq: "active" } }
-        ) {
-          edges {
-            node {
-              id
-              category {
-                name
-              }
-            }
-          }
-        }
       }
     `).then(result => {
       result.data.allContentfulCategory.edges.map(({ node }) => {
@@ -33,15 +21,6 @@ exports.createPages = ({ graphql, actions }) => {
           component: path.resolve(`./src/templates/category.js`),
           context: {
             name: node.name,
-          },
-        })
-      })
-      result.data.allContentfulProduct.edges.map(({ node }) => {
-        createPage({
-          path: `${node.category.name}/${node.id}`,
-          component: path.resolve(`./src/templates/product.js`),
-          context: {
-            id: node.id,
           },
         })
       })

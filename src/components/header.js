@@ -1,5 +1,5 @@
 import { graphql, Link, StaticQuery } from "gatsby"
-import Img from "gatsby-image"
+import Img from "gatsby-image/withIEPolyfill"
 import React from "react"
 import Responsive from "react-responsive"
 import { Flex } from "rebass"

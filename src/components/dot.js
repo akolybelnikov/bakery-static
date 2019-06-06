@@ -37,7 +37,7 @@ export default ({ onClick, index, active }) => {
   }
 
   return (
-    <a style={styles.root} onClick={handleClick}>
+    <a role="button" style={styles.root} onClick={handleClick}>
       <div style={styleDot} />
     </a>
   )

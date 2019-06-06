@@ -1,5 +1,5 @@
 import { Link } from "gatsby"
-import Img from "gatsby-image"
+import Img from "gatsby-image/withIEPolyfill"
 import React from "react"
 import { Card, Flex, Heading } from "rebass"
 import styled from "styled-components"
