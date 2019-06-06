@@ -12,11 +12,7 @@ const Container = styled(Box)`
 `
 
 const StyledCard = styled(Card)`
-  background: linear-gradient(
-    135deg,
-    ${props => props.theme.colors.primaryBR4} 25%,
-    ${props => props.theme.colors.primaryBR2} 100%
-  );
+  background: ${props => props.theme.colors.primaryBR4};
 `
 
 const Image = styled(Img)`
@@ -38,15 +34,21 @@ export default ({ news }) => {
           index
         ) => {
           return (
-            <StyledCard key={index} width={1} mx={[0, 'auto']} my={2} borderRadius={12}>
+            <StyledCard
+              key={index}
+              width={1}
+              mx={[0, "auto"]}
+              my={2}
+              borderRadius={12}
+            >
               <Image fluid={fluid} />
               <Accordion min={135}>
                 <Flex alignItems="center">
                   <Text
-                    fontSize={3}
+                    fontSize={[2, 3]}
                     color="primary"
                     px={3}
-                    py={[2,3]}
+                    py={[3]}
                     textAlign={["center"]}
                     lineHeight={[1.3, 1.5]}
                   >

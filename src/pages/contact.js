@@ -8,9 +8,9 @@ import mapStyles from "../utils/googlemap"
 import { rhythm } from "../utils/typography"
 
 const MapContainer = styled.div`
-  height: 60vh;
+  height: 70vh;
   div:nth-child(1) {
-    max-width: 95% !important;
+    max-width: 96% !important;
     @media all and (min-width: 600px) and (orientation: portrait) {
       margin: 0 auto !important;
     }
@@ -25,8 +25,8 @@ const MapContainer = styled.div`
 `
 const style = {
   maxWidth: rhythm(35),
-  width: "95%",
-  height: "60%",
+  width: "96%",
+  height: "70%",
 }
 
 const Contact = ({ google, location }) => {

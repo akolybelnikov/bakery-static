@@ -14,14 +14,16 @@ const Image = styled(Img)`
     height: 35vw;
   }
   @media all and (max-width: 420px) {
-    height: 85vw;
+    height: 100vw;
   }
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 `
 
 const CardText = styled(Text)`
-  max-height: 200px;
+  @media all and (min-width: 768px) {
+    max-height: 200px;
+  }
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 `
@@ -62,7 +64,14 @@ export default ({
                 borderRadius={8}
               >
                 <Image fluid={fluid} />
-                <CardText px={[3]} py={[2]} my={[2]} fontSize={[3]} textAlign="center" color="primary">
+                <CardText
+                  px={[3]}
+                  py={[2]}
+                  my={[2]}
+                  fontSize={[3]}
+                  textAlign="center"
+                  color="primary"
+                >
                   {content}
                 </CardText>
               </Card>
