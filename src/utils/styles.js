@@ -36,7 +36,7 @@ const theme = {
       minWidth: '125px',
       fontWeight: 300,
       marginBottom: 8,
-      fontSize: 15,
+      fontSize: 16,
       "&:hover": {
         boxShadow: "inset 0 0 0 2px",
         fontWeight: 500,

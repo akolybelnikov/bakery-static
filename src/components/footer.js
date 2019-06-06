@@ -23,6 +23,7 @@ const PhoneButton = styled.a`
   border-radius: 8px;
   width: fit-content;
   cursor: pointer;
+  text-shadow: none;
 `
 
 export default () => {

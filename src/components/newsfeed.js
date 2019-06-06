@@ -13,12 +13,14 @@ const Slide = styled(Box)`
 
 const StyledCard = styled(Card)`
   display: flex;
-  background: linear-gradient(135deg, ${props => props.theme.colors.primaryBR4} 25%, ${props => props.theme.colors.primaryBR2} 100%);
+  background: ${props => props.theme.colors.primaryBR3};
 `
 
 const Image = styled(Img)`
   min-width: 250px;
   max-width: 250px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
 `
 const SwipeView = flowRight(bindKeyboard)(SwipeableViews)
 

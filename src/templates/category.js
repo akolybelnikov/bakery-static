@@ -11,7 +11,7 @@ export default ({ data, location }) => {
   return (
     <Layout location={location} title={pageTitle}>
       <SEO title={pageTitle} />
-      <Heading>{pageTitle}</Heading>
+      <Heading px={3} color="primary">{pageTitle}</Heading>
     </Layout>
   )
 }

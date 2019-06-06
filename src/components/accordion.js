@@ -15,16 +15,16 @@ const StyledLink = styled.a`
 
 const AccordionInnerContent = styled.div``
 
-export default ({ children }) => {
+export default ({ children, min }) => {
   const [open, toggle] = useState(false)
   const handleClick = () => toggle(!open)
 
   return (
     <AccordionMain>
       <Spring
-        from={{ height: 120}}
+        from={{ height: min}}
         to={{
-          height: open ? "auto" : 120,
+          height: open ? "auto" : min,
         }}
       >
         {style => (

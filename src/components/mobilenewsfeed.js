@@ -24,10 +24,6 @@ const Image = styled(Img)`
   max-height: 100vw;
 `
 
-// const Slide = styled(Box)`
-//   -webkit-overflow-scrolling: touch;
-// `
-
 export default ({ news }) => {
   return (
     <Container mb={4}>
@@ -44,7 +40,7 @@ export default ({ news }) => {
           return (
             <StyledCard key={index} width={1} mx={[0, 'auto']} my={2} borderRadius={12}>
               <Image fluid={fluid} />
-              <Accordion>
+              <Accordion min={135}>
                 <Flex alignItems="center">
                   <Text
                     fontSize={3}

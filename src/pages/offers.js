@@ -5,21 +5,33 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Img from "gatsby-image"
 import styled from "styled-components"
+import { theme } from "../utils/styles"
 
 const Image = styled(Img)`
-  margin: 0 auto;
-  height: auto;
   width: 100%;
-  @media all and (max-width: 639px) {
-    height: 250px;
+  height: 35vw;
+  @media all and (max-width: 768px) {
+    height: 35vw;
   }
   @media all and (max-width: 420px) {
-    height: 150px;
+    height: 85vw;
   }
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 `
 
-export default ({ data, location }) => {
-  const { edges } = data.allContentfulOffer
+const CardText = styled(Text)`
+  max-height: 200px;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+`
+
+export default ({
+  data: {
+    allContentfulOffer: { edges },
+  },
+  location,
+}) => {
   const pageTitle = `Специальные предложения`
 
   return (
@@ -28,7 +40,7 @@ export default ({ data, location }) => {
       <Heading color="primary" mb={4}>
         {pageTitle}
       </Heading>
-      <Flex flexDirection={[`column`, `row`]}>
+      <Flex flexWrap={"wrap"}>
         {edges &&
           edges.map(
             (
@@ -41,9 +53,18 @@ export default ({ data, location }) => {
               },
               idx
             ) => (
-              <Card width={[1, 1 / 3]} mx={3} key={idx}>
+              <Card
+                width={[1, 3 / 10]}
+                mb={[4]}
+                mx={[0, "auto"]}
+                key={idx}
+                boxShadow={`0 2px 8px ${theme.colors.primary}`}
+                borderRadius={8}
+              >
                 <Image fluid={fluid} />
-                <Text>{content}</Text>
+                <CardText px={[3]} py={[2]} my={[2]} fontSize={[3]} textAlign="center" color="primary">
+                  {content}
+                </CardText>
               </Card>
             )
           )}
@@ -60,7 +81,7 @@ export const pageQuery = graphql`
       edges {
         node {
           image {
-            fluid(maxWidth: 500) {
+            fluid(maxWidth: 750) {
               aspectRatio
               base64
               sizes

@@ -9,7 +9,7 @@ const animatedComponents = makeAnimated()
 const styles = {
   control: (styles, { isFocused, isSelected }) => ({
     ...styles,
-    minWidth: `160px`,
+    minWidth: `175px`,
     color: theme.colors.primary,
     borderColor: "transparent",
     transition: "all 200ms ease-in",
@@ -20,7 +20,7 @@ const styles = {
       fontWeight: 500,
     },
     marginBottom: 8,
-    fontSize: 15,
+    fontSize: 16,
   }),
   input: styles => ({
     ...styles,
@@ -35,7 +35,7 @@ const styles = {
       : isFocused
       ? theme.colors.secondary
       : null,
-      fontSize: 15,
+      fontSize: 16,
   }),
   dropdownIndicator: styles => ({
     ...styles,
