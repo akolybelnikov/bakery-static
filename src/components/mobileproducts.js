@@ -32,7 +32,7 @@ const StyledCard = styled(Card)`
 
 const Image = styled(Img)`
   min-width: 100%;
-  max-height: 70vw;
+  max-height: 100vw;
   background: white;
   border-top-left-radius: 12px;
 `
@@ -65,6 +65,7 @@ export default ({ products, location }) => {
               mx={[0, "auto"]}
               my={3}
               borderRadius={12}
+              boxShadow={`0 2px 8px ${theme.colors.primaryBR4}`}
             >
               <Image
                 fluid={fluid}
@@ -133,10 +134,7 @@ export default ({ products, location }) => {
                 <hr
                   style={{ background: theme.colors.primary, margin: `20px` }}
                 />
-                <Flex py={2} justifyContent="space-around" alignItems="center">
-                  <Text color="primary" fontSize={2}>
-                    Закажи:
-                  </Text>
+                <Flex py={2} justifyContent="center" alignItems="center">
                   <PhoneButton
                     href="tel:+79269823572"
                     target="_self"
@@ -145,16 +143,7 @@ export default ({ products, location }) => {
                     +7 (0) 926 982 35 72
                   </PhoneButton>
                 </Flex>
-                <Flex px={1} flexDirection="column" alignItems="space-around">
-                  <Text
-                    color="primary"
-                    textAlign="left"
-                    pl={3}
-                    fontSize={2}
-                    mb={3}
-                  >
-                    Поделись с друзьями:
-                  </Text>
+                <Flex px={1} py={3} flexDirection="column" alignItems="space-around">
                   <Box px={2} pb={2}>
                     <Social
                       location={location}
