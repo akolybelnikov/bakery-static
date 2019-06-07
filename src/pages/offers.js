@@ -38,7 +38,7 @@ export default ({
 
   return (
     <Layout location={location} title={pageTitle}>
-      <SEO title="pageTitle" />
+      <SEO title={pageTitle} />
       <Heading color="primary" mb={4}>
         {pageTitle}
       </Heading>
