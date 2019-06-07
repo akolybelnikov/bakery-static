@@ -58,7 +58,7 @@ const styles = {
 }
 
 export default ({ location }) => {
-  const path = location.pathname.replace("/", "")
+  const path = location && location.pathname.replace("/", "")
   const { allContentfulCategory } = useStaticQuery(
     graphql`
       query {

@@ -13,7 +13,6 @@ const PrivateRoute = ({ component: Component, location, ...rest }) => {
   useEffect(() => {
     if (!isLoggedIn() && location.pathname !== `/app/login`) {
       navigate(`/app/login`)
-      return null
     }
   }, [])
 
