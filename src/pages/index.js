@@ -1,10 +1,10 @@
-import { graphql, Link } from "gatsby";
-import React from "react";
-import { Flex } from "rebass";
-import { Carousel } from "../components/carousel";
-import Categories from "../components/categories";
-import Layout from "../components/layout";
-import SEO from "../components/seo";
+import { graphql, Link } from "gatsby"
+import React from "react"
+import { Flex } from "rebass"
+import { Carousel } from "../components/carousel"
+import Categories from "../components/categories"
+import Layout from "../components/layout"
+import SEO from "../components/seo"
 
 export default ({ data, location }) => {
   const siteTitle = data.site.siteMetadata.title
@@ -32,6 +32,9 @@ export default ({ data, location }) => {
           </span>
         </Link>
       </Flex>
+      <Link to="/app/">
+        <b>Go to App (with Netlify Identity)</b>
+      </Link>{" "}
       <Categories categories={categories} />
     </Layout>
   )
