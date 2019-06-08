@@ -24,9 +24,7 @@ export default ({ onStateChange }) => {
           ...user.attributes,
           username: user.username,
         }
-        console.log(userInfo)
         setUser(userInfo)
-        onStateChange("signedIn")
         navigate("/user/profile")
       } catch (err) {
         if (err.code === "UserNotConfirmedException") {
