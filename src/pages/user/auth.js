@@ -2,8 +2,8 @@ import { navigate } from "gatsby"
 import React from "react"
 import { handleLogin } from "./services/auth"
 
-const Login = () => {
-  const handleSubmit = () => handleLogin(() => navigate(`/app/profile`))
+const Authenticator = () => {
+  const handleSubmit = () => handleLogin(() => navigate(`/user/profile`))
 
   return (
     <>
@@ -13,4 +13,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Authenticator

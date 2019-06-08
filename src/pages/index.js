@@ -32,8 +32,8 @@ export default ({ data, location }) => {
           </span>
         </Link>
       </Flex>
-      <Link to="/app/profile">
-        <b>Go to App (with Netlify Identity)</b>
+      <Link to="/user/profile">
+        <b>Go to user module (with Amplify Auth)</b>
       </Link>{" "}
       <Categories categories={categories} />
     </Layout>

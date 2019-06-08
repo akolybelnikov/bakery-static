@@ -16,7 +16,7 @@ module.exports = {
   plugins: [
     {
       resolve: `gatsby-plugin-create-client-paths`,
-      options: { prefixes: [`/app/*`] },
+      options: { prefixes: [`/user/*`] },
     },
     {
       resolve: `gatsby-source-filesystem`,
