@@ -5,6 +5,8 @@
   "version": "0.1.0",
   "author": "Andrey Kolybelnikov <a.kolybelnikov@gmail.com>",
   "dependencies": {
+    "aws-amplify": "^1.1.28",
+    "aws-amplify-react": "^2.3.8",
     "axios": "^0.19.0",
     "chroma-js": "^2.0.3",
     "dotenv": "^8.0.0",
@@ -50,7 +52,9 @@
     "sharp": "^0.22.1",
     "styled-components": "^4.2.1",
     "typeface-roboto": "^0.0.54",
+    "typeface-roboto-cyrillic": "^0.0.2",
     "typeface-roboto-slab": "^0.0.72",
+    "typeface-roboto-slab-cyrillic": "^0.0.3",
     "typography": "^0.16.19",
     "typography-theme-ocean-beach": "^0.16.19",
     "url-join": "^4.0.0"

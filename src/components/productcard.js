@@ -34,20 +34,42 @@ export default ({ product, location }) => {
         fluid={product.image.fluid}
         objectFit={product.category.name === "order" ? "cover" : "contain"}
       />
-      <Heading fontSize={4} pt={4} pb={3} textAlign="center" color="primary">
+      <Heading
+        fontWeight={"normal"}
+        fontSize={4}
+        pt={4}
+        pb={3}
+        textAlign="center"
+        color="primary"
+      >
         {product.productName}
       </Heading>
       {product.description && (
-        <Text color="primary" textAlign="center" px={3} py={2} fontSize={3}>
+        <Text
+          fontWeight={"lighter"}
+          color="primary"
+          textAlign="center"
+          px={3}
+          py={2}
+          fontSize={3}
+        >
           {product.description.internal.content}
         </Text>
       )}
       {product.ingridients && (
-        <Text color="primary" textAlign="center" px={3} py={1} fontSize={2}>
+        <Text
+          fontWeight={"normal"}
+          color="primary"
+          textAlign="center"
+          px={3}
+          py={1}
+          fontSize={2}
+        >
           {parseIngridients(product.ingridients.internal.content)}
         </Text>
       )}
       <Text
+        fontWeight={"lighter"}
         color="primary"
         textAlign="left"
         px={3}
@@ -89,7 +111,7 @@ export default ({ product, location }) => {
         </PhoneButton>
       </Flex>
       <Flex px={2} flexDirection="column" alignItems="space-around">
-        <Text color="primary" textAlign="left" pl={3} fontSize={3} mb={3}>
+        <Text color="primary" textAlign="left" pl={3} fontSize={3} mb={3} fontWeight={'lighter'}>
           Поделись с друзьями:
         </Text>
         <Social

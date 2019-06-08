@@ -73,7 +73,7 @@ export default ({ products, location }) => {
                   alignItems={"center"}
                   justifyContent={"center"}
                 >
-                  <Button onClick={() => handleClick(index)} variant="clear">
+                  <Button onClick={() => handleClick(index)} fontWeight={'lighter'} variant="clear">
                     {productName}
                     <Open width={24} height={24} fill={theme.colors.primary} />
                   </Button>

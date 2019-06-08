@@ -31,7 +31,7 @@ export default () => {
     <footer>
       <Flex flexWrap="wrap" mx={[-2, 2]} my={4}>
         <Flex flexDirection="column" p={2} width={[1, 3.33 / 10]}>
-          <Text color="primary" fontWeight="bolder">
+          <Text color="primary" fontWeight="normal">
             Наш адрес эл. почты:
           </Text>
           <PhoneButton
@@ -41,14 +41,14 @@ export default () => {
           >
             confert76@gmail.ru
           </PhoneButton>
-          <Text color="primary" fontWeight="bolder">
+          <Text color="primary" fontWeight="normal">
             Наш адрес:
           </Text>
           <span>109377, г.Москва</span>
           <span>Рязанский проспект, 58/1</span>
         </Flex>
         <Flex flexDirection="column" p={2} width={[1, 3.33 / 10]}>
-          <Text color="primary" fontWeight="bolder">
+          <Text color="primary" fontWeight="normal">
             Наши номера телефона:
           </Text>
           <PhoneButton
@@ -67,7 +67,7 @@ export default () => {
           </PhoneButton>
         </Flex>
         <Flex flexDirection="column" p={2} width={[1, 3.33 / 10]}>
-          <Text color="primary" fontWeight="bolder">
+          <Text color="primary" fontWeight="normal">
             Наши часы работы:
           </Text>
           <span>с понедельника по субботу: с 8.00 до 20.00</span>

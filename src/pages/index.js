@@ -32,7 +32,7 @@ export default ({ data, location }) => {
           </span>
         </Link>
       </Flex>
-      <Link to="/app/">
+      <Link to="/app/profile">
         <b>Go to App (with Netlify Identity)</b>
       </Link>{" "}
       <Categories categories={categories} />

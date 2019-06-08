@@ -7,18 +7,13 @@ import Profile from "./profile"
 
 const App = ({ location }) => {
   return (
-    <Layout location={location} title={'app'}>
+    <Layout location={location} title={"app"}>
       <Router>
         <PrivateRoute path="/app/profile" component={Profile} />
-        <PublicRoute path="/app">
-          <Login path="/login" />
-        </PublicRoute>
+        <Login path="/app/login" />
       </Router>
     </Layout>
   )
-}
-function PublicRoute(props) {
-  return <div>{props.children}</div>
 }
 
 export default App
