@@ -29,6 +29,15 @@ exports.createPages = ({ graphql, actions }) => {
   })
 }
 
+// exports.onCreatePage = async ({ page, actions }) => {
+//   const { createPage } = actions
+
+//   if (page.path.match(/^\/user/)) {
+//     page.matchPath = `/user/*`
+//     createPage(page)
+//   }
+// }
+
 // const { createFilePath } = require(`gatsby-source-filesystem`)
 // exports.createPages = ({ graphql, actions }) => {
 //   const { createPage } = actions

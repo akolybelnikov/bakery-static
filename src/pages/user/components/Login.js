@@ -1,9 +1,9 @@
+import { Auth } from "aws-amplify"
 import { navigate } from "gatsby"
 import { Form, Text } from "informed"
 import React, { useState } from "react"
 import { Box, Button, Card, Flex, Heading } from "rebass"
-import { Auth } from "aws-amplify"
-import { setUser, isLoggedIn } from "../utils/auth"
+import { isLoggedIn, setUser } from "../../../utils/auth"
 
 export default ({ onStateChange }) => {
   const [attribute, setAttribute] = useState("password")

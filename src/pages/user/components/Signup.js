@@ -3,7 +3,6 @@ import { navigate } from "gatsby"
 import { Form, Text } from "informed"
 import React, { useState } from "react"
 import { Box, Button, Card, Flex, Heading } from "rebass"
-import { isLoggedIn } from "../utils/auth"
 
 export default ({ onStateChange, authState }) => {
   const [attribute, setAttribute] = useState("password")

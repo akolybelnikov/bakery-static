@@ -1,4 +1,3 @@
-// custom typefaces
 import { Analytics, Auth } from "aws-amplify"
 import "typeface-roboto-cyrillic"
 import "typeface-roboto-slab-cyrillic"
