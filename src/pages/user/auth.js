@@ -1,15 +1,24 @@
-import { navigate } from "gatsby"
-import React from "react"
-import { handleLogin } from "./services/auth"
+import React, { useState } from "react"
+import { Box } from "rebass"
+import Login from "./components/Login"
+import Signup from './components/Signup'
+import { setUser, isLoggedIn } from "./utils/auth"
 
 const Authenticator = () => {
-  const handleSubmit = () => handleLogin(() => navigate(`/user/profile`))
+  const [loading, setLoading] = React.useState(false)
+  const [authState, setState] = useState()
+
+  const setAuthState = newState => setState(newState)
 
   return (
-    <>
-      <h1>Log in</h1>
-      <button onClick={handleSubmit}>log in</button>
-    </>
+    <Box>
+      {authState === "signIn" && (
+        <Login onStateChange={setAuthState} />
+      )}
+      {(authState === "signUp" || authState === "signedUp") && (
+        <Signup onStateChange={setAuthState} authState={authState} />
+      )}
+    </Box>
   )
 }
 

@@ -17,8 +17,8 @@ const Image = styled(Img)`
 const PhoneButton = styled.a`
   color: ${props => props.theme.colors.secondary};
   background: ${props => props.theme.colors.primary};
-  padding: 6px 12px;
-  margin: 8px 0;
+  padding: 6px;
+  margin: 8px 0 12px;
   border-radius: 4px;
   width: fit-content;
   cursor: pointer;
@@ -51,7 +51,7 @@ export default ({ product, location }) => {
           textAlign="center"
           px={3}
           py={2}
-          fontSize={3}
+          fontSize={2}
         >
           {product.description.internal.content}
         </Text>
@@ -89,7 +89,7 @@ export default ({ product, location }) => {
         )}
       </Text>
       {product.filling && product.filling.length && (
-        <Text color="primary" pl={4} pr={3} py={2} fontSize={3}>
+        <Text color="primary" pl={4} pr={3} py={2} fontSize={2}>
           <b>
             <span>Начинки:&nbsp;&nbsp;</span>
           </b>
@@ -102,16 +102,26 @@ export default ({ product, location }) => {
         </Text>
       )}
       <hr style={{ background: theme.colors.primary, margin: `20px` }} />
-      <Flex p={2} justifyContent="space-around" alignItems="center">
-        <Text color="primary" fontSize={3}>
+      {location.pathname === '/order' && <Flex p={2} justifyContent="space-around" alignItems="center">
+        <Text color="primary" fontSize={1}>
           Закажи по телефону:
         </Text>
         <PhoneButton href="tel:+79269823572" target="_self" name="phone number">
-          +7 (0) 926 982 35 72
+          +7 (926) 982 35 72
         </PhoneButton>
-      </Flex>
+        <PhoneButton href="tel:+79269823572" target="_self" name="phone number">
+          +7 (926) 629 87 26
+        </PhoneButton>
+      </Flex>}
       <Flex px={2} flexDirection="column" alignItems="space-around">
-        <Text color="primary" textAlign="left" pl={3} fontSize={3} mb={3} fontWeight={'lighter'}>
+        <Text
+          color="primary"
+          textAlign="left"
+          pl={3}
+          fontSize={3}
+          mb={3}
+          fontWeight={"lighter"}
+        >
           Поделись с друзьями:
         </Text>
         <Social

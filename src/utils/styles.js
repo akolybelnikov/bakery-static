@@ -17,8 +17,9 @@ const theme = {
   buttons: {
     primary: {
       color: primary,
-      backgroundColor: secondaryWashed,
-      boxShadow: "inset 0 2px 16px",
+      backgroundColor: 'transparent',
+      bcursor: "pointer",
+      border: `1px solid ${primary}`
     },
     clear: {
       color: primary,

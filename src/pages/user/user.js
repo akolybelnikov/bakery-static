@@ -1,8 +1,8 @@
 import { Router } from "@reach/router"
 import React from "react"
 import Layout from "../../components/layout"
-import PrivateRoute from "./components/PrivateRoute"
 import Authenticator from "./auth"
+import PrivateRoute from "./components/PrivateRoute"
 import Profile from "./profile"
 
 const App = ({ location }) => {
