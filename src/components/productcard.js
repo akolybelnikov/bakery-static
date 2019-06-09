@@ -15,8 +15,8 @@ const Image = styled(Img)`
 `
 
 const PhoneButton = styled.a`
-  color: ${props => props.theme.colors.secondary};
-  background: ${props => props.theme.colors.primary};
+  color: ${theme.colors.secondary};
+  background: ${theme.colors.primary};
   padding: 6px;
   margin: 8px 0 12px;
   border-radius: 4px;

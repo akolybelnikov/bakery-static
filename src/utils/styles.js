@@ -4,6 +4,7 @@ const secondaryWashed = "rgba(244, 229, 216, 0.65)"
 const primaryBR2 = "#9f7182"
 const primaryBR3 = "#BF9FAA"
 const primaryBR4 = "#DECED4"
+const red = "#ec392f"
 
 const theme = {
   colors: {
@@ -13,13 +14,14 @@ const theme = {
     primaryBR2,
     primaryBR3,
     primaryBR4,
+    red,
   },
   buttons: {
     primary: {
       color: primary,
-      backgroundColor: 'transparent',
+      backgroundColor: "transparent",
       bcursor: "pointer",
-      border: `1px solid ${primary}`
+      border: `1px solid ${primary}`,
     },
     clear: {
       color: primary,

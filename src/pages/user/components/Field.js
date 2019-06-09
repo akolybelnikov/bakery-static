@@ -1,6 +1,7 @@
 import React from "react"
 import { Box } from "rebass"
 import styled from "styled-components"
+import { theme } from "../../../utils/styles"
 
 const Field = styled(Box).attrs({
   width: [1],
@@ -10,17 +11,17 @@ const Field = styled(Box).attrs({
   height: 56px;
   border-radius: 4px;
   position: relative;
-  background-color: ${props => props.theme.colors.primaryBR3};
+  background-color: ${theme.colors.primaryBR3};
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
 
   &:hover {
-    background-color: ${props => props.theme.colors.primaryBR4};
-    box-shadow: 0 2px 8px ${props => props.theme.colors.primaryBR2};
+    background-color: ${theme.colors.primaryBR4};
+    box-shadow: 0 2px 8px ${theme.colors.primaryBR2};
   }
 
   &.active {
     background-color: #ffffff;
-    box-shadow: 0 2px 8px ${props => props.theme.colors.primary};
+    box-shadow: 0 2px 8px ${theme.colors.primary};
   }
 
   &.active input {
@@ -30,7 +31,7 @@ const Field = styled(Box).attrs({
   &.active input + label {
     top: 4px;
     opacity: 1;
-    color: ${props => props.theme.colors.primary};
+    color: ${theme.colors.primary};
   }
 
   .locked {
@@ -88,7 +89,7 @@ const Field = styled(Box).attrs({
   }
 
   input + label.error {
-    color: #ec392f;
+    color: ${theme.colors.red};
   }
 `
 
