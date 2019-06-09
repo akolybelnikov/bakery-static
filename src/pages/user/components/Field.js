@@ -1,7 +1,6 @@
 import React from "react"
-import styled from "styled-components"
 import { Box } from "rebass"
-import { theme } from "../../../utils/styles"
+import styled from "styled-components"
 
 const Field = styled(Box).attrs({
   width: [1],
@@ -88,13 +87,13 @@ const Field = styled(Box).attrs({
     transition: 0.1s all ease-in-out;
   }
 
-  .field input + label.error {
+  input + label.error {
     color: #ec392f;
   }
 `
 
 export default ({ label, error, locked, active, children, id, value }) => {
-  const fieldClassName = `${(locked ? active : active || value) &&
+  const fieldClassName = `${(locked ? active : active || value || error) &&
     "active"} ${locked && !active && "locked"}`
 
   return (

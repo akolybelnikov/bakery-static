@@ -17,11 +17,16 @@ export default ({ onStateChange }) => {
   const setPasswordActive = () => setActive({ password: true })
   const setPasswordInactive = () => setActive({ password: false })
 
+  const validate = value => {
+    return !value || !value.length ? "Это поле обязательно" : undefined
+  }
+
   const toggleAttr = () => {
     attribute === "password" ? setAttribute("text") : setAttribute("password")
   }
 
   const login = async form => {
+    console.log(form)
     const {
       values: { email, password },
     } = form
@@ -66,12 +71,14 @@ export default ({ onStateChange }) => {
                 value={formState.values.email}
               >
                 <Text
-                  required
+                  validateOnBlur
+                  validateOnChange
                   field="email"
                   id="email"
                   placeholder="Введите свой адрес эл.почты"
                   onFocus={setEmailActive}
                   onBlur={setEmailInactive}
+                  validate={validate}
                 />
               </Field>
 
@@ -84,12 +91,15 @@ export default ({ onStateChange }) => {
                 value={formState.values.password}
               >
                 <Text
+                  validateOnBlur
+                  validateOnChange
                   type="password"
                   field="password"
                   id="password"
                   placeholder="Введите свой пароль"
                   onFocus={setPasswordActive}
                   onBlur={setPasswordInactive}
+                  validate={validate}
                 />
               </Field>
 
@@ -121,7 +131,7 @@ export default ({ onStateChange }) => {
                   mt={[4]}
                   width={[1 / 2]}
                   variant="primary"
-                  type="button"
+                  type="submit"
                   onClick={() => login(formState)}
                 >
                   Войти
