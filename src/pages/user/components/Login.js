@@ -2,10 +2,41 @@ import { Auth } from "aws-amplify"
 import { navigate } from "gatsby"
 import { Form, Text } from "informed"
 import React, { useState } from "react"
-import { Box, Button, Card, Flex, Heading, Text as RebassText } from "rebass"
+import {
+  Box,
+  Button as RebassButton,
+  Card,
+  Flex,
+  Heading,
+  Text as RebassText,
+} from "rebass"
 import { setUser } from "../../../utils/auth"
 import { theme } from "../../../utils/styles"
 import Field from "./Field"
+import styled from "styled-components"
+
+const Button = styled(RebassButton).attrs({
+  color: theme.colors.primary,
+  backgroundColor: "transparent",
+  boxShadow: "0 0 0 transparent",
+  outline: "none",
+  fontSize: [2, 3],
+  lineHeight: 1.5,
+})`
+  cursor: pointer;
+`
+
+const OutlinedButton = styled(RebassButton).attrs({
+  color: "#fff",
+  backgroundColor: theme.colors.primary,
+  fontWeight: "normal",
+  fontSize: 16,
+  mt: [4],
+  width: [1 / 2],
+})`
+  cursor: pointer;
+  letter-spacing: 1px;
+`
 
 export default ({ onStateChange }) => {
   const [attribute, setAttribute] = useState("password")
@@ -26,7 +57,6 @@ export default ({ onStateChange }) => {
   }
 
   const login = async form => {
-    console.log(form)
     const {
       values: { email, password },
     } = form
@@ -103,7 +133,7 @@ export default ({ onStateChange }) => {
                 />
               </Field>
 
-              <Flex alignItems="center" justifyContent="space-around">
+              {/* <Flex alignItems="center" justifyContent="space-around">
                 <RebassText fontSize={[1, 2]} color="#282828;">
                   Пароль утерян?{" "}
                 </RebassText>
@@ -113,7 +143,7 @@ export default ({ onStateChange }) => {
                 >
                   Запросить новый пароль
                 </Button>
-              </Flex>
+              </Flex> */}
 
               <Flex alignItems="center" justifyContent="space-around">
                 <RebassText fontSize={[1, 2]} color="#282828;">
@@ -127,15 +157,9 @@ export default ({ onStateChange }) => {
                 </Button>
               </Flex>
               <Box>
-                <Button
-                  mt={[4]}
-                  width={[1 / 2]}
-                  variant="primary"
-                  type="submit"
-                  onClick={() => login(formState)}
-                >
+                <OutlinedButton type="submit" onClick={() => login(formState)}>
                   Войти
-                </Button>
+                </OutlinedButton>
               </Box>
             </Card>
           )

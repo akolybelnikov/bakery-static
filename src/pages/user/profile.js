@@ -34,7 +34,7 @@ const Profile = () => {
         width={[1, 1/2, 1 / 3]}
         onClick={() =>
           Auth.signOut()
-            .then(logout(() => navigate("/user/auth")))
+            .then(logout(() => navigate("/auth")))
             .catch(err => console.log("eror:", err))
         }
       >

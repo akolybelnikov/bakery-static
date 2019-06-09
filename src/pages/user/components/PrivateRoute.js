@@ -4,8 +4,8 @@ import { isLoggedIn } from "../../../utils/auth"
 
 const PrivateRoute = ({ component: Component, location, ...rest }) => {
   useEffect(() => {
-    if (!isLoggedIn() && location.pathname !== `/user/auth`) {
-      navigate(`/user/auth`)
+    if (!isLoggedIn() && location.pathname !== `/auth`) {
+      navigate(`/auth`)
     }
   }, [])
 

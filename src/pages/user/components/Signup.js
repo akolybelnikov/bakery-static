@@ -2,17 +2,85 @@ import { Auth } from "aws-amplify"
 import { navigate } from "gatsby"
 import { Form, Text } from "informed"
 import React, { useState } from "react"
-import { Box, Button, Card, Flex, Heading } from "rebass"
+import {
+  Box,
+  Button as RebassButton,
+  Card as RebassCard,
+  Flex,
+  Heading,
+} from "rebass"
+import styled from "styled-components"
+import { theme } from "../../../utils/styles"
+import {
+  emptyCode,
+  emptyEmail,
+  emptyName,
+  emptyPassword,
+  emptyPhone,
+} from "../../../utils/validation"
+import Field from "./Field"
+
+const Card = styled(RebassCard).attrs({
+  boxShadow: `0px 4px 20px 0px ${theme.colors.secondary}`,
+  my: [4],
+  p: [4],
+})``
+
+const Button = styled(RebassButton).attrs({
+  color: theme.colors.primary,
+  backgroundColor: "transparent",
+  boxShadow: "0 0 0 transparent",
+  outline: "none",
+  fontSize: [2, 3],
+  lineHeight: 1.5,
+})`
+  cursor: pointer;
+`
+
+const OutlinedButton = styled(RebassButton).attrs({
+  color: "#fff",
+  backgroundColor: theme.colors.primary,
+  fontWeight: "normal",
+  fontSize: 16,
+  mb: [3],
+})`
+  cursor: pointer;
+  letter-spacing: 1px;
+`
 
 export default ({ onStateChange, authState }) => {
   const [attribute, setAttribute] = useState("password")
   const [username, setUsername] = useState()
+  const [active, setActive] = useState({
+    email: false,
+    password: false,
+    name: false,
+    phone_number: false,
+    username: false,
+    code: false,
+  })
 
-  console.log(authState)
+  const setEmailActive = () => setActive({ email: true })
+  const setEmailInactive = () => setActive({ email: false })
 
-  const toggleAttr = () => {
-    attribute === "password" ? setAttribute("text") : setAttribute("password")
-  }
+  const setPasswordActive = () => setActive({ password: true })
+  const setPasswordInactive = () => setActive({ password: false })
+
+  const setNameActive = () => setActive({ name: true })
+  const setNameInactive = () => setActive({ name: false })
+
+  const setPhoneActive = () => setActive({ phone_number: true })
+  const setPhoneInactive = () => setActive({ phone_number: false })
+
+  const setUsernameActive = () => setActive({ username: true })
+  const setUsernameInactive = () => setActive({ username: false })
+
+  const setCodeActive = () => setActive({ code: true })
+  const setCodeInactive = () => setActive({ code: false })
+
+  // const toggleAttr = () => {
+  //   attribute === "password" ? setAttribute("text") : setAttribute("password")
+  // }
 
   const signup = async form => {
     const {
@@ -54,7 +122,7 @@ export default ({ onStateChange, authState }) => {
   }
 
   return (
-    <Box>
+    <Flex px={[2]} flexDirection="column" alignItems="center">
       {authState === "signUp" && (
         <>
           <Heading color="primary">Регистрация пользователя</Heading>
@@ -62,66 +130,101 @@ export default ({ onStateChange, authState }) => {
             {({ formState }) => {
               return (
                 <Card>
-                  <Box>
-                    <label htmlFor="email">Адрес эл. почты</label>
+                  <Field
+                    label="Aдрес эл.почты"
+                    error={formState.errors.email}
+                    active={active.email}
+                    id="email"
+                    locked={false}
+                    value={formState.values.email}
+                  >
                     <Text
-                      required
+                      validateOnBlur
+                      validateOnChange
                       field="email"
                       id="email"
-                      placeholder="Введите свой адрес эл.почты"
+                      placeholder="Aдрес эл.почты"
+                      onFocus={setEmailActive}
+                      onBlur={setEmailInactive}
+                      validate={emptyEmail}
                     />
-                  </Box>
+                  </Field>
 
-                  <Box>
-                    <label htmlFor="password">Пароль</label>
+                  <Field
+                    label="Пароль"
+                    error={formState.errors.password}
+                    active={active.password}
+                    id="password"
+                    locked={false}
+                    value={formState.values.password}
+                  >
                     <Text
-                      required
+                      validateOnBlur
+                      validateOnChange
                       type="password"
                       field="password"
                       id="password"
-                      placeholder="Введите свой пароль"
+                      placeholder="Пароль"
+                      onFocus={setPasswordActive}
+                      onBlur={setPasswordInactive}
+                      validate={emptyPassword}
                     />
-                  </Box>
+                  </Field>
 
-                  <Box>
-                    <label htmlFor="name">Ваше имя</label>
+                  <Field
+                    label="Ваше имя"
+                    error={formState.errors.name}
+                    active={active.name}
+                    id="name"
+                    locked={false}
+                    value={formState.values.name}
+                  >
                     <Text
-                      required
+                      validateOnBlur
+                      validateOnChange
                       field="name"
                       id="name"
-                      placeholder="Как нам к Вам обращаться?"
+                      placeholder="Ваше имя"
+                      onFocus={setNameActive}
+                      onBlur={setNameInactive}
+                      validate={emptyName}
                     />
-                  </Box>
+                  </Field>
 
-                  <Box>
-                    <label htmlFor="phone_number">Ваш номер телефона</label>
+                  <Field
+                    label="Ваш номер телефона"
+                    error={formState.errors.phone_number}
+                    active={active.phone_number}
+                    id="phone_number"
+                    locked={false}
+                    value={formState.values.phone_number}
+                  >
                     <Text
-                      required
+                      validateOnBlur
+                      validateOnChange
                       field="phone_number"
                       id="phone_number"
-                      placeholder="например: +79261234567"
+                      placeholder="Ваш номер телефона"
+                      onFocus={setPhoneActive}
+                      onBlur={setPhoneInactive}
+                      validate={emptyPhone}
                     />
+                  </Field>
+
+                  <Box justifyContent="flex-start">
+                    <OutlinedButton onClick={() => signup(formState)}>
+                      Зарегистрироваться
+                    </OutlinedButton>
                   </Box>
 
-                  <Flex flexWrap="wrap">
-                    <Box>
-                      <Button
-                        variant="primary"
-                        onClick={() => signup(formState)}
-                      >
-                        Зарегистрироваться
-                      </Button>
-                    </Box>
-                    <Box>
-                      <span>Зарегистрированы?</span>
-                      <Button
-                        variant="primary"
-                        type="button"
-                        onClick={() => onStateChange("signIn")}
-                      >
-                        Войти
-                      </Button>
-                    </Box>
+                  <Flex alignItems="center">
+                    <span>Зарегистрированы?</span>
+                    <Button
+                      type="button"
+                      onClick={() => onStateChange("signIn")}
+                    >
+                      Войти
+                    </Button>
                   </Flex>
                 </Card>
               )
@@ -136,25 +239,47 @@ export default ({ onStateChange, authState }) => {
             {({ formState }) => {
               return (
                 <Card>
-                  <Box>
-                    <label htmlFor="username">Адрес эл. почты</label>
+                  <Field
+                    label="Ваш aдрес эл. почты"
+                    error={formState.errors.username}
+                    active={active.username}
+                    id="username"
+                    locked={false}
+                    value={formState.values.username}
+                  >
                     <Text
-                      required
+                      validateOnBlur
+                      validateOnChange
                       field="username"
                       id="username"
                       placeholder="Введите свой адрес эл.почты"
+                      onFocus={setUsernameActive}
+                      onBlur={setUsernameInactive}
+                      validate={emptyEmail}
                     />
-                  </Box>
-                  <Box>
-                    <label htmlFor="code">Код подтверждения</label>
+                  </Field>
+
+                  <Field
+                    label="Код подтверждения"
+                    error={formState.errors.code}
+                    active={active.code}
+                    id="code"
+                    locked={false}
+                    value={formState.values.code}
+                  >
                     <Text
-                      required
+                      validateOnBlur
+                      validateOnChange
                       type="text"
                       field="code"
                       id="code"
-                      placeholder="Введите код"
+                      placeholder="Код подтверждения"
+                      onFocus={setUsernameActive}
+                      onBlur={setUsernameInactive}
+                      validate={emptyCode}
                     />
-                  </Box>
+                  </Field>
+
                   <Flex flexWrap="wrap">
                     <Box>
                       <Button
@@ -182,6 +307,6 @@ export default ({ onStateChange, authState }) => {
           </Form>
         </>
       )}
-    </Box>
+    </Flex>
   )
 }

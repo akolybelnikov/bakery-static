@@ -13,6 +13,7 @@ const StyledLink = styled(Link)`
   text-transform: uppercase;
   letter-spacing: 1px;
   outline: none;
+  font-size: 18px;
 `
 
 export default ({ location }) => {

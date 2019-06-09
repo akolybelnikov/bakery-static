@@ -11,3 +11,15 @@ Auth.configure({
   userPoolWebClientId: process.env.GATSBY_WEBCLIENT_ID,
   mandatorySignIn: false,
 })
+
+export const onServiceWorkerUpdateReady = () => {
+  const answer = window.confirm(
+    `Приложение было обновлено.. ` + `Загрузить обновлённую версию?`
+  )
+
+  if (answer === true) {
+    window.location.reload()
+  }
+}
+
+export const registerServiceWorker = () => true
