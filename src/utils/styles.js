@@ -34,6 +34,15 @@ const theme = {
       justifyContent: "space-around",
       cursor: "pointer",
     },
+    noOutline: {
+      color: primary,
+      backgroundColor: "transparent",
+      boxShadow: "0 0 0 transparent",
+      outline: "none",
+      fontSize: [2, 3],
+      lineHeight: 1.5,
+      cursor: "pointer",
+    },
     outline: {
       color: primary,
       backgroundColor: "transparent",

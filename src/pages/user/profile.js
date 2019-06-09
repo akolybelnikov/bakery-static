@@ -24,21 +24,21 @@ const Profile = () => {
   return (
     <Flex>
       <Heading textAlign="center" color="primary">
-        Добро пожаловать, {user.name && user.name}!
+        Добро пожаловать, {user.name ? user.name : "неизвестный пользователь"}!
       </Heading>
       <Text textAlign="center" color="primary">
-        Вы зарегистрированы под этим адресом эл. почты: <b>{user.email}</b>
+        Вы зарегистрированы с адресом эл. почты: <b>{user.email}</b>
       </Text>
       <Button
         variant="primary"
-        width={[1 / 3]}
+        width={[1, 1/2, 1 / 3]}
         onClick={() =>
           Auth.signOut()
             .then(logout(() => navigate("/user/auth")))
             .catch(err => console.log("eror:", err))
         }
       >
-        Log out
+        Выйдти
       </Button>
     </Flex>
   )

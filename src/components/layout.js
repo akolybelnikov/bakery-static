@@ -17,7 +17,7 @@ export default ({ location, title, children }) => {
     <ThemeProvider theme={theme}>
       <Box id="outer-container">
         <Mobile>
-          <Menu />
+          <Menu location={location} />
         </Mobile>
         <Box
           mx="auto"

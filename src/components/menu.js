@@ -12,9 +12,10 @@ const StyledLink = styled(Link)`
   backgroundimage: none;
   text-transform: uppercase;
   letter-spacing: 1px;
+  outline: none;
 `
 
-export default () => {
+export default ({ location }) => {
   const [menuOpenState, setMenuOpenState] = useState(false)
 
   const toggleMenu = () => setMenuOpenState(!menuOpenState)
@@ -30,43 +31,50 @@ export default () => {
       pageWrapId={"page-wrap"}
       outerContainerId={"outer-container"}
     >
-      <StyledLink
-        style={{
-          paddingBlockEnd: rhythm(1.5),
-          borderBlockEnd: `${rhythm(0.05)} solid ${theme.colors.primary}`,
-          outline: `none`,
-        }}
-        onClick={toggleMenu}
-        to={`/offers`}
-      >
-        Спецпредложения
-      </StyledLink>
-      <StyledLink onClick={toggleMenu} to={`/order`}>
-        На заказ
-      </StyledLink>
-      <StyledLink onClick={toggleMenu} to={`/cakes`}>
-        Кондитерка
-      </StyledLink>
-      <StyledLink
-        style={{
-          paddingBlockEnd: rhythm(1.5),
-          borderBlockEnd: `${rhythm(0.05)} solid ${theme.colors.primary}`,
-        }}
-        onClick={toggleMenu}
-        to={`/bread`}
-      >
-        Хлеб и Булочки
-      </StyledLink>
-      <StyledLink
-        style={{ paddingBlockStart: rhythm(1) }}
-        onClick={toggleMenu}
-        to={`/about`}
-      >
-        Новости
-      </StyledLink>
-      <StyledLink onClick={toggleMenu} to={`/contact`}>
-        Наши координаты
-      </StyledLink>
+      {location.pathname !== "/" && (
+        <StyledLink onClick={toggleMenu} to={`/`}>
+          В начало
+        </StyledLink>
+      )}
+      {location.pathname !== "/offers" && (
+        <StyledLink onClick={toggleMenu} to={`/offers`}>
+          Спецпредложения
+        </StyledLink>
+      )}
+      <hr style={{ background: theme.colors.primary, padding: 0 }} />
+      {location.pathname !== "/order" && (
+        <StyledLink onClick={toggleMenu} to={`/order`}>
+          На заказ
+        </StyledLink>
+      )}
+      {location.pathname !== "/cakes" && (
+        <StyledLink onClick={toggleMenu} to={`/cakes`}>
+          Кондитерка
+        </StyledLink>
+      )}
+      {location.pathname !== "/bread" && (
+        <StyledLink
+          onClick={toggleMenu}
+          to={`/bread`}
+        >
+          Хлеб и Булочки
+        </StyledLink>
+      )}
+      <hr style={{ background: theme.colors.primary, padding: 0 }} />
+      {location.pathname !== "/about" && (
+        <StyledLink
+          style={{ paddingBlockStart: rhythm(1) }}
+          onClick={toggleMenu}
+          to={`/about`}
+        >
+          Новости
+        </StyledLink>
+      )}
+      {location.pathname !== "/contact" && (
+        <StyledLink onClick={toggleMenu} to={`/contact`}>
+          Наши координаты
+        </StyledLink>
+      )}
     </Menu>
   )
 }

@@ -2,11 +2,20 @@ import { Auth } from "aws-amplify"
 import { navigate } from "gatsby"
 import { Form, Text } from "informed"
 import React, { useState } from "react"
-import { Box, Button, Card, Flex, Heading } from "rebass"
-import { isLoggedIn, setUser } from "../../../utils/auth"
+import { Box, Button, Card, Flex, Heading, Text as RebassText } from "rebass"
+import { setUser } from "../../../utils/auth"
+import { theme } from "../../../utils/styles"
+import Field from "./Field"
 
 export default ({ onStateChange }) => {
   const [attribute, setAttribute] = useState("password")
+  const [active, setActive] = useState({ email: false, password: false })
+
+  const setEmailActive = () => setActive({ email: true })
+  const setEmailInactive = () => setActive({ email: false })
+
+  const setPasswordActive = () => setActive({ password: true })
+  const setPasswordInactive = () => setActive({ password: false })
 
   const toggleAttr = () => {
     attribute === "password" ? setAttribute("text") : setAttribute("password")
@@ -35,68 +44,93 @@ export default ({ onStateChange }) => {
     }
   }
 
-  if (isLoggedIn()) navigate("/user/profile")
-
   return (
-    <Box>
-      <Heading color="primary">Вход пользователя</Heading>
+    <Flex px={[2]} flexDirection="column" alignItems="center">
+      <Heading textAlign="center" color="primary">
+        Вход пользователя
+      </Heading>
       <Form>
         {({ formState }) => {
           return (
-            <Card>
-              <Box>
-                <label htmlFor="email">Адрес эл. почты</label>
+            <Card
+              boxShadow={`0px 4px 20px 0px ${theme.colors.secondary}`}
+              my={[4]}
+              p={[4]}
+            >
+              <Field
+                label="Введите свой адрес эл.почты"
+                error={formState.errors.email}
+                active={active.email}
+                id="email"
+                locked={false}
+                value={formState.values.email}
+              >
                 <Text
+                  required
                   field="email"
                   id="email"
                   placeholder="Введите свой адрес эл.почты"
+                  onFocus={setEmailActive}
+                  onBlur={setEmailInactive}
                 />
-              </Box>
+              </Field>
 
-              <Box>
-                <label htmlFor="password">Пароль</label>
+              <Field
+                label="Введите свой пароль"
+                error={formState.errors.password}
+                active={active.password}
+                id="password"
+                locked={false}
+                value={formState.values.password}
+              >
                 <Text
                   type="password"
                   field="password"
                   id="password"
                   placeholder="Введите свой пароль"
+                  onFocus={setPasswordActive}
+                  onBlur={setPasswordInactive}
                 />
-              </Box>
+              </Field>
 
-              <Box>
-                <span>Пароль утерян? </span>
+              <Flex alignItems="center" justifyContent="space-around">
+                <RebassText fontSize={[1, 2]} color="#282828;">
+                  Пароль утерян?{" "}
+                </RebassText>
                 <Button
-                  variant="primary"
+                  variant="noOutline"
                   onClick={() => onStateChange("forgotPassword")}
                 >
                   Запросить новый пароль
                 </Button>
-              </Box>
-
-              <Flex flexWrap="wrap">
-                <Box>
-                  <Button
-                    variant="primary"
-                    type="button"
-                    onClick={() => login(formState)}
-                  >
-                    Войти
-                  </Button>
-                </Box>
-                <Box>
-                  <span>Нет профиля?</span>
-                  <Button
-                    variant="primary"
-                    onClick={() => onStateChange("signUp")}
-                  >
-                    Зарегистрироваться
-                  </Button>
-                </Box>
               </Flex>
+
+              <Flex alignItems="center" justifyContent="space-around">
+                <RebassText fontSize={[1, 2]} color="#282828;">
+                  Нет профиля?
+                </RebassText>
+                <Button
+                  variant="noOutline"
+                  onClick={() => onStateChange("signUp")}
+                >
+                  Зарегистрироваться
+                </Button>
+              </Flex>
+              <Box>
+                <Button
+                  mt={[4]}
+                  width={[1 / 2]}
+                  variant="primary"
+                  type="button"
+                  onClick={() => login(formState)}
+                >
+                  Войти
+                </Button>
+              </Box>
             </Card>
           )
         }}
       </Form>
-    </Box>
+    </Flex>
   )
 }

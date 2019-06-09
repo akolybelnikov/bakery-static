@@ -15,8 +15,6 @@ const Authenticator = () => {
     navigate("/user/profile")
   }
 
-  console.log(authState)
-
   return (
     <Box>
       {authState === "signIn" && <Login onStateChange={setAuthState} />}

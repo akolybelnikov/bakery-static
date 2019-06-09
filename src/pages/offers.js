@@ -68,7 +68,7 @@ export default ({
                   px={[3]}
                   py={[2]}
                   my={[2]}
-                  fontSize={[3]}
+                  fontSize={[2, 3]}
                   textAlign="center"
                   color="primary"
                 >
