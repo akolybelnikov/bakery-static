@@ -2,6 +2,7 @@ import { Link } from "gatsby"
 import React, { useState } from "react"
 import Menu from "react-burger-menu/lib/menus/slide"
 import styled from "styled-components"
+import { isLoggedIn } from "../utils/auth"
 import { menuStyles, theme } from "../utils/styles"
 import { rhythm } from "../utils/typography"
 
@@ -54,10 +55,7 @@ export default ({ location }) => {
         </StyledLink>
       )}
       {location.pathname !== "/bread" && (
-        <StyledLink
-          onClick={toggleMenu}
-          to={`/bread`}
-        >
+        <StyledLink onClick={toggleMenu} to={`/bread`}>
           Хлеб и Булочки
         </StyledLink>
       )}
@@ -74,6 +72,11 @@ export default ({ location }) => {
       {location.pathname !== "/contact" && (
         <StyledLink onClick={toggleMenu} to={`/contact`}>
           Наши координаты
+        </StyledLink>
+      )}
+      {!location.pathname.includes("user") && (
+        <StyledLink onClick={toggleMenu} to={`/user/profile`}>
+          {!isLoggedIn() ? "Вход пользователя" : "Мой профиль"}
         </StyledLink>
       )}
     </Menu>

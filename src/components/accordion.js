@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import { animated, Spring } from "react-spring/renderprops"
-import styled from "styled-components"
-import Up from "./svg/arrowDropUp"
-import Down from "./svg/arrowDropDown"
-import { theme } from "../utils/styles"
 import { Flex } from "rebass"
+import styled from "styled-components"
+import { theme } from "../utils/styles"
+import Down from "./svg/arrowDropDown"
+import Up from "./svg/arrowDropUp"
 
 const AccordionMain = styled.div``
 
@@ -22,7 +22,7 @@ export default ({ children, min }) => {
   return (
     <AccordionMain>
       <Spring
-        from={{ height: min}}
+        from={{ height: min }}
         to={{
           height: open ? "auto" : min,
         }}

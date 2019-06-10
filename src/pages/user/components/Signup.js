@@ -19,12 +19,15 @@ import {
   emptyPhone,
 } from "../../../utils/validation"
 import Field from "./Field"
+import BottomSheet from "./BottomSheet"
 
 const Card = styled(RebassCard).attrs({
   boxShadow: `0px 4px 20px 0px ${theme.colors.secondary}`,
   my: [4],
   p: [4],
-})``
+})`
+  position: relative;
+`
 
 const Button = styled(RebassButton).attrs({
   color: theme.colors.primary,
@@ -49,7 +52,9 @@ const OutlinedButton = styled(RebassButton).attrs({
 `
 
 export default ({ onStateChange, authState }) => {
-  const [attribute, setAttribute] = useState("password")
+  // const [attribute, setAttribute] = useState("password")
+  const [error, setError] = useState()
+  const [open, setSheet] = useState(false)
   const [username, setUsername] = useState()
   const [active, setActive] = useState({
     email: false,
@@ -59,6 +64,16 @@ export default ({ onStateChange, authState }) => {
     username: false,
     code: false,
   })
+
+  const openSheet = () => {
+    setSheet(true)
+  }
+
+  const closeSheet = () => {
+    console.log("clicked!")
+    setError(null)
+    setSheet(false)
+  }
 
   const setEmailActive = () => setActive({ email: true })
   const setEmailInactive = () => setActive({ email: false })
@@ -100,7 +115,8 @@ export default ({ onStateChange, authState }) => {
         onStateChange("signedUp")
       } catch (err) {
         if (err.code === "UsernameExistsException") {
-          onStateChange("signedUp")
+          setError("error signing up...")
+          openSheet()
         }
         console.log("error signing up...", err)
       }
@@ -111,13 +127,13 @@ export default ({ onStateChange, authState }) => {
     const {
       values: { username, code },
     } = form
-    try {
-      await Auth.confirmSignUp(username, code)
-      onStateChange("signedIn")
-      alert("Successfully signed up!")
-      navigate("/user/profile")
-    } catch (err) {
-      console.log("error confirming signing up...", err)
+    if (username && code) {
+      try {
+        await Auth.confirmSignUp(username, code)
+        navigate("/user/profile")
+      } catch (err) {
+        console.log("error confirming signing up...", err)
+      }
     }
   }
 
@@ -226,6 +242,11 @@ export default ({ onStateChange, authState }) => {
                       Войти
                     </Button>
                   </Flex>
+                  <BottomSheet
+                    toggle={closeSheet}
+                    open={open}
+                    children={error}
+                  />
                 </Card>
               )
             }}
@@ -274,8 +295,8 @@ export default ({ onStateChange, authState }) => {
                       field="code"
                       id="code"
                       placeholder="Код подтверждения"
-                      onFocus={setUsernameActive}
-                      onBlur={setUsernameInactive}
+                      onFocus={setCodeActive}
+                      onBlur={setCodeInactive}
                       validate={emptyCode}
                     />
                   </Field>
@@ -301,6 +322,11 @@ export default ({ onStateChange, authState }) => {
                       </Button>
                     </Box>
                   </Flex>
+                  <BottomSheet
+                    toggle={closeSheet}
+                    open={open}
+                    children={error}
+                  />
                 </Card>
               )
             }}
