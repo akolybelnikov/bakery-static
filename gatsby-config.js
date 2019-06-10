@@ -68,7 +68,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-offline`,
       options: {
-        importScripts: [`./sw-extension.js`],
+        importScripts: [`sw-extension.js`],
       },
     },
     // `gatsby-plugin-remove-serviceworker`
