@@ -1,12 +1,12 @@
 import React from "react"
-import { Box } from "rebass"
+import { Flex } from "rebass"
 import styled from "styled-components"
 import { theme } from "../../utils/styles"
 
-const Field = styled(Box).attrs({
+const Field = styled(Flex).attrs({
   width: [1],
   mb: [4],
-  px: [2],
+  px: [1],
 })`
   height: 56px;
   border-radius: 4px;

@@ -19,11 +19,11 @@ const Flex = styled(FlexRebass).attrs({
 `
 
 const Profile = () => {
-  useEffect(() => {
-    if (!isLoggedIn()) {
-      navigate(`/auth`)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!isLoggedIn()) {
+  //     navigate(`/auth`)
+  //   }
+  // }, [])
 
   const user = getCurrentUser()
 

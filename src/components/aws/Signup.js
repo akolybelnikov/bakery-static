@@ -2,32 +2,63 @@ import { Auth } from "aws-amplify"
 import { navigate } from "gatsby"
 import { Form, Text } from "informed"
 import React, { useState } from "react"
+import { FaEye } from "react-icons/fa"
 import {
   Box,
   Button as RebassButton,
   Card as RebassCard,
   Flex,
   Heading,
+  Text as RebassText,
 } from "rebass"
-import styled from "styled-components"
+import styled, {keyframes} from "styled-components"
+import { mapSignUpError } from "../../utils/aws"
 import { theme } from "../../utils/styles"
 import {
   emptyCode,
-  emptyEmail,
   emptyName,
-  emptyPassword,
-  emptyPhone,
+  validateEmail,
+  validatePassword,
+  validatePhoneNumber,
 } from "../../utils/validation"
-import Field from "./Field"
 import BottomSheet from "./BottomSheet"
-import { mapSignUpError } from "../../utils/aws"
+import Field from "./Field"
+
+const spin = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(359deg);
+  }
+`
+
+const Icon = styled(RebassButton).attrs({
+  color: theme.colors.primary,
+  backgroundColor: "transparent",
+  boxShadow: "0 0 0 transparent",
+  outline: "none",
+  fontSize: [4],
+  p: [0],
+  px: [1],
+})`
+  height: 56px;
+  cursor: pointer;
+  // animation: ${spin} 1.5s linear infinite;
+`
 
 const Card = styled(RebassCard).attrs({
   boxShadow: `0px 4px 20px 0px ${theme.colors.secondary}`,
-  my: [4],
-  p: [4],
+  my: [2],
+  py: [3],
+  px: [2],
 })`
   position: relative;
+  min-width: 350px;
+  @media all and (max-width: 350px) {
+    min-width: 300px;
+  }
 `
 
 const Button = styled(RebassButton).attrs({
@@ -35,7 +66,7 @@ const Button = styled(RebassButton).attrs({
   backgroundColor: "transparent",
   boxShadow: "0 0 0 transparent",
   outline: "none",
-  fontSize: [2, 3],
+  fontSize: [2],
   lineHeight: 1.5,
 })`
   cursor: pointer;
@@ -53,7 +84,7 @@ const OutlinedButton = styled(RebassButton).attrs({
 `
 
 export default ({ onStateChange, authState, username, setUsername }) => {
-  // const [attribute, setAttribute] = useState("password")
+  const [attribute, setAttribute] = useState("password")
   const [error, setError] = useState(false)
   const [open, setSheet] = useState(false)
   const [active, setActive] = useState({
@@ -129,15 +160,21 @@ export default ({ onStateChange, authState, username, setUsername }) => {
   }
   const setCodeInactive = () => setActive({ code: false })
 
-  // const toggleAttr = () => {
-  //   attribute === "password" ? setAttribute("text") : setAttribute("password")
-  // }
+  const toggleAttr = () => {
+    attribute === "password" ? setAttribute("text") : setAttribute("password")
+  }
 
   const signup = async form => {
     const {
       values: { email, password, name, phone_number },
+      errors,
     } = form
-    if (email && password && name && phone_number) {
+    if (
+      !errors.email &&
+      !errors.password &&
+      !errors.name &&
+      !errors.phone_number
+    ) {
       try {
         await Auth.signUp({
           username: email.trim(),
@@ -217,30 +254,35 @@ export default ({ onStateChange, authState, username, setUsername }) => {
                       placeholder="Aдрес эл.почты"
                       onFocus={setEmailActive}
                       onBlur={setEmailInactive}
-                      validate={emptyEmail}
+                      validate={validateEmail}
                     />
                   </Field>
 
-                  <Field
-                    label="Пароль"
-                    error={formState.errors.password}
-                    active={active.password}
-                    id="password"
-                    locked={false}
-                    value={formState.values.password}
-                  >
-                    <Text
-                      validateOnBlur
-                      validateOnChange
-                      type="password"
-                      field="password"
+                  <Flex>
+                    <Field
+                      label="Пароль"
+                      error={formState.errors.password}
+                      active={active.password}
                       id="password"
-                      placeholder="Пароль"
-                      onFocus={setPasswordActive}
-                      onBlur={setPasswordInactive}
-                      validate={emptyPassword}
-                    />
-                  </Field>
+                      locked={false}
+                      value={formState.values.password}
+                    >
+                      <Text
+                        validateOnBlur
+                        validateOnChange
+                        type={attribute}
+                        field="password"
+                        id="password"
+                        placeholder="Пароль"
+                        onFocus={setPasswordActive}
+                        onBlur={setPasswordInactive}
+                        validate={validatePassword}
+                      />
+                    </Field>
+                    <Icon onClick={toggleAttr}>
+                      <FaEye />
+                    </Icon>
+                  </Flex>
 
                   <Field
                     label="Ваше имя"
@@ -278,18 +320,20 @@ export default ({ onStateChange, authState, username, setUsername }) => {
                       placeholder="Ваш номер телефона"
                       onFocus={setPhoneActive}
                       onBlur={setPhoneInactive}
-                      validate={emptyPhone}
+                      validate={validatePhoneNumber}
                     />
                   </Field>
 
-                  <Box justifyContent="flex-start">
+                  <Box>
                     <OutlinedButton onClick={() => signup(formState)}>
                       Зарегистрироваться
                     </OutlinedButton>
                   </Box>
 
-                  <Flex alignItems="center">
-                    <span>Зарегистрированы?</span>
+                  <Flex justifyContent="space-between" alignItems="center">
+                    <RebassText fontSize={[1, 2]} color="#282828;">
+                      Зарегистрированы?
+                    </RebassText>
                     <Button
                       type="button"
                       onClick={() => onStateChange("signIn")}
@@ -334,7 +378,7 @@ export default ({ onStateChange, authState, username, setUsername }) => {
                       placeholder="Введите свой адрес эл.почты"
                       onFocus={setUsernameActive}
                       onBlur={setUsernameInactive}
-                      validate={emptyEmail}
+                      validate={validateEmail}
                     />
                   </Field>
 
