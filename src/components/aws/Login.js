@@ -186,7 +186,7 @@ export default ({ onStateChange, setUsername }) => {
                 </Button>
               </Flex>
 
-              <Flex mt={[4]} alignItems="center" justifyContent="space-between">
+              {/* <Flex mt={[4]} alignItems="center" justifyContent="space-between">
                 <RebassText fontSize={[1, 2]} color="#282828;">
                   Пароль утерян?{" "}
                 </RebassText>
@@ -196,7 +196,7 @@ export default ({ onStateChange, setUsername }) => {
                 >
                   Запросить новый
                 </Button>
-              </Flex>
+              </Flex> */}
 
               <BottomSheet
                 color={theme.colors.red}
