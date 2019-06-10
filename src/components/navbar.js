@@ -28,7 +28,7 @@ export default ({ location }) => {
           Новости
         </Button>
       )}
-      {location.pathname !== "/auth" && (
+      {(location.pathname !== "/auth" && !location.pathname.includes('user')) && (
         <Button onClick={() => navigate("/user/profile")} variant="outline">
           {!isLoggedIn() ? "Вход пользователя" : "Мой профиль"}
         </Button>

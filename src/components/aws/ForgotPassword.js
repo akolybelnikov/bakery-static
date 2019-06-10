@@ -16,7 +16,7 @@ import Field from "./Field"
 import styled from "styled-components"
 import BottomSheet from "./BottomSheet"
 import { mapSignInError } from "../../utils/aws"
-import { validateEmail, emptyLoginPassword } from "../../utils/validation"
+import { emptyLoginEmail, emptyLoginPassword } from "../../utils/validation"
 
 const Button = styled(RebassButton).attrs({
   color: theme.colors.primary,
@@ -34,6 +34,7 @@ const OutlinedButton = styled(RebassButton).attrs({
   backgroundColor: theme.colors.primary,
   fontWeight: "normal",
   fontSize: 16,
+  mt: [4],
   width: [1 / 2],
 })`
   cursor: pointer;
@@ -43,18 +44,12 @@ const OutlinedButton = styled(RebassButton).attrs({
 const Card = styled(RebassCard).attrs({
   boxShadow: `0px 4px 20px 0px ${theme.colors.secondary}`,
   my: [4],
-  py: [4],
-  px: [2],
+  p: [4],
 })`
   position: relative;
-  min-width: 350px;
-  @media all and (max-width: 350px) {
-    min-width: 300px;
-  }
 `
 
 export default ({ onStateChange, setUsername }) => {
-  // const [attribute, setAttribute] = useState("password")
   const [active, setActive] = useState({ email: false, password: false })
   const [error, setError] = useState()
   const [open, setSheet] = useState(false)
@@ -87,10 +82,6 @@ export default ({ onStateChange, setUsername }) => {
     setSheet(false)
     setError(null)
   }
-
-  // const toggleAttr = () => {
-  //   attribute === "password" ? setAttribute("text") : setAttribute("password")
-  // }
 
   const login = async form => {
     const {
@@ -143,7 +134,7 @@ export default ({ onStateChange, setUsername }) => {
                   placeholder="Введите свой адрес эл.почты"
                   onFocus={setEmailActive}
                   onBlur={setEmailInactive}
-                  validate={validateEmail}
+                  validate={emptyLoginEmail}
                 />
               </Field>
 
@@ -168,13 +159,19 @@ export default ({ onStateChange, setUsername }) => {
                 />
               </Field>
 
-              <Box>
-                <OutlinedButton type="submit" onClick={() => login(formState)}>
-                  Войти
-                </OutlinedButton>
-              </Box>
+              {/* <Flex alignItems="center" justifyContent="space-around">
+                <RebassText fontSize={[1, 2]} color="#282828;">
+                  Пароль утерян?{" "}
+                </RebassText>
+                <Button
+                  variant="noOutline"
+                  onClick={() => onStateChange("forgotPassword")}
+                >
+                  Запросить новый пароль
+                </Button>
+              </Flex> */}
 
-              <Flex mt={[2]} alignItems="center" justifyContent="space-between">
+              <Flex alignItems="center" justifyContent="space-around">
                 <RebassText fontSize={[1, 2]} color="#282828;">
                   Нет профиля?
                 </RebassText>
@@ -185,19 +182,11 @@ export default ({ onStateChange, setUsername }) => {
                   Зарегистрироваться
                 </Button>
               </Flex>
-
-              <Flex mt={[4]} alignItems="center" justifyContent="space-between">
-                <RebassText fontSize={[1, 2]} color="#282828;">
-                  Пароль утерян?{" "}
-                </RebassText>
-                <Button
-                  variant="noOutline"
-                  onClick={() => onStateChange("forgotPassword")}
-                >
-                  Запросить новый
-                </Button>
-              </Flex>
-
+              <Box>
+                <OutlinedButton type="submit" onClick={() => login(formState)}>
+                  Войти
+                </OutlinedButton>
+              </Box>
               <BottomSheet
                 color={theme.colors.red}
                 toggle={closeSheet}

@@ -62,7 +62,7 @@ const Carousel = ({ offers }) => {
                 >
                   <Text
                     fontSize={[2, 3, 4]}
-                    fontWeight={"lighter"}
+                    fontWeight={"normal"}
                     color="primary"
                     px={[3, 4]}
                     py={[2, 3, 4]}
