@@ -174,7 +174,6 @@ export default ({ onStateChange, authState, username, setUsername }) => {
   }
 
   const resendCode = async form => {
-    console.log(form)
     const {
       values: { username },
     } = form
