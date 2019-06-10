@@ -11,17 +11,50 @@ const Field = styled(Flex).attrs({
   height: 56px;
   border-radius: 4px;
   position: relative;
-  background-color: ${theme.colors.primaryBR3};
+  background-color: ${theme.colors.primary};
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
 
   &:hover {
     background-color: ${theme.colors.primaryBR4};
     box-shadow: 0 2px 8px ${theme.colors.primaryBR2};
+
+    input::-webkit-input-placeholder {
+      color: ${theme.colors.primary};
+    }
+  
+    input::-moz-placeholder {
+      color: ${theme.colors.primary};
+    }
+  
+    input:-ms-input-placeholder {
+      color: ${theme.colors.primary};
+    }
+  
+    input:-moz-placeholder {
+      color: ${theme.colors.primary};
+    }
   }
 
   &.active {
     background-color: #ffffff;
     box-shadow: 0 2px 8px ${theme.colors.primary};
+    
+    input::-webkit-input-placeholder {
+      color: rgba(255, 255, 255, 1);
+    }
+  
+    input::-moz-placeholder {
+      color: rgba(255, 255, 255, 1);
+    }
+  
+    input:-ms-input-placeholder {
+      color: rgba(255, 255, 255, 1);
+    }
+  
+    input:-moz-placeholder {
+      color: rgba(255, 255, 255, 1);
+    }
+  
   }
 
   &.active input {
@@ -59,19 +92,19 @@ const Field = styled(Flex).attrs({
   }
 
   input::-webkit-input-placeholder {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 1);
   }
 
   input::-moz-placeholder {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 1);
   }
 
   input:-ms-input-placeholder {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 1);
   }
 
   input:-moz-placeholder {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 1);
   }
 
   input + label {
