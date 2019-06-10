@@ -1,9 +1,9 @@
-import { navigate } from "@reach/router"
 import { Auth } from "aws-amplify"
+import { navigate } from "gatsby"
 import React, { useEffect } from "react"
 import { Button, Flex as FlexRebass, Heading, Text } from "rebass"
 import styled from "styled-components"
-import { getCurrentUser, logout } from "../../utils/auth"
+import { getCurrentUser, isLoggedIn, logout } from "../../utils/auth"
 
 const Flex = styled(FlexRebass).attrs({
   py: [2],
