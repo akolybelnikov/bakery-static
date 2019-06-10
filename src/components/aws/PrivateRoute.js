@@ -1,4 +1,4 @@
-import { navigate } from "@reach/router"
+import { navigate } from "gatsby"
 import React from "react"
 import { isLoggedIn } from "../../utils/auth"
 

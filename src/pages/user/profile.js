@@ -1,4 +1,4 @@
-import { navigate } from "@reach/router"
+import { navigate } from "gatsby"
 import { Auth } from "aws-amplify"
 import React, { useEffect } from "react"
 import { Button, Flex as FlexRebass, Heading, Text } from "rebass"
