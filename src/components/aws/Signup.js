@@ -23,7 +23,6 @@ import {
 } from "../../utils/validation"
 import BottomSheet from "./BottomSheet"
 import Field from "./Field"
-import Loading from "../loading"
 
 const Icon = styled(RebassButton).attrs({
   color: theme.colors.primary,
@@ -86,7 +85,7 @@ export default ({ onStateChange, authState, username, setUsername }) => {
     code: false,
   })
   const [message, setMessage] = useState()
- // const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
 
   const openSheet = () => {
     setSheet(true)

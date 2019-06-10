@@ -41,6 +41,7 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-styled-components`,
     },
@@ -65,13 +66,13 @@ module.exports = {
       },
     },
     `gatsby-plugin-netlify`,
-    // `gatsby-plugin-offline`,
-    // {
-    //   resolve: `gatsby-plugin-offline`,
-    //   options: {
-    //     importScripts: [`sw-extension.js`],
-    //   },
-    // },
-    `gatsby-plugin-remove-serviceworker`
+    `gatsby-plugin-offline`,
+    // `gatsby-plugin-remove-serviceworker`,
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography`,
+      },
+    },
   ],
 }

@@ -16,7 +16,7 @@ import Field from "./Field"
 import styled from "styled-components"
 import BottomSheet from "./BottomSheet"
 import { mapSignInError } from "../../utils/aws"
-import { emptyLoginEmail, emptyLoginPassword } from "../../utils/validation"
+import { validateEmail, emptyLoginPassword } from "../../utils/validation"
 
 const Button = styled(RebassButton).attrs({
   color: theme.colors.primary,
@@ -134,7 +134,7 @@ export default ({ onStateChange, setUsername }) => {
                   placeholder="Введите свой адрес эл.почты"
                   onFocus={setEmailActive}
                   onBlur={setEmailInactive}
-                  validate={emptyLoginEmail}
+                  validate={validateEmail}
                 />
               </Field>
 
