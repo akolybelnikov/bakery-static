@@ -9,11 +9,12 @@ import Signup from "./user/components/Signup"
 
 const Authenticator = ({ location }) => {
   const pageTitle = "Вход пользователя"
-
+  const [username, setUsername] = useState()
   const [loading, setLoading] = React.useState(false)
   const [authState, setState] = useState("signIn")
 
   const setAuthState = newState => setState(newState)
+  const userSignedUp = username => setUsername(username)
 
   if (isLoggedIn()) {
     navigate("/user/profile")
@@ -23,9 +24,16 @@ const Authenticator = ({ location }) => {
     <Layout location={location} title={pageTitle}>
       <SEO title={pageTitle} />
       <Box>
-        {authState === "signIn" && <Login onStateChange={setAuthState} />}
+        {authState === "signIn" && (
+          <Login setUsername={userSignedUp} onStateChange={setAuthState} />
+        )}
         {(authState === "signUp" || authState === "signedUp") && (
-          <Signup onStateChange={setAuthState} authState={authState} />
+          <Signup
+            username={username}
+            setUsername={userSignedUp}
+            onStateChange={setAuthState}
+            authState={authState}
+          />
         )}
       </Box>
     </Layout>

@@ -5,7 +5,7 @@ import React, { useState } from "react"
 import {
   Box,
   Button as RebassButton,
-  Card,
+  Card as RebassCard,
   Flex,
   Heading,
   Text as RebassText,
@@ -14,6 +14,8 @@ import { setUser } from "../../../utils/auth"
 import { theme } from "../../../utils/styles"
 import Field from "./Field"
 import styled from "styled-components"
+import BottomSheet from "./BottomSheet"
+import { mapSignInError } from "../../../utils/aws"
 
 const Button = styled(RebassButton).attrs({
   color: theme.colors.primary,
@@ -38,23 +40,56 @@ const OutlinedButton = styled(RebassButton).attrs({
   letter-spacing: 1px;
 `
 
-export default ({ onStateChange }) => {
-  const [attribute, setAttribute] = useState("password")
+const Card = styled(RebassCard).attrs({
+  boxShadow: `0px 4px 20px 0px ${theme.colors.secondary}`,
+  my: [4],
+  p: [4],
+})`
+  position: relative;
+`
+
+export default ({ onStateChange, setUsername }) => {
+  // const [attribute, setAttribute] = useState("password")
   const [active, setActive] = useState({ email: false, password: false })
+  const [error, setError] = useState()
+  const [open, setSheet] = useState(false)
 
-  const setEmailActive = () => setActive({ email: true })
-  const setEmailInactive = () => setActive({ email: false })
+  const setEmailActive = () => {
+    setActive({ email: true })
+    if (open) {
+      closeSheet()
+    }
+  }
+  const setEmailInactive = () => {
+    setActive({ email: false })
+  }
 
-  const setPasswordActive = () => setActive({ password: true })
-  const setPasswordInactive = () => setActive({ password: false })
+  const setPasswordActive = () => {
+    setActive({ password: true })
+    if (open) {
+      closeSheet()
+    }
+  }
+  const setPasswordInactive = () => {
+    setActive({ password: false })
+  }
 
   const validate = value => {
     return !value || !value.length ? "Это поле обязательно" : undefined
   }
 
-  const toggleAttr = () => {
-    attribute === "password" ? setAttribute("text") : setAttribute("password")
+  const openSheet = () => {
+    setSheet(true)
   }
+
+  const closeSheet = () => {
+    setSheet(false)
+    setError(null)
+  }
+
+  // const toggleAttr = () => {
+  //   attribute === "password" ? setAttribute("text") : setAttribute("password")
+  // }
 
   const login = async form => {
     const {
@@ -72,9 +107,12 @@ export default ({ onStateChange }) => {
         navigate("/user/profile")
       } catch (err) {
         if (err.code === "UserNotConfirmedException") {
+          setUsername(email)
           onStateChange("confirmSignUp")
+        } else {
+          setError(mapSignInError(err))
+          openSheet()
         }
-        console.error(err)
       }
     }
   }
@@ -87,11 +125,7 @@ export default ({ onStateChange }) => {
       <Form>
         {({ formState }) => {
           return (
-            <Card
-              boxShadow={`0px 4px 20px 0px ${theme.colors.secondary}`}
-              my={[4]}
-              p={[4]}
-            >
+            <Card>
               <Field
                 label="Введите свой адрес эл.почты"
                 error={formState.errors.email}
@@ -161,6 +195,12 @@ export default ({ onStateChange }) => {
                   Войти
                 </OutlinedButton>
               </Box>
+              <BottomSheet
+                color={theme.colors.red}
+                toggle={closeSheet}
+                open={open}
+                children={error}
+              />
             </Card>
           )
         }}

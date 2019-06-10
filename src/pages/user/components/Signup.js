@@ -20,6 +20,7 @@ import {
 } from "../../../utils/validation"
 import Field from "./Field"
 import BottomSheet from "./BottomSheet"
+import { mapSignUpError } from "../../../utils/aws"
 
 const Card = styled(RebassCard).attrs({
   boxShadow: `0px 4px 20px 0px ${theme.colors.secondary}`,
@@ -51,11 +52,10 @@ const OutlinedButton = styled(RebassButton).attrs({
   letter-spacing: 1px;
 `
 
-export default ({ onStateChange, authState }) => {
+export default ({ onStateChange, authState, username, setUsername }) => {
   // const [attribute, setAttribute] = useState("password")
-  const [error, setError] = useState()
+  const [error, setError] = useState(false)
   const [open, setSheet] = useState(false)
-  const [username, setUsername] = useState()
   const [active, setActive] = useState({
     email: false,
     password: false,
@@ -64,33 +64,69 @@ export default ({ onStateChange, authState }) => {
     username: false,
     code: false,
   })
+  const [message, setMessage] = useState()
 
   const openSheet = () => {
     setSheet(true)
   }
 
   const closeSheet = () => {
-    console.log("clicked!")
-    setError(null)
     setSheet(false)
+    if (error) {
+      setError(false)
+    }
+    if (message) {
+      setMessage(null)
+    }
   }
 
-  const setEmailActive = () => setActive({ email: true })
+  const setEmailActive = () => {
+    if (open) {
+      closeSheet()
+    }
+    setActive({ email: true })
+  }
+
   const setEmailInactive = () => setActive({ email: false })
 
-  const setPasswordActive = () => setActive({ password: true })
+  const setPasswordActive = () => {
+    setActive({ password: true })
+    if (open) {
+      closeSheet()
+    }
+  }
   const setPasswordInactive = () => setActive({ password: false })
 
-  const setNameActive = () => setActive({ name: true })
+  const setNameActive = () => {
+    if (open) {
+      closeSheet()
+    }
+    setActive({ name: true })
+  }
   const setNameInactive = () => setActive({ name: false })
 
-  const setPhoneActive = () => setActive({ phone_number: true })
+  const setPhoneActive = () => {
+    if (open) {
+      closeSheet()
+    }
+    setActive({ phone_number: true })
+  }
   const setPhoneInactive = () => setActive({ phone_number: false })
 
-  const setUsernameActive = () => setActive({ username: true })
+  const setUsernameActive = () => {
+    if (open) {
+      closeSheet()
+    }
+    setActive({ username: true })
+  }
   const setUsernameInactive = () => setActive({ username: false })
 
-  const setCodeActive = () => setActive({ code: true })
+  const setCodeActive = () => {
+    if (open) {
+      closeSheet()
+    }
+    setActive({ code: true })
+  }
   const setCodeInactive = () => setActive({ code: false })
 
   // const toggleAttr = () => {
@@ -104,21 +140,19 @@ export default ({ onStateChange, authState }) => {
     if (email && password && name && phone_number) {
       try {
         await Auth.signUp({
-          username: email,
+          username: email.trim(),
           password,
           attributes: {
             name,
             phone_number,
           },
         })
-        setUsername(email)
+        setUsername(email.trim())
         onStateChange("signedUp")
       } catch (err) {
-        if (err.code === "UsernameExistsException") {
-          setError("error signing up...")
-          openSheet()
-        }
-        console.log("error signing up...", err)
+        setError(true)
+        setMessage(mapSignUpError(err))
+        openSheet()
       }
     }
   }
@@ -129,10 +163,32 @@ export default ({ onStateChange, authState }) => {
     } = form
     if (username && code) {
       try {
-        await Auth.confirmSignUp(username, code)
+        await Auth.confirmSignUp(username.trim(), code.trim())
         navigate("/user/profile")
       } catch (err) {
-        console.log("error confirming signing up...", err)
+        setError(true)
+        setMessage(mapSignUpError(err))
+        openSheet()
+      }
+    }
+  }
+
+  const resendCode = async form => {
+    console.log(form)
+    const {
+      values: { username },
+    } = form
+    if (username) {
+      try {
+        await Auth.resendSignUp(username.trim())
+        setMessage(
+          "Мы выслали код подтверждения на Ваш адрес. Код действителен 24 часа."
+        )
+        openSheet()
+      } catch (err) {
+        setError(true)
+        setMessage(mapSignUpError(err))
+        openSheet()
       }
     }
   }
@@ -242,10 +298,12 @@ export default ({ onStateChange, authState }) => {
                       Войти
                     </Button>
                   </Flex>
+
                   <BottomSheet
                     toggle={closeSheet}
                     open={open}
-                    children={error}
+                    children={message}
+                    color={error ? theme.colors.red : theme.colors.primary}
                   />
                 </Card>
               )
@@ -256,7 +314,7 @@ export default ({ onStateChange, authState }) => {
       {authState === "signedUp" && (
         <>
           <Heading color="primary">Подтвердить регистрацию</Heading>
-          <Form initialValues={username}>
+          <Form>
             {({ formState }) => {
               return (
                 <Card>
@@ -269,6 +327,7 @@ export default ({ onStateChange, authState }) => {
                     value={formState.values.username}
                   >
                     <Text
+                      initialValue={username}
                       validateOnBlur
                       validateOnChange
                       field="username"
@@ -301,31 +360,31 @@ export default ({ onStateChange, authState }) => {
                     />
                   </Field>
 
-                  <Flex flexWrap="wrap">
-                    <Box>
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        onClick={() => confirmSignUp(formState)}
-                      >
-                        Подтвердить
-                      </Button>
-                    </Box>
-                    <Box>
-                      <span>Код утерян? </span>
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        onClick={() => console.log(authState)}
-                      >
-                        Выслать повторно
-                      </Button>
-                    </Box>
+                  <Box>
+                    <OutlinedButton
+                      type="button"
+                      onClick={() => confirmSignUp(formState)}
+                    >
+                      Подтвердить
+                    </OutlinedButton>
+                  </Box>
+
+                  <Flex alignItems="center" justifyContent="space-between">
+                    <span>Код утерян? </span>
+                    <Button
+                      ml={[1]}
+                      type="button"
+                      onClick={() => resendCode(formState)}
+                    >
+                      Выслать повторно
+                    </Button>
                   </Flex>
+
                   <BottomSheet
                     toggle={closeSheet}
                     open={open}
-                    children={error}
+                    children={message}
+                    color={error ? theme.colors.red : theme.colors.primary}
                   />
                 </Card>
               )
