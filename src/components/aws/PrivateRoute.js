@@ -1,15 +1,16 @@
-import { navigate } from "gatsby"
-import React, { useEffect } from "react"
+import { navigate } from "@reach/router"
+import React from "react"
 import { isLoggedIn } from "../../utils/auth"
 
-const PrivateRoute = ({ component: Component, location, ...rest }) => {
-  useEffect(() => {
+class PrivateRoute extends React.Component {
+  render() {
+    const { component: Component, location, ...rest } = this.props
     if (!isLoggedIn()) {
       navigate(`/auth`)
+      return null
     }
-  }, [])
-
-  return isLoggedIn() ? <Component {...rest} /> : null
+    return <Component {...rest} />
+  }
 }
 
 export default PrivateRoute

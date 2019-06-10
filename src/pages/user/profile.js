@@ -1,6 +1,6 @@
+import { navigate } from "@reach/router"
 import { Auth } from "aws-amplify"
-import { navigate } from "gatsby"
-import React from "react"
+import React, { useEffect } from "react"
 import { Button, Flex as FlexRebass, Heading, Text } from "rebass"
 import styled from "styled-components"
 import { getCurrentUser, logout } from "../../utils/auth"
@@ -21,6 +21,12 @@ const Flex = styled(FlexRebass).attrs({
 const Profile = () => {
   const user = getCurrentUser()
 
+  useEffect(() => {
+    if (!isLoggedIn()) {
+      navigate(`/auth`)
+    }
+  }, [])
+
   return (
     <Flex>
       <Heading textAlign="center" color="primary">
@@ -31,7 +37,7 @@ const Profile = () => {
       </Text>
       <Button
         variant="primary"
-        width={[1, 1/2, 1 / 3]}
+        width={[1, 1 / 2, 1 / 3]}
         onClick={() =>
           Auth.signOut()
             .then(logout(() => navigate("/auth")))
