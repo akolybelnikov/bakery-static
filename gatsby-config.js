@@ -14,6 +14,13 @@ module.exports = {
     },
   },
   plugins: [
+    `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography`,
+      },
+    },
     {
       resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [`/user/*`] },
@@ -58,14 +65,12 @@ module.exports = {
       },
     },
     `gatsby-plugin-netlify`,
-    `gatsby-plugin-offline`,
-    // `gatsby-plugin-remove-serviceworker`,
-    `gatsby-plugin-react-helmet`,
     {
-      resolve: `gatsby-plugin-typography`,
+      resolve: `gatsby-plugin-offline`,
       options: {
-        pathToConfigModule: `src/utils/typography`,
+        importScripts: [`./sw-extension.js`],
       },
     },
+    // `gatsby-plugin-remove-serviceworker`
   ],
 }
