@@ -66,8 +66,13 @@ module.exports = {
       },
     },
     `gatsby-plugin-netlify`,
-    `gatsby-plugin-offline`,
-    // `gatsby-plugin-remove-serviceworker`,
+    // {
+    //   resolve: `gatsby-plugin-offline`,
+    //   options: {
+    //     importScripts: [`sw-extension.js`],
+    //   }
+    // },
+    `gatsby-plugin-remove-serviceworker`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
