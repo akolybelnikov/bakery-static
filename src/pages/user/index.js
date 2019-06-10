@@ -1,14 +1,24 @@
 import { Router } from "@reach/router"
+import { navigate } from "gatsby"
 import React from "react"
-import Layout from "../../components/layout"
 import PrivateRoute from "../../components/aws/PrivateRoute"
+import Layout from "../../components/layout"
+import { isLoggedIn } from "../../utils/auth"
 import Profile from "./profile"
 
 const App = ({ location }) => {
+  if (!isLoggedIn()) {
+    navigate(`/auth`)
+  }
+
   return (
     <Layout location={location} title={"Страница Пользователя"}>
       <Router>
-        <PrivateRoute path="/user/profile" component={Profile} />
+        <PrivateRoute
+          isLoggedIn={isLoggedIn()}
+          path="/user/profile"
+          component={Profile}
+        />
       </Router>
     </Layout>
   )

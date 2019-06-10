@@ -1,9 +1,9 @@
 import { Auth } from "aws-amplify"
 import { navigate } from "gatsby"
-import React, { useEffect } from "react"
+import React from "react"
 import { Button, Flex as FlexRebass, Heading, Text } from "rebass"
 import styled from "styled-components"
-import { getCurrentUser, isLoggedIn, logout } from "../../utils/auth"
+import { getCurrentUser, logout } from "../../utils/auth"
 
 const Flex = styled(FlexRebass).attrs({
   py: [2],
@@ -19,12 +19,6 @@ const Flex = styled(FlexRebass).attrs({
 `
 
 const Profile = () => {
-  // useEffect(() => {
-  //   if (!isLoggedIn()) {
-  //     navigate(`/auth`)
-  //   }
-  // }, [])
-
   const user = getCurrentUser()
 
   return (
