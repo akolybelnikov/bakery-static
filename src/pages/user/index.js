@@ -7,7 +7,9 @@ import { isLoggedIn } from "../../utils/auth"
 import Profile from "./profile"
 
 const App = ({ location }) => {
-  if (!isLoggedIn()) {
+  const isBrowser = typeof window !== `undefined`
+
+  if (isBrowser && !isLoggedIn()) {
     navigate(`/auth`)
   }
 
