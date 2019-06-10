@@ -11,7 +11,7 @@ const App = ({ location }) => {
 
   if (isBrowser && !isLoggedIn()) {
     navigate(`/auth`)
-  }
+  }  
 
   return (
     <Layout location={location} title={"Страница Пользователя"}>
