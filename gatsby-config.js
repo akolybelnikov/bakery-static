@@ -57,6 +57,7 @@ module.exports = {
         include_favicon: false,
       },
     },
+    `gatsby-plugin-netlify`,
     `gatsby-plugin-offline`,
     // `gatsby-plugin-remove-serviceworker`,
     `gatsby-plugin-react-helmet`,

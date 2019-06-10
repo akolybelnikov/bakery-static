@@ -11,7 +11,7 @@ import {
   Heading,
   Text as RebassText,
 } from "rebass"
-import styled, {keyframes} from "styled-components"
+import styled from "styled-components"
 import { mapSignUpError } from "../../utils/aws"
 import { theme } from "../../utils/styles"
 import {
@@ -23,16 +23,7 @@ import {
 } from "../../utils/validation"
 import BottomSheet from "./BottomSheet"
 import Field from "./Field"
-
-const spin = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(359deg);
-  }
-`
+import Loading from "../loading"
 
 const Icon = styled(RebassButton).attrs({
   color: theme.colors.primary,
@@ -45,7 +36,6 @@ const Icon = styled(RebassButton).attrs({
 })`
   height: 56px;
   cursor: pointer;
-  // animation: ${spin} 1.5s linear infinite;
 `
 
 const Card = styled(RebassCard).attrs({
@@ -96,6 +86,7 @@ export default ({ onStateChange, authState, username, setUsername }) => {
     code: false,
   })
   const [message, setMessage] = useState()
+ // const [loading, setLoading] = useState(false)
 
   const openSheet = () => {
     setSheet(true)
@@ -230,7 +221,12 @@ export default ({ onStateChange, authState, username, setUsername }) => {
   }
 
   return (
-    <Flex px={[2]} flexDirection="column" alignItems="center">
+    <Flex
+      style={{ position: "relative" }}
+      px={[2]}
+      flexDirection="column"
+      alignItems="center"
+    >
       {authState === "signUp" && (
         <>
           <Heading color="primary">Регистрация пользователя</Heading>
