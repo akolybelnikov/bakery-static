@@ -10,6 +10,8 @@ export const mapSignUpError = ({ code, message }) => {
           return "Недействительный адрес эл. почты."
         case "Invalid phone number format.":
           return "Неверный формат номера телефона. Используйте формат +7 *********"
+        default:
+          return "Ошибка при регистрации. Попробуйте позже."
       }
     case "InvalidPasswordException":
       return "Для пароля используйте не менее 8 знаков, включая заглавные и строчные буквы, цифры и специальные символы (!, @, #, $, %, ^, &)"

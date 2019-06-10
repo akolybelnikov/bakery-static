@@ -2,8 +2,8 @@ import React from "react"
 import { animated, Spring } from "react-spring/renderprops"
 import { Button as RebassButton, Flex as RebassFlex, Text } from "rebass"
 import styled from "styled-components"
-import Close from "../../../components/svg/close"
-import { theme } from "../../../utils/styles"
+import Close from "../svg/close"
+import { theme } from "../../utils/styles"
 
 const Flex = styled(RebassFlex).attrs({
   alignItems: "center",

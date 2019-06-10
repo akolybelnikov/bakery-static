@@ -4,13 +4,13 @@ import { Box } from "rebass"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { isLoggedIn } from "../utils/auth"
-import Login from "./user/components/Login"
-import Signup from "./user/components/Signup"
+import Login from "../components/aws/Login"
+import Signup from "../components/aws/Signup"
 
 const Authenticator = ({ location }) => {
   const pageTitle = "Вход пользователя"
   const [username, setUsername] = useState()
-  const [loading, setLoading] = React.useState(false)
+  // const [loading, setLoading] = React.useState(false)
   const [authState, setState] = useState("signIn")
 
   const setAuthState = newState => setState(newState)

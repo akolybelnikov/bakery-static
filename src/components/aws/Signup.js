@@ -10,17 +10,17 @@ import {
   Heading,
 } from "rebass"
 import styled from "styled-components"
-import { theme } from "../../../utils/styles"
+import { theme } from "../../utils/styles"
 import {
   emptyCode,
   emptyEmail,
   emptyName,
   emptyPassword,
   emptyPhone,
-} from "../../../utils/validation"
+} from "../../utils/validation"
 import Field from "./Field"
 import BottomSheet from "./BottomSheet"
-import { mapSignUpError } from "../../../utils/aws"
+import { mapSignUpError } from "../../utils/aws"
 
 const Card = styled(RebassCard).attrs({
   boxShadow: `0px 4px 20px 0px ${theme.colors.secondary}`,

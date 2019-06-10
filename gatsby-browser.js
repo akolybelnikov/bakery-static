@@ -14,7 +14,7 @@ Auth.configure({
 
 export const onServiceWorkerUpdateReady = () => {
   const answer = window.confirm(
-    `Приложение было обновлено.. ` + `Загрузить обновлённую версию?`
+    `Приложение было обновлено... Загрузить обновлённую версию?`
   )
 
   if (answer === true) {

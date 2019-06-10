@@ -74,7 +74,7 @@ export default ({ location }) => {
           Наши координаты
         </StyledLink>
       )}
-      {!location.pathname.includes("user") && (
+      {location.pathname !== "/auth" && (
         <StyledLink onClick={toggleMenu} to={`/user/profile`}>
           {!isLoggedIn() ? "Вход пользователя" : "Мой профиль"}
         </StyledLink>

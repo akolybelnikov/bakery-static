@@ -1,7 +1,7 @@
 import React from "react"
 import { Box } from "rebass"
 import styled from "styled-components"
-import { theme } from "../../../utils/styles"
+import { theme } from "../../utils/styles"
 
 const Field = styled(Box).attrs({
   width: [1],

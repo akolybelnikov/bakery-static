@@ -10,12 +10,12 @@ import {
   Heading,
   Text as RebassText,
 } from "rebass"
-import { setUser } from "../../../utils/auth"
-import { theme } from "../../../utils/styles"
+import { setUser } from "../../utils/auth"
+import { theme } from "../../utils/styles"
 import Field from "./Field"
 import styled from "styled-components"
 import BottomSheet from "./BottomSheet"
-import { mapSignInError } from "../../../utils/aws"
+import { mapSignInError } from "../../utils/aws"
 
 const Button = styled(RebassButton).attrs({
   color: theme.colors.primary,
@@ -108,7 +108,7 @@ export default ({ onStateChange, setUsername }) => {
       } catch (err) {
         if (err.code === "UserNotConfirmedException") {
           setUsername(email)
-          onStateChange("confirmSignUp")
+          onStateChange("signedUp")
         } else {
           setError(mapSignInError(err))
           openSheet()
