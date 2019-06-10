@@ -1,5 +1,6 @@
 import React from "react"
 import { theme } from "../utils/styles"
+import { Button } from "rebass"
 
 const styles = {
   root: {
@@ -37,8 +38,8 @@ export default ({ onClick, index, active }) => {
   }
 
   return (
-    <a role="button" style={styles.root} onClick={handleClick}>
+    <Button style={styles.root} onClick={handleClick}>
       <div style={styleDot} />
-    </a>
+    </Button>
   )
 }

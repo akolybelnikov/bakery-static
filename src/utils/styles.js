@@ -4,6 +4,7 @@ const secondaryWashed = "rgba(244, 229, 216, 0.65)"
 const primaryBR2 = "#9f7182"
 const primaryBR3 = "#BF9FAA"
 const primaryBR4 = "#DECED4"
+const red = "#ec392f"
 
 const theme = {
   colors: {
@@ -13,51 +14,60 @@ const theme = {
     primaryBR2,
     primaryBR3,
     primaryBR4,
+    red,
   },
   buttons: {
     primary: {
       color: primary,
-      backgroundColor: secondaryWashed,
-      boxShadow: 'inset 0 2px 16px',
+      backgroundColor: "transparent",
+      bcursor: "pointer",
+      border: `1px solid ${primary}`,
     },
     clear: {
       color: primary,
       backgroundColor: "transparent",
-      boxShadow: '0 0 0 transparent',
-      outline: 'none',
-      width: '100%',
+      boxShadow: "0 0 0 transparent",
+      outline: "none",
+      width: "100%",
       fontSize: 20,
       lineHeight: 1.5,
-      fontWeight: 400,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-around',
-      cursor: 'pointer'
-
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-around",
+      cursor: "pointer",
+    },
+    noOutline: {
+      color: primary,
+      backgroundColor: "transparent",
+      boxShadow: "0 0 0 transparent",
+      outline: "none",
+      fontSize: [2, 3],
+      lineHeight: 1.5,
+      cursor: "pointer",
     },
     outline: {
       color: primary,
       backgroundColor: "transparent",
       boxShadow: "inset 0 0 0 1px",
-      width: 'auto',
-      minWidth: '125px',
-      fontWeight: 300,
+      width: "auto",
+      minWidth: "125px",
+      fontWeight: "normal",
       marginBottom: 8,
       fontSize: 16,
       "&:hover": {
         boxShadow: "inset 0 0 0 2px",
-        fontWeight: 500,
+        fontWeight: "bolder",
       },
       borderRadius: "4px",
       "&:focus": {
         outline: "none",
         boxShadow: "inset 0 0 0 2px",
-        fontWeight: 500,
+        fontWeight: "bolder",
       },
       "&:active": {
         outline: "none",
         boxShadow: "inset 0 0 0 2px",
-        fontWeight: 500,
+        fontWeight: "bolder",
       },
       transition: "all 200ms ease-in",
     },

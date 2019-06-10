@@ -13,11 +13,11 @@ const styles = {
     color: theme.colors.primary,
     borderColor: "transparent",
     transition: "all 200ms ease-in",
-    fontWeight: (isFocused || isSelected) ? 500 : 300,
+    fontWeight: (isFocused || isSelected) ? 'bolder' : 'normal',
     boxShadow: (isFocused || isSelected) ? "inset 0 0 0 2px" :  "inset 0 0 0 1px",
     "&:hover": {
       boxShadow: "inset 0 0 0 2px",
-      fontWeight: 500,
+      fontWeight: 'bolder',
     },
     marginBottom: 8,
     fontSize: 16,
@@ -58,7 +58,7 @@ const styles = {
 }
 
 export default ({ location }) => {
-  const path = location.pathname.replace("/", "")
+  const path = location && location.pathname.replace("/", "")
   const { allContentfulCategory } = useStaticQuery(
     graphql`
       query {

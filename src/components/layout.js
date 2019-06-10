@@ -12,13 +12,12 @@ const Mobile = props => <Responsive {...props} maxWidth={899} />
 
 export default ({ location, title, children }) => {
   // const rootPath = `${__PATH_PREFIX__}/`
-  // const path = location.pathname
 
   return (
     <ThemeProvider theme={theme}>
       <Box id="outer-container">
         <Mobile>
-          <Menu />
+          <Menu location={location} />
         </Mobile>
         <Box
           mx="auto"

@@ -31,7 +31,7 @@ export default () => {
     <footer>
       <Flex flexWrap="wrap" mx={[-2, 2]} my={4}>
         <Flex flexDirection="column" p={2} width={[1, 3.33 / 10]}>
-          <Text color="primary" fontWeight="bolder">
+          <Text fontSize={[2,2,3]} color="primary" fontWeight="normal">
             Наш адрес эл. почты:
           </Text>
           <PhoneButton
@@ -41,14 +41,14 @@ export default () => {
           >
             confert76@gmail.ru
           </PhoneButton>
-          <Text color="primary" fontWeight="bolder">
+          <Text mb={[1,2]} fontSize={[2,2,3]} color="primary" fontWeight="normal">
             Наш адрес:
           </Text>
-          <span>109377, г.Москва</span>
-          <span>Рязанский проспект, 58/1</span>
+          <Text fontSize={[2,2,3]}>109377, г.Москва</Text>
+          <Text fontSize={[2,2,3]}>Рязанский проспект, 58/1</Text>
         </Flex>
         <Flex flexDirection="column" p={2} width={[1, 3.33 / 10]}>
-          <Text color="primary" fontWeight="bolder">
+          <Text fontSize={[2,2,3]} color="primary" fontWeight="normal">
             Наши номера телефона:
           </Text>
           <PhoneButton
@@ -67,11 +67,11 @@ export default () => {
           </PhoneButton>
         </Flex>
         <Flex flexDirection="column" p={2} width={[1, 3.33 / 10]}>
-          <Text color="primary" fontWeight="bolder">
+          <Text fontSize={[2,2,3]} color="primary" fontWeight="normal" mb={[1,2]}>
             Наши часы работы:
           </Text>
-          <span>с понедельника по субботу: с 8.00 до 20.00</span>
-          <span>в воскресенье: с 9.00 до 18.00</span>
+          <Text mb={[1,2]} fontSize={[2,2,3]}>с понедельника по субботу: с 8.00 до 20.00</Text>
+          <Text fontSize={[2,2,3]}>в воскресенье: с 9.00 до 18.00</Text>
         </Flex>
       </Flex>
       <Flex justifyContent={[`flex-start`, `space-around`]} alignItems="center">

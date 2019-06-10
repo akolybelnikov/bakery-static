@@ -134,16 +134,28 @@ export default ({ products, location }) => {
                 <hr
                   style={{ background: theme.colors.primary, margin: `20px` }}
                 />
-                <Flex py={2} justifyContent="center" alignItems="center">
+                <Flex py={2} flexWrap={['wrap']} justifyContent="space-around" alignItems="center">
                   <PhoneButton
                     href="tel:+79269823572"
                     target="_self"
                     name="phone number"
                   >
-                    +7 (0) 926 982 35 72
+                    +7 (926) 982 35 72
+                  </PhoneButton>
+                  <PhoneButton
+                    href="tel:+79269823572"
+                    target="_self"
+                    name="phone number"
+                  >
+                    +7 (926) 629 87 26
                   </PhoneButton>
                 </Flex>
-                <Flex px={1} py={3} flexDirection="column" alignItems="space-around">
+                <Flex
+                  px={1}
+                  py={3}
+                  flexDirection="column"
+                  alignItems="space-around"
+                >
                   <Box px={2} pb={2}>
                     <Social
                       location={location}

@@ -45,7 +45,7 @@ export default ({ news }) => {
               <Accordion min={135}>
                 <Flex alignItems="center">
                   <Text
-                    fontSize={[3]}
+                    fontSize={[2, 3]}
                     color="primary"
                     px={3}
                     py={[3]}
