@@ -19,10 +19,6 @@ const Flex = styled(FlexRebass).attrs({
 `
 
 const Profile = () => {
-  const isBrowser = typeof window !== `undefined`
-  if (isBrowser && !isLoggedIn()) {
-    navigate(`/auth`)
-  }
   const user = getCurrentUser()
 
   return (
