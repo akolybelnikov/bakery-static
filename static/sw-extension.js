@@ -1,10 +1,15 @@
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.getRegistrations().then(registrations => {
-    if (registrations.length) {
-      for (let registration of registrations) {
-        console.log(registration)
-        registration.unregister()
-      }
-    }
-  })
+self.addEventListener('activate', () => activateSW());
+
+async function activateSW() {
+
+    log('Service Worker activated');
+
+    const cacheKeys = await caches.keys();
+
+    cacheKeys.forEach(cacheKey => {
+        if (cacheKey !== getCacheName() ) {
+            caches.delete(cacheKey);
+        }
+    });
 }
+
