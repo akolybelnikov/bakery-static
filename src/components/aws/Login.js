@@ -2,6 +2,7 @@ import { Auth } from "aws-amplify"
 import { navigate } from "gatsby"
 import { Form, Text } from "informed"
 import React, { useState } from "react"
+import { FaEye } from "react-icons/fa"
 import {
   Box,
   Button as RebassButton,
@@ -15,7 +16,7 @@ import { theme } from "../../utils/styles"
 import Field from "./Field"
 import styled from "styled-components"
 import BottomSheet from "./BottomSheet"
-import { mapSignInError } from "../../utils/aws"
+import { mapError } from "../../utils/aws"
 import { validateEmail, emptyLoginPassword } from "../../utils/validation"
 
 const Button = styled(RebassButton).attrs({
@@ -53,8 +54,21 @@ const Card = styled(RebassCard).attrs({
   }
 `
 
+const Icon = styled(RebassButton).attrs({
+  color: theme.colors.primary,
+  backgroundColor: "transparent",
+  boxShadow: "0 0 0 transparent",
+  outline: "none",
+  fontSize: [4],
+  p: [0],
+  px: [1],
+})`
+  height: 56px;
+  cursor: pointer;
+`
+
 export default ({ onStateChange, setUsername }) => {
-  // const [attribute, setAttribute] = useState("password")
+  const [attribute, setAttribute] = useState("password")
   const [active, setActive] = useState({ email: false, password: false })
   const [error, setError] = useState()
   const [open, setSheet] = useState(false)
@@ -88,9 +102,9 @@ export default ({ onStateChange, setUsername }) => {
     setError(null)
   }
 
-  // const toggleAttr = () => {
-  //   attribute === "password" ? setAttribute("text") : setAttribute("password")
-  // }
+  const toggleAttr = () => {
+    attribute === "password" ? setAttribute("text") : setAttribute("password")
+  }
 
   const login = async form => {
     const {
@@ -111,7 +125,7 @@ export default ({ onStateChange, setUsername }) => {
           setUsername(email)
           onStateChange("signedUp")
         } else {
-          setError(mapSignInError(err))
+          setError(mapError(err))
           openSheet()
         }
       }
@@ -147,26 +161,31 @@ export default ({ onStateChange, setUsername }) => {
                 />
               </Field>
 
-              <Field
-                label="Введите свой пароль"
-                error={formState.errors.password}
-                active={active.password}
-                id="password"
-                locked={false}
-                value={formState.values.password}
-              >
-                <Text
-                  validateOnBlur
-                  validateOnChange
-                  type="password"
-                  field="password"
+              <Flex>
+                <Field
+                  label="Введите свой пароль"
+                  error={formState.errors.password}
+                  active={active.password}
                   id="password"
-                  placeholder="Введите свой пароль"
-                  onFocus={setPasswordActive}
-                  onBlur={setPasswordInactive}
-                  validate={emptyLoginPassword}
-                />
-              </Field>
+                  locked={false}
+                  value={formState.values.password}
+                >
+                  <Text
+                    validateOnBlur
+                    validateOnChange
+                    type={attribute}
+                    field="password"
+                    id="password"
+                    placeholder="Введите свой пароль"
+                    onFocus={setPasswordActive}
+                    onBlur={setPasswordInactive}
+                    validate={emptyLoginPassword}
+                  />
+                </Field>
+                <Icon onClick={toggleAttr}>
+                  <FaEye />
+                </Icon>
+              </Flex>
 
               <Box>
                 <OutlinedButton type="submit" onClick={() => login(formState)}>
@@ -186,17 +205,17 @@ export default ({ onStateChange, setUsername }) => {
                 </Button>
               </Flex>
 
-              {/* <Flex mt={[4]} alignItems="center" justifyContent="space-between">
+              <Flex mt={[4]} alignItems="center" justifyContent="space-between">
                 <RebassText fontSize={[1, 2]} color="#282828;">
                   Пароль утерян?{" "}
                 </RebassText>
                 <Button
                   variant="noOutline"
-                  onClick={() => onStateChange("forgotPassword")}
+                  onClick={() => onStateChange("resetPassword")}
                 >
                   Запросить новый
                 </Button>
-              </Flex> */}
+              </Flex>
 
               <BottomSheet
                 color={theme.colors.red}

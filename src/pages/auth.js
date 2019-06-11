@@ -6,7 +6,7 @@ import SEO from "../components/seo"
 import { isLoggedIn } from "../utils/auth"
 import Login from "../components/aws/Login"
 import Signup from "../components/aws/Signup"
-import ForgotPassword from '../components/aws/ForgotPassword'
+import ResetPassword from "../components/aws/ResetPassword"
 
 const Authenticator = ({ location }) => {
   const pageTitle = "Вход пользователя"
@@ -36,8 +36,12 @@ const Authenticator = ({ location }) => {
             authState={authState}
           />
         )}
-        {authState === "forgotPassword" && (
-          <ForgotPassword setUsername={userSignedUp} onStateChange={setAuthState} />
+        {(authState === "resetPassword" || authState === "codeSent") && (
+          <ResetPassword
+            setUsername={userSignedUp}
+            onStateChange={setAuthState}
+            authState={authState}
+          />
         )}
       </Box>
     </Layout>

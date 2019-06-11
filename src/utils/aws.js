@@ -1,6 +1,8 @@
-export const mapSignUpError = ({ code, message }) => {
+export const mapError = ({ code, message }) => {
   switch (code) {
     case /incorrect.*username.*password/i.test(message):
+      return "Неверный адрес эл. почты или пароль"
+    case "NotAuthorizedException":
       return "Неверный адрес эл. почты или пароль"
     case "UsernameExistsException":
       return "Пользователь с таким адресом эл. почты уже существует"
@@ -10,25 +12,18 @@ export const mapSignUpError = ({ code, message }) => {
           return "Недействительный адрес эл. почты."
         case "Invalid phone number format.":
           return "Неверный формат номера телефона. Используйте формат +7 *********"
+        case "Cannot reset password for the user as there is no registered/verified email or phone_number":
+          return "Вы не подтвердили свой адрес эл. почты при регистрации. Смена пароля невозможна."
         default:
-          return "Ошибка при регистрации. Попробуйте позже."
+          return "Произошла ошибка. Нам очень жаль... Попробуйте позже."
       }
     case "InvalidPasswordException":
       return "Для пароля используйте не менее 8 знаков, включая заглавные и строчные буквы, цифры и специальные символы (!, @, #, $, %, ^, &)"
     case "UserNotFoundException":
       return "Пользователя с таким адресом эл. почты не существует"
+    case "CodeMismatchException":
+      return "Указан неверный код подтверждения."
     default:
-      return "Ошибка при регистрации. Попробуйте позже."
-  }
-}
-
-export const mapSignInError = ({ code }) => {
-  switch (code) {
-    case "NotAuthorizedException":
-      return "Неверный адрес эл. почты или пароль"
-    case "UserNotFoundException":
-      return "Пользователя с таким адресом эл. почты не существует"
-    default:
-      return "Ошибка при входе на сайт. Попробуйте позже."
+      return "Произошла ошибка. Нам очень жаль... Попробуйте позже."
   }
 }

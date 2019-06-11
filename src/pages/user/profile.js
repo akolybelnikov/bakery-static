@@ -41,7 +41,7 @@ const Profile = () => {
                 .catch(err => console.log("eror:", err))
             }
           >
-            Выйдти
+            Выйти
           </Button>
         </Flex>
       ) : null}
