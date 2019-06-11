@@ -73,12 +73,7 @@ module.exports = {
     //   }
     // },
     // `gatsby-plugin-remove-serviceworker`,
-    {
-      resolve: `gatsby-plugin-offline`,
-      options: {
-        importScripts: [`sw-extension.js`],
-      },
-    },
+    `gatsby-plugin-offline`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
