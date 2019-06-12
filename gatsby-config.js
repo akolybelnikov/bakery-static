@@ -90,5 +90,14 @@ module.exports = {
         pathToConfigModule: `src/utils/typography`,
       },
     },
+    "gatsby-plugin-sitemap",
+    {
+      resolve: "gatsby-plugin-robots-txt",
+      options: {
+        host: `${siteMetadata.siteUrl}`,
+        sitemap: `${siteMetadata.siteUrl}/sitemap.xml`,
+        policy: [{ userAgent: "*", disallow: "" }],
+      },
+    },
   ],
 }
