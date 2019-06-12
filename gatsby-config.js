@@ -65,7 +65,17 @@ module.exports = {
         include_favicon: false,
       },
     },
-    `gatsby-plugin-netlify`,
+    {
+      resolve: `gatsby-plugin-netlify`,
+      options: {
+        headers: {
+          "/service-worker.js": [
+            "Cache-Control: no-cache",
+            "Cache-Control: no-store, max-age=0",
+          ],
+        },
+      },
+    },
     // {
     //   resolve: `gatsby-plugin-offline`,
     //   options: {

@@ -5,6 +5,7 @@ import { Carousel } from "../components/carousel"
 import Categories from "../components/categories"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import Helmet from "react-helmet"
 
 export default ({ data, location }) => {
   const siteTitle = data.site.siteMetadata.title
@@ -13,6 +14,17 @@ export default ({ data, location }) => {
 
   return (
     <Layout location={location} title={siteTitle}>
+      <Helmet>
+        <script type="text/javascript">
+          {`
+            if('serviceWorker' in navigator) {
+              window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js', {scope: '/'}).then(function() { console.log("Service Worker Registered"); });
+              });
+            }
+          `}
+        </script>
+      </Helmet>
       <SEO title="Главная страница" />
       <Carousel offers={offers} />
       <Flex justifyContent="center" mb={4} mt={1} pt={1} pb={3}>

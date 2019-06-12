@@ -12,12 +12,12 @@ Auth.configure({
   mandatorySignIn: false,
 })
 
-export const onServiceWorkerUpdateReady = () => {
-  const answer = window.confirm(
-    `Приложение было обновлено... Загрузить обновлённую версию?`
-  )
+// export const onServiceWorkerUpdateReady = () => {
+//   const answer = window.confirm(
+//     `Приложение было обновлено... Загрузить обновлённую версию?`
+//   )
 
-  if (answer === true) {
-    window.location.reload()
-  }
-}
+//   if (answer === true) {
+//     window.location.reload()
+//   }
+// }
