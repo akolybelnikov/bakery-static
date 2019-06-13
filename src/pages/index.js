@@ -14,7 +14,7 @@ export default ({ data, location }) => {
 
   return (
     <Layout location={location} title={siteTitle}>
-      <Helmet>
+      {/* <Helmet>
         <script type="text/javascript">
           {`
             if('serviceWorker' in navigator) {
@@ -24,7 +24,7 @@ export default ({ data, location }) => {
             }
           `}
         </script>
-      </Helmet>
+      </Helmet> */}
       <SEO title="Главная страница" />
       <Carousel offers={offers} />
       <Flex justifyContent="center" mb={4} mt={1} pt={1} pb={3}>
