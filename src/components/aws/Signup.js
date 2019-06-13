@@ -21,6 +21,7 @@ import {
   validatePassword,
   validatePhoneNumber,
 } from "../../utils/validation"
+import LoadingModal from "../loadingmodal"
 import BottomSheet from "./BottomSheet"
 import Field from "./Field"
 
@@ -85,7 +86,10 @@ export default ({ onStateChange, authState, username, setUsername }) => {
     code: false,
   })
   const [message, setMessage] = useState()
-  // const [loading, setLoading] = useState(false)
+  const [modalOpen, setModal] = useState(false)
+
+  const showLoading = () => setModal(true)
+  const hideLoading = () => setModal(false)
 
   const openSheet = () => {
     setSheet(true)
@@ -165,6 +169,7 @@ export default ({ onStateChange, authState, username, setUsername }) => {
       !errors.name &&
       !errors.phone_number
     ) {
+      showLoading()
       try {
         await Auth.signUp({
           username: email.trim(),
@@ -176,10 +181,12 @@ export default ({ onStateChange, authState, username, setUsername }) => {
         })
         setUsername(email.trim())
         onStateChange("signedUp")
+        hideLoading()
       } catch (err) {
         setError(true)
         setMessage(mapError(err))
         openSheet()
+        hideLoading()
       }
     }
   }
@@ -189,13 +196,16 @@ export default ({ onStateChange, authState, username, setUsername }) => {
       values: { username, code },
     } = form
     if (username && code) {
+      showLoading()
       try {
         await Auth.confirmSignUp(username.trim(), code.trim())
         navigate("/user/profile")
+        hideLoading()
       } catch (err) {
         setError(true)
         setMessage(mapError(err))
         openSheet()
+        hideLoading()
       }
     }
   }
@@ -205,16 +215,19 @@ export default ({ onStateChange, authState, username, setUsername }) => {
       values: { username },
     } = form
     if (username) {
+      showLoading()
       try {
         await Auth.resendSignUp(username.trim())
         setMessage(
           "Мы выслали код подтверждения на Ваш адрес. Код действителен 24 часа."
         )
         openSheet()
+        hideLoading()
       } catch (err) {
         setError(true)
         setMessage(mapError(err))
         openSheet()
+        hideLoading()
       }
     }
   }
@@ -226,6 +239,7 @@ export default ({ onStateChange, authState, username, setUsername }) => {
       flexDirection="column"
       alignItems="center"
     >
+      <LoadingModal open={modalOpen} hideLoading={hideLoading} />
       {authState === "signUp" && (
         <>
           <Heading color="primary">Регистрация пользователя</Heading>

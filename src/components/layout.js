@@ -10,7 +10,7 @@ import Menu from "./menu"
 
 const Mobile = props => <Responsive {...props} maxWidth={899} />
 
-export default ({ location, title, children }) => {
+export default ({ location, children }) => {
   // const rootPath = `${__PATH_PREFIX__}/`
 
   return (

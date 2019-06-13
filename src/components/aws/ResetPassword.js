@@ -17,6 +17,7 @@ import {
   validateEmail,
   validatePassword,
 } from "../../utils/validation"
+import LoadingModal from "../loadingmodal"
 import BottomSheet from "./BottomSheet"
 import Field from "./Field"
 
@@ -71,7 +72,10 @@ export default ({ onStateChange, authState, username, setUsername }) => {
   })
   const [message, setMessage] = useState()
   const [confirmed, setConfirmed] = useState(false)
-  // const [loading, setLoading] = useState(false)
+  const [modalOpen, setModal] = useState(false)
+
+  const showLoading = () => setModal(true)
+  const hideLoading = () => setModal(false)
 
   const openSheet = () => {
     setSheet(true)
@@ -145,14 +149,17 @@ export default ({ onStateChange, authState, username, setUsername }) => {
       errors,
     } = form
     if (!errors.email) {
+      showLoading()
       try {
         await Auth.forgotPassword(email.trim())
         setUsername(email.trim())
         onStateChange("codeSent")
+        hideLoading()
       } catch (err) {
         setError(true)
         setMessage(mapError(err))
         openSheet()
+        hideLoading()
       }
     }
   }
@@ -163,6 +170,7 @@ export default ({ onStateChange, authState, username, setUsername }) => {
       errors,
     } = form
     if (!errors.username && !errors.password && !errors.code) {
+      showLoading()
       try {
         await Auth.forgotPasswordSubmit(
           username.trim(),
@@ -172,10 +180,12 @@ export default ({ onStateChange, authState, username, setUsername }) => {
         setConfirmed(true)
         setMessage("Пароль успешно сохранён. Вы можете войти на сайт.")
         openSheet()
+        hideLoading()
       } catch (err) {
         setError(true)
         setMessage(mapError(err))
         openSheet()
+        hideLoading()
       }
     }
   }
@@ -187,6 +197,7 @@ export default ({ onStateChange, authState, username, setUsername }) => {
       flexDirection="column"
       alignItems="center"
     >
+      <LoadingModal open={modalOpen} hideLoading={hideLoading} />
       {authState === "resetPassword" && (
         <>
           <Heading color="primary">Сменить пароль</Heading>
@@ -195,7 +206,7 @@ export default ({ onStateChange, authState, username, setUsername }) => {
               return (
                 <Card>
                   <Field
-                    label="Aдрес эл.почты"
+                    label="Адрес эл. почты пользователя"
                     error={formState.errors.email}
                     active={active.email}
                     id="email"
@@ -207,7 +218,7 @@ export default ({ onStateChange, authState, username, setUsername }) => {
                       validateOnChange
                       field="email"
                       id="email"
-                      placeholder="Aдрес эл.почты"
+                      placeholder="Адрес эл. почты пользователя"
                       onFocus={setEmailActive}
                       onBlur={setEmailInactive}
                       validate={validateEmail}
@@ -216,7 +227,7 @@ export default ({ onStateChange, authState, username, setUsername }) => {
 
                   <Box>
                     <OutlinedButton onClick={() => sendcode(formState)}>
-                      Отправить
+                      Запросить
                     </OutlinedButton>
                   </Box>
 
@@ -339,7 +350,7 @@ export default ({ onStateChange, authState, username, setUsername }) => {
                       type="button"
                       onClick={() => confirmchange(formState)}
                     >
-                      Подтвердить
+                      Подтвердить смену
                     </OutlinedButton>
                   </Box>
 

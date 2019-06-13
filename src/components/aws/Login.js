@@ -11,13 +11,14 @@ import {
   Heading,
   Text as RebassText,
 } from "rebass"
-import { setUser } from "../../utils/auth"
-import { theme } from "../../utils/styles"
-import Field from "./Field"
 import styled from "styled-components"
-import BottomSheet from "./BottomSheet"
+import { setUser } from "../../utils/auth"
 import { mapError } from "../../utils/aws"
-import { validateEmail, emptyLoginPassword } from "../../utils/validation"
+import { theme } from "../../utils/styles"
+import { emptyLoginPassword, validateEmail } from "../../utils/validation"
+import LoadingModal from "../loadingmodal"
+import BottomSheet from "./BottomSheet"
+import Field from "./Field"
 
 const Button = styled(RebassButton).attrs({
   color: theme.colors.primary,
@@ -72,6 +73,10 @@ export default ({ onStateChange, setUsername }) => {
   const [active, setActive] = useState({ email: false, password: false })
   const [error, setError] = useState()
   const [open, setSheet] = useState(false)
+  const [modalOpen, setModal] = useState(false)
+
+  const showLoading = () => setModal(true)
+  const hideLoading = () => setModal(false)
 
   const setEmailActive = () => {
     setActive({ email: true })
@@ -111,6 +116,7 @@ export default ({ onStateChange, setUsername }) => {
       values: { email, password },
     } = form
     if (email && password) {
+      showLoading()
       try {
         await Auth.signIn(email.trim(), password.trim())
         const user = await Auth.currentAuthenticatedUser()
@@ -120,6 +126,7 @@ export default ({ onStateChange, setUsername }) => {
         }
         setUser(userInfo)
         navigate("/user/profile")
+        hideLoading()
       } catch (err) {
         if (err.code === "UserNotConfirmedException") {
           setUsername(email)
@@ -128,12 +135,14 @@ export default ({ onStateChange, setUsername }) => {
           setError(mapError(err))
           openSheet()
         }
+        hideLoading()
       }
     }
   }
 
   return (
     <Flex px={[2]} flexDirection="column" alignItems="center">
+      <LoadingModal open={modalOpen} hideLoading={hideLoading} />
       <Heading textAlign="center" color="primary">
         Вход пользователя
       </Heading>

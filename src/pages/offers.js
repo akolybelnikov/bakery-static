@@ -34,7 +34,7 @@ export default ({
   },
   location,
 }) => {
-  const pageTitle = `Специальные предложения`
+   const pageTitle = `Специальные предложения`
 
   return (
     <Layout location={location} title={pageTitle}>
@@ -43,40 +43,38 @@ export default ({
         {pageTitle}
       </Heading>
       <Flex flexWrap={"wrap"}>
-        {edges &&
-          edges.map(
-            (
-              {
-                node: {
-                  content: { content },
-                  image: { fluid },
-                  createdAt,
-                },
+        {edges && edges.map(
+          (
+            {
+              node: {
+                content: { content },
+                image: { fluid },
               },
-              idx
-            ) => (
-              <Card
-                width={[1, 3 / 10]}
-                mb={[4]}
-                mx={[0, "auto"]}
-                key={idx}
-                boxShadow={`0 2px 8px ${theme.colors.primary}`}
-                borderRadius={8}
+            },
+            idx
+          ) => (
+            <Card
+              width={[1, 3 / 10]}
+              mb={[4]}
+              mx={[0, "auto"]}
+              key={idx}
+              boxShadow={`0 2px 8px ${theme.colors.primary}`}
+              borderRadius={8}
+            >
+              <Image fluid={fluid} />
+              <CardText
+                px={[3]}
+                py={[2]}
+                my={[2]}
+                fontSize={[2, 3]}
+                textAlign="center"
+                color="primary"
               >
-                <Image fluid={fluid} />
-                <CardText
-                  px={[3]}
-                  py={[2]}
-                  my={[2]}
-                  fontSize={[2, 3]}
-                  textAlign="center"
-                  color="primary"
-                >
-                  {content}
-                </CardText>
-              </Card>
-            )
-          )}
+                {content}
+              </CardText>
+            </Card>
+          )
+        )}
       </Flex>
     </Layout>
   )
