@@ -97,7 +97,7 @@ export default () => {
         <Box>
           <StyledLink
             aria-label="Instagram link"
-            href="https://www.instagram.com/confertru.ru"
+            href="https://www.instagram.com/vsebulochkitut"
             target="_blank"
             rel="noopener noreferrer"
           >
