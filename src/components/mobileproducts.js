@@ -50,7 +50,7 @@ export default ({ products, location }) => {
               internal: { content },
             },
             filling,
-            image: { fluid },
+            image,
             ingridients,
             price,
             productName,
@@ -67,10 +67,10 @@ export default ({ products, location }) => {
               borderRadius={12}
               boxShadow={`0 2px 8px ${theme.colors.primaryBR4}`}
             >
-              <Image
-                fluid={fluid}
+              {image && <Image
+                fluid={image.fluid}
                 objectFit={name === "order" ? "cover" : "contain"}
-              />
+              />}
               <StyledText
                 fontSize={2}
                 color="primary"
@@ -163,7 +163,7 @@ export default ({ products, location }) => {
                       quote={`${productName}: ${content}`}
                       title={productName}
                       description={`${content}`}
-                      image={`https:${fluid.src}`}
+                      image={`https:${image && image.fluid.src}`}
                     />
                   </Box>
                 </Flex>

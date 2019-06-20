@@ -53,35 +53,39 @@ export default ({ products, location }) => {
   return (
     <Fragment>
       <Container mb={4} flexWrap={"wrap"}>
-        {products.map(
-          ({ category: { name }, image: { fluid }, productName }, index) => {
-            return (
-              <StyledCard
-                key={index}
-                width={3 / 10}
-                mx={"auto"}
-                my={3}
-                borderRadius={12}
-                boxShadow={`0 2px 8px ${theme.colors.primaryBR4}`}
-              >
+        {products.map(({ category: { name }, image, productName }, index) => {
+          return (
+            <StyledCard
+              key={index}
+              width={3 / 10}
+              mx={"auto"}
+              my={3}
+              borderRadius={12}
+              boxShadow={`0 2px 8px ${theme.colors.primaryBR4}`}
+            >
+              {image && (
                 <Image
-                  fluid={fluid}
+                  fluid={image.fluid}
                   objectFit={name === "order" ? "cover" : "contain"}
                 />
-                <Flex
-                  style={{ minHeight: 90 }}
-                  alignItems={"center"}
-                  justifyContent={"center"}
+              )}
+              <Flex
+                style={{ minHeight: 90 }}
+                alignItems={"center"}
+                justifyContent={"center"}
+              >
+                <Button
+                  onClick={() => handleClick(index)}
+                  fontWeight={"lighter"}
+                  variant="clear"
                 >
-                  <Button onClick={() => handleClick(index)} fontWeight={'lighter'} variant="clear">
-                    {productName}
-                    <Open width={24} height={24} fill={theme.colors.primary} />
-                  </Button>
-                </Flex>
-              </StyledCard>
-            )
-          }
-        )}
+                  {productName}
+                  <Open width={24} height={24} fill={theme.colors.primary} />
+                </Button>
+              </Flex>
+            </StyledCard>
+          )
+        })}
       </Container>
       {products[current] && (
         <Modal

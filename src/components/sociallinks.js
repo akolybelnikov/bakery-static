@@ -5,8 +5,6 @@ import {
   FacebookShareButton,
   OKIcon,
   OKShareButton,
-  // TelegramIcon,
-  // TelegramShareButton,
   VKIcon,
   VKShareButton,
   WhatsappIcon,
@@ -38,9 +36,6 @@ export default ({ location, iconSize, quote, title, description, image }) => {
       <FacebookShareButton url={url} quote={quote}>
         <FacebookIcon round size={iconSize} />
       </FacebookShareButton>
-      {/* <TelegramShareButton url={url} tite={title}>
-        <TelegramIcon round size={iconSize} />
-      </TelegramShareButton> */}
       <VKShareButton
         url={url}
         tite={title}

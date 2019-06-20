@@ -27,13 +27,25 @@ const PhoneButton = styled.a`
   font-size: 16px;
 `
 
-export default ({ product, location }) => {
+export default ({
+  product: {
+    image,
+    productName,
+    category,
+    description,
+    ingridients,
+    weight,
+    price,
+    filling,
+  },
+  location,
+}) => {
   return (
     <Card bg="secondary" pb={4} borderRadius={12}>
-      <Image
-        fluid={product.image.fluid}
-        objectFit={product.category.name === "order" ? "cover" : "contain"}
-      />
+      {image && <Image
+        fluid={image.fluid}
+        objectFit={category.name === "order" ? "cover" : "contain"}
+      />}
       <Heading
         fontWeight={"normal"}
         fontSize={4}
@@ -42,9 +54,9 @@ export default ({ product, location }) => {
         textAlign="center"
         color="primary"
       >
-        {product.productName}
+        {productName}
       </Heading>
-      {product.description && (
+      {description && (
         <Text
           fontWeight={"lighter"}
           color="primary"
@@ -53,10 +65,10 @@ export default ({ product, location }) => {
           py={2}
           fontSize={2}
         >
-          {product.description.internal.content}
+          {description.internal.content}
         </Text>
       )}
-      {product.ingridients && (
+      {ingridients && (
         <Text
           fontWeight={"normal"}
           color="primary"
@@ -65,7 +77,7 @@ export default ({ product, location }) => {
           py={1}
           fontSize={2}
         >
-          {parseIngridients(product.ingridients.internal.content)}
+          {parseIngridients(ingridients.internal.content)}
         </Text>
       )}
       <Text
@@ -77,42 +89,52 @@ export default ({ product, location }) => {
         fontSize={3}
         style={{ display: "flex", justifyContent: "space-around" }}
       >
-        {product.weight && (
+        {weight && (
           <span>
-            <b>Вес:</b> {product.weight}
+            <b>Вес:</b> {weight}
           </span>
         )}
-        {product.price && (
+        {price && (
           <span>
-            <b>Цена:</b> {product.price} руб.
+            <b>Цена:</b> {price} руб.
           </span>
         )}
       </Text>
-      {product.filling && product.filling.length && (
+      {filling && filling.length && (
         <Text color="primary" pl={4} pr={3} py={2} fontSize={2}>
           <b>
             <span>Начинки:&nbsp;&nbsp;</span>
           </b>
-          {product.filling.map((item, idx) => (
+          {filling.map((item, idx) => (
             <span key={idx}>
               {item.name}
-              {idx < product.filling.length - 1 && <span>,&nbsp;</span>}
+              {idx < filling.length - 1 && <span>,&nbsp;</span>}
             </span>
           ))}
         </Text>
       )}
       <hr style={{ background: theme.colors.primary, margin: `20px` }} />
-      {location.pathname === '/order' && <Flex p={2} justifyContent="space-around" alignItems="center">
-        <Text color="primary" fontSize={1}>
-          Закажи по телефону:
-        </Text>
-        <PhoneButton href="tel:+79269823572" target="_self" name="phone number">
-          +7 (926) 982 35 72
-        </PhoneButton>
-        <PhoneButton href="tel:+79269823572" target="_self" name="phone number">
-          +7 (926) 629 87 26
-        </PhoneButton>
-      </Flex>}
+      {location.pathname === "/order" && (
+        <Flex p={2} justifyContent="space-around" alignItems="center">
+          <Text color="primary" fontSize={1}>
+            Закажи по телефону:
+          </Text>
+          <PhoneButton
+            href="tel:+79269823572"
+            target="_self"
+            name="phone number"
+          >
+            +7 (926) 982 35 72
+          </PhoneButton>
+          <PhoneButton
+            href="tel:+79269823572"
+            target="_self"
+            name="phone number"
+          >
+            +7 (926) 629 87 26
+          </PhoneButton>
+        </Flex>
+      )}
       <Flex px={2} flexDirection="column" alignItems="space-around">
         <Text
           color="primary"
@@ -127,12 +149,11 @@ export default ({ product, location }) => {
         <Social
           location={location}
           iconSize={40}
-          quote={`${product.productName}: ${
-            product.description.internal.content
-          }`}
-          title={product.productName}
-          description={`${product.description.internal.content}`}
-          image={`https:${product.image.fluid.src}`}
+          quote={`${productName}: ${description &&
+            description.internal.content}`}
+          title={productName}
+          description={`${description && description.internal.content}`}
+          image={`https:${image && image.fluid.src}`}
         />
       </Flex>
     </Card>

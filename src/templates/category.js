@@ -16,6 +16,7 @@ export default ({
   },
   location,
 }) => {
+  const activeProducts = product.filter(p => p.status !== 'inactive' && p.image)
   return (
     <Layout location={location} title={label}>
       <SEO title={label} />
@@ -24,10 +25,10 @@ export default ({
       </Heading>
 
       <Default>
-        <ProductFeed location={location} products={product} />
+        <ProductFeed location={location} products={activeProducts} />
       </Default>
       <Mobile>
-        <MobileProductFeed location={location} products={product} />
+        <MobileProductFeed location={location} products={activeProducts} />
       </Mobile>
     </Layout>
   )
