@@ -67,10 +67,12 @@ export default ({ products, location }) => {
               borderRadius={12}
               boxShadow={`0 2px 8px ${theme.colors.primaryBR4}`}
             >
-              {image && <Image
-                fluid={image.fluid}
-                objectFit={name === "order" ? "cover" : "contain"}
-              />}
+              {image && (
+                <Image
+                  fluid={image.fluid}
+                  objectFit={name === "order" ? "cover" : "contain"}
+                />
+              )}
               <StyledText
                 fontSize={2}
                 color="primary"
@@ -134,20 +136,25 @@ export default ({ products, location }) => {
                 <hr
                   style={{ background: theme.colors.primary, margin: `20px` }}
                 />
-                <Flex py={2} flexWrap={['wrap']} justifyContent="space-around" alignItems="center">
+                <Flex
+                  py={2}
+                  flexWrap={["wrap"]}
+                  justifyContent="space-around"
+                  alignItems="center"
+                >
                   <PhoneButton
-                    href="tel:+79269823572"
+                    href="tel:+79266298726"
                     target="_self"
                     name="phone number"
                   >
-                    +7 (926) 982 35 72
+                    +7 (926) 629 87 26
                   </PhoneButton>
                   <PhoneButton
                     href="tel:+79269823572"
                     target="_self"
                     name="phone number"
                   >
-                    +7 (926) 629 87 26
+                    +7 (926) 982 35 72
                   </PhoneButton>
                 </Flex>
                 <Flex

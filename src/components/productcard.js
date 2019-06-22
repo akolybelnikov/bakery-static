@@ -42,10 +42,12 @@ export default ({
 }) => {
   return (
     <Card bg="secondary" pb={4} borderRadius={12}>
-      {image && <Image
-        fluid={image.fluid}
-        objectFit={category.name === "order" ? "cover" : "contain"}
-      />}
+      {image && (
+        <Image
+          fluid={image.fluid}
+          objectFit={category.name === "order" ? "cover" : "contain"}
+        />
+      )}
       <Heading
         fontWeight={"normal"}
         fontSize={4}
@@ -120,18 +122,18 @@ export default ({
             Закажи по телефону:
           </Text>
           <PhoneButton
-            href="tel:+79269823572"
+            href="tel:+79266298726"
             target="_self"
             name="phone number"
           >
-            +7 (926) 982 35 72
+            +7 (926) 629 87 26
           </PhoneButton>
           <PhoneButton
             href="tel:+79269823572"
             target="_self"
             name="phone number"
           >
-            +7 (926) 629 87 26
+            +7 (926) 982 35 72
           </PhoneButton>
         </Flex>
       )}
