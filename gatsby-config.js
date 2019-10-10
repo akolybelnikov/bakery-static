@@ -68,6 +68,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-netlify`,
       options: {
+        allPageHeaders: [
+          "X-Frame-Options: DENY",
+          "X-XSS-Protection: 1; mode=block",
+        ],
         headers: {
           "/service-worker.js": [
             "Cache-Control: no-cache",
