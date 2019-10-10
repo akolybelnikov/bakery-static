@@ -31,7 +31,7 @@ export default () => {
     <footer>
       <Flex flexWrap="wrap" mx={[-2, 2]} my={4}>
         <Flex flexDirection="column" p={2} width={[1, 3.33 / 10]}>
-          <Text fontSize={[2,2,3]} color="primary" fontWeight="normal">
+          <Text fontSize={[2, 2, 3]} color="primary" fontWeight="normal">
             Наш адрес эл. почты:
           </Text>
           <PhoneButton
@@ -39,16 +39,21 @@ export default () => {
             target="_self"
             name="email"
           >
-            confert76@gmail.ru
+            confert76@gmail.com
           </PhoneButton>
-          <Text mb={[1,2]} fontSize={[2,2,3]} color="primary" fontWeight="normal">
+          <Text
+            mb={[1, 2]}
+            fontSize={[2, 2, 3]}
+            color="primary"
+            fontWeight="normal"
+          >
             Наш адрес:
           </Text>
-          <Text fontSize={[2,2,3]}>109377, г.Москва</Text>
-          <Text fontSize={[2,2,3]}>Рязанский проспект, 58/1</Text>
+          <Text fontSize={[2, 2, 3]}>109377, г.Москва</Text>
+          <Text fontSize={[2, 2, 3]}>Рязанский проспект, 58/1</Text>
         </Flex>
         <Flex flexDirection="column" p={2} width={[1, 3.33 / 10]}>
-          <Text fontSize={[2,2,3]} color="primary" fontWeight="normal">
+          <Text fontSize={[2, 2, 3]} color="primary" fontWeight="normal">
             Наши номера телефона:
           </Text>
           <PhoneButton
@@ -67,11 +72,18 @@ export default () => {
           </PhoneButton>
         </Flex>
         <Flex flexDirection="column" p={2} width={[1, 3.33 / 10]}>
-          <Text fontSize={[2,2,3]} color="primary" fontWeight="normal" mb={[1,2]}>
+          <Text
+            fontSize={[2, 2, 3]}
+            color="primary"
+            fontWeight="normal"
+            mb={[1, 2]}
+          >
             Наши часы работы:
           </Text>
-          <Text mb={[1,2]} fontSize={[2,2,3]}>с понедельника по субботу: с 8.00 до 20.00</Text>
-          <Text fontSize={[2,2,3]}>в воскресенье: с 9.00 до 18.00</Text>
+          <Text mb={[1, 2]} fontSize={[2, 2, 3]}>
+            с понедельника по субботу: с 8.00 до 20.00
+          </Text>
+          <Text fontSize={[2, 2, 3]}>в воскресенье: с 9.00 до 18.00</Text>
         </Flex>
       </Flex>
       <Flex justifyContent={[`flex-start`, `space-around`]} alignItems="center">
