@@ -158,7 +158,7 @@ export default () => {
         <Text px={2} py={1} width={1} textAlign={["left", "center"]}>
           Услуги разработчика:
           <StyledLink
-            href="https://github.com/akolybelnikov"
+            href="https://akolybelnikov.now.sh"
             target="_blank"
             rel="noopener noreferrer"
           >

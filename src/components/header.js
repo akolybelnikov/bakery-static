@@ -18,7 +18,7 @@ const Image = styled(Img)`
   }
 `
 
-export default ({ location }) => {
+const Header = ({ location }) => {
   return (
     <StaticQuery
       query={logoQuery}
@@ -69,3 +69,4 @@ const logoQuery = graphql`
     }
   }
 `
+export default Header
