@@ -1,6 +1,6 @@
 import { Auth } from "aws-amplify"
 import { Form, Text } from "informed"
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import { FaEye } from "react-icons/fa"
 import {
   Box,
@@ -58,8 +58,7 @@ const OutlinedButton = styled(RebassButton).attrs({
   letter-spacing: 1px;
 `
 
-export default ({ onStateChange, authState, username, setUsername }) => {
-  console.log(authState)
+const ResetPassword = ({ onStateChange, authState, username, setUsername }) => {
   const [attribute, setAttribute] = useState("password")
   const [error, setError] = useState(false)
   const [open, setSheet] = useState(false)
@@ -73,6 +72,8 @@ export default ({ onStateChange, authState, username, setUsername }) => {
   const [message, setMessage] = useState()
   const [confirmed, setConfirmed] = useState(false)
   const [modalOpen, setModal] = useState(false)
+
+  const apiRef = useRef()
 
   const showLoading = () => setModal(true)
   const hideLoading = () => setModal(false)
@@ -136,19 +137,25 @@ export default ({ onStateChange, authState, username, setUsername }) => {
     attribute === "password" ? setAttribute("text") : setAttribute("password")
   }
 
-  const passwordMatch = ({ values: { password, confirmpassword } }) =>
-    !confirmpassword || !confirmpassword.length
+  const passwordMatch = apiRef => {
+    const {
+      values: { password, confirmpassword },
+      errors,
+    } = apiRef.current.getState()
+
+    return errors.confirmpassword
       ? "Подтвердите пароль"
       : confirmpassword !== password
       ? "Пароль не совпадает с указанным"
       : undefined
+  }
 
   const sendcode = async form => {
     const {
       values: { email },
       errors,
-    } = form
-    if (!errors.email) {
+    } = form.current.getState()
+    if (email && !errors.email) {
       showLoading()
       try {
         await Auth.forgotPassword(email.trim())
@@ -168,8 +175,15 @@ export default ({ onStateChange, authState, username, setUsername }) => {
     const {
       values: { username, code, password },
       errors,
-    } = form
-    if (!errors.username && !errors.password && !errors.code) {
+    } = form.current.getState()
+    if (
+      username &&
+      code &&
+      password &&
+      !errors.username &&
+      !errors.password &&
+      !errors.code
+    ) {
       showLoading()
       try {
         await Auth.forgotPasswordSubmit(
@@ -190,6 +204,36 @@ export default ({ onStateChange, authState, username, setUsername }) => {
     }
   }
 
+  const emailError = apiRef =>
+    apiRef.current && apiRef.current.getState().errors.email
+
+  const emailValue = apiRef =>
+    apiRef.current && apiRef.current.getState().values.email
+
+  const passwordError = apiRef =>
+    apiRef.current && apiRef.current.getState().errors.password
+
+  const passwordValue = apiRef =>
+    apiRef.current && apiRef.current.getState().values.password
+
+  const codeError = apiRef =>
+    apiRef.current && apiRef.current.getState().errors.code
+
+  const codeValue = apiRef =>
+    apiRef.current && apiRef.current.getState().values.code
+
+  const usernameError = apiRef =>
+    apiRef.current && apiRef.current.getState().errors.username
+
+  const usernameValue = apiRef =>
+    apiRef.current && apiRef.current.getState().values.username
+
+  const confirmPasswordError = apiRef =>
+    apiRef.current && apiRef.current.getState().errors.confirmpassword
+
+  const confirmPasswordValue = apiRef =>
+    apiRef.current && apiRef.current.getState().values.confirmpassword
+
   return (
     <Flex
       style={{ position: "relative" }}
@@ -201,45 +245,41 @@ export default ({ onStateChange, authState, username, setUsername }) => {
       {authState === "resetPassword" && (
         <>
           <Heading color="primary">Сменить пароль</Heading>
-          <Form>
-            {({ formState }) => {
-              return (
-                <Card>
-                  <Field
-                    label="Адрес эл. почты пользователя"
-                    error={formState.errors.email}
-                    active={active.email}
-                    id="email"
-                    locked={false}
-                    value={formState.values.email}
-                  >
-                    <Text
-                      validateOnBlur
-                      validateOnChange
-                      field="email"
-                      id="email"
-                      placeholder="Адрес эл. почты пользователя"
-                      onFocus={setEmailActive}
-                      onBlur={setEmailInactive}
-                      validate={validateEmail}
-                    />
-                  </Field>
+          <Form apiRef={apiRef}>
+            <Card>
+              <Field
+                label="Адрес эл. почты пользователя"
+                error={emailError(apiRef)}
+                value={emailValue(apiRef)}
+                active={active.email}
+                id="email"
+                locked={false}
+              >
+                <Text
+                  validateOnBlur
+                  validateOnChange
+                  field="email"
+                  id="email"
+                  placeholder="Адрес эл. почты пользователя"
+                  onFocus={setEmailActive}
+                  onBlur={setEmailInactive}
+                  validate={validateEmail}
+                />
+              </Field>
 
-                  <Box>
-                    <OutlinedButton onClick={() => sendcode(formState)}>
-                      Запросить
-                    </OutlinedButton>
-                  </Box>
+              <Box>
+                <OutlinedButton onClick={() => sendcode(apiRef)}>
+                  Запросить
+                </OutlinedButton>
+              </Box>
 
-                  <BottomSheet
-                    toggle={closeSheet}
-                    open={open}
-                    children={message}
-                    color={error ? theme.colors.red : theme.colors.primary}
-                  />
-                </Card>
-              )
-            }}
+              <BottomSheet
+                toggle={closeSheet}
+                open={open}
+                children={message}
+                color={error ? theme.colors.red : theme.colors.primary}
+              />
+            </Card>
           </Form>
         </>
       )}
@@ -247,122 +287,118 @@ export default ({ onStateChange, authState, username, setUsername }) => {
       {authState === "codeSent" && (
         <>
           <Heading color="primary">Подтвердить смену пароля</Heading>
-          <Form>
-            {({ formState }) => {
-              return (
-                <Card>
-                  <Field
-                    label="Ваш aдрес эл. почты"
-                    error={formState.errors.username}
-                    active={active.username}
-                    id="username"
-                    locked={false}
-                    value={formState.values.username}
-                  >
-                    <Text
-                      initialValue={username}
-                      validateOnBlur
-                      validateOnChange
-                      field="username"
-                      id="username"
-                      placeholder="Ваш aдрес эл. почты"
-                      onFocus={setUsernameActive}
-                      onBlur={setUsernameInactive}
-                      validate={validateEmail}
-                    />
-                  </Field>
+          <Form apiRef={apiRef}>
+            <Card>
+              <Field
+                label="Ваш aдрес эл. почты"
+                error={usernameError(apiRef)}
+                value={usernameValue(apiRef)}
+                active={active.username}
+                id="username"
+                locked={false}
+              >
+                <Text
+                  initialValue={username}
+                  validateOnBlur
+                  validateOnChange
+                  field="username"
+                  id="username"
+                  placeholder="Ваш aдрес эл. почты"
+                  onFocus={setUsernameActive}
+                  onBlur={setUsernameInactive}
+                  validate={validateEmail}
+                />
+              </Field>
 
-                  <Field
-                    label="Код подтверждения"
-                    error={formState.errors.code}
-                    active={active.code}
-                    id="code"
-                    locked={false}
-                    value={formState.values.code}
-                  >
-                    <Text
-                      validateOnBlur
-                      validateOnChange
-                      type="text"
-                      field="code"
-                      id="code"
-                      placeholder="Код подтверждения"
-                      onFocus={setCodeActive}
-                      onBlur={setCodeInactive}
-                      validate={emptyCode}
-                    />
-                  </Field>
+              <Field
+                label="Код подтверждения"
+                error={codeError(apiRef)}
+                value={codeValue(apiRef)}
+                active={active.code}
+                id="code"
+                locked={false}
+              >
+                <Text
+                  validateOnBlur
+                  validateOnChange
+                  type="text"
+                  field="code"
+                  id="code"
+                  placeholder="Код подтверждения"
+                  onFocus={setCodeActive}
+                  onBlur={setCodeInactive}
+                  validate={emptyCode}
+                />
+              </Field>
 
-                  <Flex>
-                    <Field
-                      label="Пароль"
-                      error={formState.errors.password}
-                      active={active.password}
-                      id="password"
-                      locked={false}
-                      value={formState.values.password}
-                    >
-                      <Text
-                        validateOnBlur
-                        validateOnChange
-                        type={attribute}
-                        field="password"
-                        id="password"
-                        placeholder="Пароль"
-                        onFocus={setPasswordActive}
-                        onBlur={setPasswordInactive}
-                        validate={validatePassword}
-                      />
-                    </Field>
-                    <Icon onClick={toggleAttr}>
-                      <FaEye />
-                    </Icon>
-                  </Flex>
-
-                  <Flex>
-                    <Field
-                      label="Подтвердите пароль"
-                      error={formState.errors.confirmpassword}
-                      active={active.password}
-                      id="password"
-                      locked={false}
-                      value={formState.values.confirmpassword}
-                    >
-                      <Text
-                        validateOnBlur
-                        validateOnChange
-                        type={"password"}
-                        field="confirmpassword"
-                        id="confirmpassword"
-                        placeholder="Подтвердите пароль"
-                        onFocus={setConfirmPasswordActive}
-                        onBlur={setConfirmPasswordInactive}
-                        validate={() => passwordMatch(formState)}
-                      />
-                    </Field>
-                    <Icon onClick={toggleAttr}>
-                      <FaEye />
-                    </Icon>
-                  </Flex>
-
-                  <Box>
-                    <OutlinedButton
-                      type="button"
-                      onClick={() => confirmchange(formState)}
-                    >
-                      Подтвердить смену
-                    </OutlinedButton>
-                  </Box>
-
-                  <BottomSheet
-                    toggle={closeSheet}
-                    open={open}
-                    children={message}
-                    color={error ? theme.colors.red : theme.colors.primary}
+              <Flex>
+                <Field
+                  label="Пароль"
+                  error={passwordError(apiRef)}
+                  value={passwordValue(apiRef)}
+                  active={active.password}
+                  id="password"
+                  locked={false}
+                >
+                  <Text
+                    validateOnBlur
+                    validateOnChange
+                    type={attribute}
+                    field="password"
+                    id="password"
+                    placeholder="Пароль"
+                    onFocus={setPasswordActive}
+                    onBlur={setPasswordInactive}
+                    validate={validatePassword}
                   />
-                </Card>
-              )
-            }}
+                </Field>
+                <Icon onClick={toggleAttr}>
+                  <FaEye />
+                </Icon>
+              </Flex>
+
+              <Flex>
+                <Field
+                  label="Подтвердите пароль"
+                  error={confirmPasswordError(apiRef)}
+                  value={confirmPasswordValue(apiRef)}
+                  active={active.password}
+                  id="confirmpassword"
+                  locked={false}
+                >
+                  <Text
+                    validateOnBlur
+                    validateOnChange
+                    type={"password"}
+                    field="confirmpassword"
+                    id="confirmpassword"
+                    placeholder="Подтвердите пароль"
+                    onFocus={setConfirmPasswordActive}
+                    onBlur={setConfirmPasswordInactive}
+                    validate={() => passwordMatch(apiRef)}
+                  />
+                </Field>
+                <Icon onClick={toggleAttr}>
+                  <FaEye />
+                </Icon>
+              </Flex>
+
+              <Box>
+                <OutlinedButton
+                  type="button"
+                  onClick={() => confirmchange(apiRef)}
+                >
+                  Подтвердить смену
+                </OutlinedButton>
+              </Box>
+
+              <BottomSheet
+                toggle={closeSheet}
+                open={open}
+                children={message}
+                color={error ? theme.colors.red : theme.colors.primary}
+              />
+            </Card>
           </Form>
           {confirmed && (
             <Box>
@@ -376,3 +412,5 @@ export default ({ onStateChange, authState, username, setUsername }) => {
     </Flex>
   )
 }
+
+export default ResetPassword

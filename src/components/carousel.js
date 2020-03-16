@@ -38,7 +38,7 @@ const Carousel = ({ offers }) => {
   return (
     <Box style={{ position: `relative` }}>
       <AutoPlaySwipeView
-        interval={5000}
+        interval={8000}
         onChangeIndex={handleSlideChange}
         index={activeIndex}
         ignoreNativeScroll={true}

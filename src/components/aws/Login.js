@@ -1,7 +1,7 @@
 import { Auth } from "aws-amplify"
 import { navigate } from "gatsby"
 import { Form, Text } from "informed"
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import { FaEye } from "react-icons/fa"
 import {
   Box,
@@ -71,12 +71,19 @@ const Icon = styled(RebassButton).attrs({
 export default ({ onStateChange, setUsername }) => {
   const [attribute, setAttribute] = useState("password")
   const [active, setActive] = useState({ email: false, password: false })
+
   const [error, setError] = useState()
   const [open, setSheet] = useState(false)
   const [modalOpen, setModal] = useState(false)
 
-  const showLoading = () => setModal(true)
-  const hideLoading = () => setModal(false)
+  const apiRef = useRef()
+
+  const showLoading = () => {
+    setModal(true)
+  }
+  const hideLoading = () => {
+    setModal(false)
+  }
 
   const setEmailActive = () => {
     setActive({ email: true })
@@ -114,8 +121,9 @@ export default ({ onStateChange, setUsername }) => {
   const login = async form => {
     const {
       values: { email, password },
-    } = form
-    if (email && password) {
+      errors,
+    } = form.current.getState()
+    if (email && password && !errors.email && !errors.password) {
       showLoading()
       try {
         await Auth.signIn(email.trim(), password.trim())
@@ -140,101 +148,108 @@ export default ({ onStateChange, setUsername }) => {
     }
   }
 
+  const emailError = apiRef =>
+    apiRef.current && apiRef.current.getState().errors.email
+
+  const emailValue = apiRef =>
+    apiRef.current && apiRef.current.getState().values.email
+
+  const passwordError = apiRef =>
+    apiRef.current && apiRef.current.getState().errors.password
+
+  const passwordValue = apiRef =>
+    apiRef.current && apiRef.current.getState().values.password
+
   return (
     <Flex px={[2]} flexDirection="column" alignItems="center">
       <LoadingModal open={modalOpen} hideLoading={hideLoading} />
       <Heading textAlign="center" color="primary">
         Вход пользователя
       </Heading>
-      <Form>
-        {({ formState }) => {
-          return (
-            <Card>
-              <Field
-                label="Введите свой адрес эл.почты"
-                error={formState.errors.email}
-                active={active.email}
-                id="email"
-                locked={false}
-                value={formState.values.email}
-              >
-                <Text
-                  validateOnBlur
-                  validateOnChange
-                  field="email"
-                  id="email"
-                  placeholder="Введите свой адрес эл.почты"
-                  onFocus={setEmailActive}
-                  onBlur={setEmailInactive}
-                  validate={validateEmail}
-                />
-              </Field>
+      <Form apiRef={apiRef}>
+        <Card>
+          <Field
+            label="Введите свой адрес эл.почты"
+            error={emailError(apiRef)}
+            active={active.email}
+            id="email"
+            locked={false}
+            value={emailValue(apiRef)}
+          >
+            <Text
+              validateOnBlur
+              validateOnChange
+              autoComplete="username"
+              field="email"
+              id="email"
+              placeholder="Введите свой адрес эл.почты"
+              onFocus={setEmailActive}
+              onBlur={setEmailInactive}
+              validate={validateEmail}
+            />
+          </Field>
 
-              <Flex>
-                <Field
-                  label="Введите свой пароль"
-                  error={formState.errors.password}
-                  active={active.password}
-                  id="password"
-                  locked={false}
-                  value={formState.values.password}
-                >
-                  <Text
-                    validateOnBlur
-                    validateOnChange
-                    type={attribute}
-                    field="password"
-                    id="password"
-                    placeholder="Введите свой пароль"
-                    onFocus={setPasswordActive}
-                    onBlur={setPasswordInactive}
-                    validate={emptyLoginPassword}
-                  />
-                </Field>
-                <Icon onClick={toggleAttr}>
-                  <FaEye />
-                </Icon>
-              </Flex>
-
-              <Box>
-                <OutlinedButton type="submit" onClick={() => login(formState)}>
-                  Войти
-                </OutlinedButton>
-              </Box>
-
-              <Flex mt={[2]} alignItems="center" justifyContent="space-between">
-                <RebassText fontSize={[1, 2]} color="#282828;">
-                  Нет профиля?
-                </RebassText>
-                <Button
-                  variant="noOutline"
-                  onClick={() => onStateChange("signUp")}
-                >
-                  Зарегистрироваться
-                </Button>
-              </Flex>
-
-              <Flex mt={[4]} alignItems="center" justifyContent="space-between">
-                <RebassText fontSize={[1, 2]} color="#282828;">
-                  Пароль утерян?{" "}
-                </RebassText>
-                <Button
-                  variant="noOutline"
-                  onClick={() => onStateChange("resetPassword")}
-                >
-                  Запросить новый
-                </Button>
-              </Flex>
-
-              <BottomSheet
-                color={theme.colors.red}
-                toggle={closeSheet}
-                open={open}
-                children={error}
+          <Flex>
+            <Field
+              label="Введите свой пароль"
+              error={passwordError(apiRef)}
+              active={active.password}
+              id="password"
+              locked={false}
+              value={passwordValue(apiRef)}
+            >
+              <Text
+                validateOnBlur
+                validateOnChange
+                type={attribute}
+                field="password"
+                id="password"
+                autoComplete="current-password"
+                placeholder="Введите свой пароль"
+                onFocus={setPasswordActive}
+                onBlur={setPasswordInactive}
+                validate={emptyLoginPassword}
               />
-            </Card>
-          )
-        }}
+            </Field>
+            <Icon onClick={toggleAttr}>
+              <FaEye />
+            </Icon>
+          </Flex>
+
+          <Box>
+            <OutlinedButton type="submit" onClick={() => login(apiRef)}>
+              Войти
+            </OutlinedButton>
+          </Box>
+
+          <Flex mt={[2]} alignItems="center" justifyContent="space-between">
+            <RebassText fontSize={[1, 2]} color="#282828;">
+              Нет профиля?
+            </RebassText>
+            <Button variant="noOutline" onClick={() => onStateChange("signUp")}>
+              Зарегистрироваться
+            </Button>
+          </Flex>
+
+          <Flex mt={[4]} alignItems="center" justifyContent="space-between">
+            <RebassText fontSize={[1, 2]} color="#282828;">
+              Пароль утерян?{" "}
+            </RebassText>
+            <Button
+              variant="noOutline"
+              onClick={() => onStateChange("resetPassword")}
+            >
+              Запросить новый
+            </Button>
+          </Flex>
+
+          <BottomSheet
+            color={theme.colors.red}
+            toggle={closeSheet}
+            open={open}
+            children={error}
+          />
+        </Card>
       </Form>
     </Flex>
   )

@@ -74,6 +74,13 @@ const theme = {
   },
 }
 
+const baseLink = {
+  boxShadow: `none`,
+  textDecoration: `none`,
+  color: `inherit`,
+  backgroundImage: `none`,
+}
+
 const menuStyles = {
   bmBurgerButton: {
     position: "fixed",
@@ -128,4 +135,4 @@ const menuStyles = {
   },
 }
 
-export { menuStyles, theme }
+export { menuStyles, theme, baseLink }

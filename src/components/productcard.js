@@ -116,27 +116,17 @@ export default ({
         </Text>
       )}
       <hr style={{ background: theme.colors.primary, margin: `20px` }} />
-      {location.pathname === "/order" && (
-        <Flex p={2} justifyContent="space-around" alignItems="center">
-          <Text color="primary" fontSize={1}>
-            Закажи по телефону:
-          </Text>
-          <PhoneButton
-            href="tel:+79266298726"
-            target="_self"
-            name="phone number"
-          >
-            +7 (926) 629 87 26
-          </PhoneButton>
-          <PhoneButton
-            href="tel:+79269823572"
-            target="_self"
-            name="phone number"
-          >
-            +7 (926) 982 35 72
-          </PhoneButton>
-        </Flex>
-      )}
+      <Flex p={2} justifyContent="space-around" alignItems="center">
+        <Text color="primary" fontSize={1}>
+          Закажи по телефону:
+        </Text>
+        <PhoneButton href="tel:+79266298726" target="_self" name="phone number">
+          +7 (926) 629 87 26
+        </PhoneButton>
+        <PhoneButton href="tel:+79269823572" target="_self" name="phone number">
+          +7 (926) 982 35 72
+        </PhoneButton>
+      </Flex>
       <Flex px={2} flexDirection="column" alignItems="space-around">
         <Text
           color="primary"

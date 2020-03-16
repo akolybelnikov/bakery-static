@@ -1,7 +1,7 @@
 import { Auth } from "aws-amplify"
 import { navigate } from "gatsby"
 import { Form, Text } from "informed"
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import { FaEye } from "react-icons/fa"
 import {
   Box,
@@ -73,7 +73,7 @@ const OutlinedButton = styled(RebassButton).attrs({
   letter-spacing: 1px;
 `
 
-export default ({ onStateChange, authState, username, setUsername }) => {
+const SignUp = ({ onStateChange, authState, username, setUsername }) => {
   const [attribute, setAttribute] = useState("password")
   const [error, setError] = useState(false)
   const [open, setSheet] = useState(false)
@@ -87,6 +87,8 @@ export default ({ onStateChange, authState, username, setUsername }) => {
   })
   const [message, setMessage] = useState()
   const [modalOpen, setModal] = useState(false)
+
+  const apiRef = useRef()
 
   const showLoading = () => setModal(true)
   const hideLoading = () => setModal(false)
@@ -162,7 +164,7 @@ export default ({ onStateChange, authState, username, setUsername }) => {
     const {
       values: { email, password, name, phone_number },
       errors,
-    } = form
+    } = form.current.getState()
     if (
       !errors.email &&
       !errors.password &&
@@ -194,8 +196,9 @@ export default ({ onStateChange, authState, username, setUsername }) => {
   const confirmSignUp = async form => {
     const {
       values: { username, code },
-    } = form
-    if (username && code) {
+      errors,
+    } = form.current.getState()
+    if (username && code && !errors.username && !errors.code) {
       showLoading()
       try {
         await Auth.confirmSignUp(username.trim(), code.trim())
@@ -213,8 +216,9 @@ export default ({ onStateChange, authState, username, setUsername }) => {
   const resendCode = async form => {
     const {
       values: { username },
-    } = form
-    if (username) {
+      errors,
+    } = form.current.getState()
+    if (username && !errors.username) {
       showLoading()
       try {
         await Auth.resendSignUp(username.trim())
@@ -232,6 +236,42 @@ export default ({ onStateChange, authState, username, setUsername }) => {
     }
   }
 
+  const emailError = apiRef =>
+    apiRef.current && apiRef.current.getState().errors.email
+
+  const emailValue = apiRef =>
+    apiRef.current && apiRef.current.getState().values.email
+
+  const passwordError = apiRef =>
+    apiRef.current && apiRef.current.getState().errors.password
+
+  const passwordValue = apiRef =>
+    apiRef.current && apiRef.current.getState().values.password
+
+  const codeError = apiRef =>
+    apiRef.current && apiRef.current.getState().errors.code
+
+  const codeValue = apiRef =>
+    apiRef.current && apiRef.current.getState().values.code
+
+  const usernameError = apiRef =>
+    apiRef.current && apiRef.current.getState().errors.username
+
+  const usernameValue = apiRef =>
+    apiRef.current && apiRef.current.getState().values.username
+
+  const phoneNumberError = apiRef =>
+    apiRef.current && apiRef.current.getState().errors.phone_number
+
+  const phoneNumberValue = apiRef =>
+    apiRef.current && apiRef.current.getState().values.phone_number
+
+  const nameError = apiRef =>
+    apiRef.current && apiRef.current.getState().errors.name
+
+  const nameValue = apiRef =>
+    apiRef.current && apiRef.current.getState().values.name
+
   return (
     <Flex
       style={{ position: "relative" }}
@@ -242,208 +282,203 @@ export default ({ onStateChange, authState, username, setUsername }) => {
       <LoadingModal open={modalOpen} hideLoading={hideLoading} />
       {authState === "signUp" && (
         <>
-          <Heading color="primary">Регистрация пользователя</Heading>
-          <Form>
-            {({ formState }) => {
-              return (
-                <Card>
-                  <Field
-                    label="Aдрес эл.почты"
-                    error={formState.errors.email}
-                    active={active.email}
-                    id="email"
-                    locked={false}
-                    value={formState.values.email}
-                  >
-                    <Text
-                      validateOnBlur
-                      validateOnChange
-                      field="email"
-                      id="email"
-                      placeholder="Aдрес эл.почты"
-                      onFocus={setEmailActive}
-                      onBlur={setEmailInactive}
-                      validate={validateEmail}
-                    />
-                  </Field>
+          <Heading py={[2, 4]} color="primary">
+            Регистрация пользователя
+          </Heading>
+          <Form apiRef={apiRef}>
+            <Card>
+              <Field
+                label="Aдрес эл.почты"
+                error={emailError(apiRef)}
+                value={emailValue(apiRef)}
+                active={active.email}
+                id="email"
+                locked={false}
+              >
+                <Text
+                  validateOnBlur
+                  validateOnChange
+                  autoComplete="username"
+                  field="email"
+                  id="email"
+                  placeholder="Aдрес эл.почты"
+                  onFocus={setEmailActive}
+                  onBlur={setEmailInactive}
+                  validate={validateEmail}
+                />
+              </Field>
 
-                  <Flex>
-                    <Field
-                      label="Пароль"
-                      error={formState.errors.password}
-                      active={active.password}
-                      id="password"
-                      locked={false}
-                      value={formState.values.password}
-                    >
-                      <Text
-                        validateOnBlur
-                        validateOnChange
-                        type={attribute}
-                        field="password"
-                        id="password"
-                        placeholder="Пароль"
-                        onFocus={setPasswordActive}
-                        onBlur={setPasswordInactive}
-                        validate={validatePassword}
-                      />
-                    </Field>
-                    <Icon onClick={toggleAttr}>
-                      <FaEye />
-                    </Icon>
-                  </Flex>
-
-                  <Field
-                    label="Ваше имя"
-                    error={formState.errors.name}
-                    active={active.name}
-                    id="name"
-                    locked={false}
-                    value={formState.values.name}
-                  >
-                    <Text
-                      validateOnBlur
-                      validateOnChange
-                      field="name"
-                      id="name"
-                      placeholder="Ваше имя"
-                      onFocus={setNameActive}
-                      onBlur={setNameInactive}
-                      validate={emptyName}
-                    />
-                  </Field>
-
-                  <Field
-                    label="Ваш номер телефона"
-                    error={formState.errors.phone_number}
-                    active={active.phone_number}
-                    id="phone_number"
-                    locked={false}
-                    value={formState.values.phone_number}
-                  >
-                    <Text
-                      validateOnBlur
-                      validateOnChange
-                      field="phone_number"
-                      id="phone_number"
-                      placeholder="Ваш номер телефона"
-                      onFocus={setPhoneActive}
-                      onBlur={setPhoneInactive}
-                      validate={validatePhoneNumber}
-                    />
-                  </Field>
-
-                  <Box>
-                    <OutlinedButton onClick={() => signup(formState)}>
-                      Зарегистрироваться
-                    </OutlinedButton>
-                  </Box>
-
-                  <Flex justifyContent="space-between" alignItems="center">
-                    <RebassText fontSize={[1, 2]} color="#282828;">
-                      Зарегистрированы?
-                    </RebassText>
-                    <Button
-                      type="button"
-                      onClick={() => onStateChange("signIn")}
-                    >
-                      Войти
-                    </Button>
-                  </Flex>
-
-                  <BottomSheet
-                    toggle={closeSheet}
-                    open={open}
-                    children={message}
-                    color={error ? theme.colors.red : theme.colors.primary}
+              <Flex>
+                <Field
+                  label="Пароль"
+                  error={passwordError(apiRef)}
+                  active={active.password}
+                  id="password"
+                  locked={false}
+                  value={passwordValue(apiRef)}
+                >
+                  <Text
+                    validateOnBlur
+                    validateOnChange
+                    type={attribute}
+                    field="password"
+                    id="password"
+                    placeholder="Пароль"
+                    autoComplete="current-password"
+                    onFocus={setPasswordActive}
+                    onBlur={setPasswordInactive}
+                    validate={validatePassword}
                   />
-                </Card>
-              )
-            }}
+                </Field>
+                <Icon onClick={toggleAttr}>
+                  <FaEye />
+                </Icon>
+              </Flex>
+
+              <Field
+                label="Ваше имя"
+                error={nameError(apiRef)}
+                active={active.name}
+                id="name"
+                locked={false}
+                value={nameValue(apiRef)}
+              >
+                <Text
+                  validateOnBlur
+                  validateOnChange
+                  field="name"
+                  id="name"
+                  placeholder="Ваше имя"
+                  onFocus={setNameActive}
+                  onBlur={setNameInactive}
+                  validate={emptyName}
+                />
+              </Field>
+
+              <Field
+                label="Ваш номер телефона"
+                error={phoneNumberError(apiRef)}
+                active={active.phone_number}
+                id="phone_number"
+                locked={false}
+                value={phoneNumberValue(apiRef)}
+              >
+                <Text
+                  validateOnBlur
+                  validateOnChange
+                  field="phone_number"
+                  id="phone_number"
+                  placeholder="Ваш номер телефона"
+                  onFocus={setPhoneActive}
+                  onBlur={setPhoneInactive}
+                  validate={validatePhoneNumber}
+                />
+              </Field>
+
+              <Box>
+                <OutlinedButton onClick={() => signup(apiRef)}>
+                  Зарегистрироваться
+                </OutlinedButton>
+              </Box>
+
+              <Flex justifyContent="space-between" alignItems="center">
+                <RebassText fontSize={[1, 2]} color="#282828;">
+                  Зарегистрированы?
+                </RebassText>
+                <Button type="button" onClick={() => onStateChange("signIn")}>
+                  Войти
+                </Button>
+              </Flex>
+
+              <BottomSheet
+                toggle={closeSheet}
+                open={open}
+                children={message}
+                color={error ? theme.colors.red : theme.colors.primary}
+              />
+            </Card>
           </Form>
         </>
       )}
       {authState === "signedUp" && (
         <>
           <Heading color="primary">Подтвердить регистрацию</Heading>
-          <Form>
-            {({ formState }) => {
-              return (
-                <Card>
-                  <Field
-                    label="Ваш aдрес эл. почты"
-                    error={formState.errors.username}
-                    active={active.username}
-                    id="username"
-                    locked={false}
-                    value={formState.values.username}
-                  >
-                    <Text
-                      initialValue={username}
-                      validateOnBlur
-                      validateOnChange
-                      field="username"
-                      id="username"
-                      placeholder="Введите свой адрес эл.почты"
-                      onFocus={setUsernameActive}
-                      onBlur={setUsernameInactive}
-                      validate={validateEmail}
-                    />
-                  </Field>
+          <Form apiRef={apiRef}>
+            <Card>
+              <Field
+                label="Ваш aдрес эл. почты"
+                error={usernameError(apiRef)}
+                active={active.username}
+                id="username"
+                locked={false}
+                value={usernameValue(apiRef)}
+              >
+                <Text
+                  initialValue={username}
+                  validateOnBlur
+                  validateOnChange
+                  field="username"
+                  id="username"
+                  placeholder="Введите свой адрес эл.почты"
+                  onFocus={setUsernameActive}
+                  onBlur={setUsernameInactive}
+                  validate={validateEmail}
+                />
+              </Field>
 
-                  <Field
-                    label="Код подтверждения"
-                    error={formState.errors.code}
-                    active={active.code}
-                    id="code"
-                    locked={false}
-                    value={formState.values.code}
-                  >
-                    <Text
-                      validateOnBlur
-                      validateOnChange
-                      type="text"
-                      field="code"
-                      id="code"
-                      placeholder="Код подтверждения"
-                      onFocus={setCodeActive}
-                      onBlur={setCodeInactive}
-                      validate={emptyCode}
-                    />
-                  </Field>
+              <Field
+                label="Код подтверждения"
+                error={codeError(apiRef)}
+                active={active.code}
+                id="code"
+                locked={false}
+                value={codeValue(apiRef)}
+              >
+                <Text
+                  validateOnBlur
+                  validateOnChange
+                  type="text"
+                  field="code"
+                  id="code"
+                  placeholder="Код подтверждения"
+                  onFocus={setCodeActive}
+                  onBlur={setCodeInactive}
+                  validate={emptyCode}
+                />
+              </Field>
 
-                  <Box>
-                    <OutlinedButton
-                      type="button"
-                      onClick={() => confirmSignUp(formState)}
-                    >
-                      Подтвердить
-                    </OutlinedButton>
-                  </Box>
+              <Box>
+                <OutlinedButton
+                  type="button"
+                  onClick={() => confirmSignUp(apiRef)}
+                >
+                  Подтвердить
+                </OutlinedButton>
+              </Box>
 
-                  <Flex alignItems="center" justifyContent="space-between">
-                    <span>Код утерян? </span>
-                    <Button
-                      ml={[1]}
-                      type="button"
-                      onClick={() => resendCode(formState)}
-                    >
-                      Выслать повторно
-                    </Button>
-                  </Flex>
+              <Flex alignItems="center" justifyContent="space-between">
+                <span>Код утерян? </span>
+                <Button
+                  ml={[1]}
+                  type="button"
+                  onClick={() => resendCode(apiRef)}
+                >
+                  Выслать повторно
+                </Button>
+              </Flex>
 
-                  <BottomSheet
-                    toggle={closeSheet}
-                    open={open}
-                    children={message}
-                    color={error ? theme.colors.red : theme.colors.primary}
-                  />
-                </Card>
-              )
-            }}
+              <BottomSheet
+                toggle={closeSheet}
+                open={open}
+                children={message}
+                color={error ? theme.colors.red : theme.colors.primary}
+              />
+            </Card>
           </Form>
         </>
       )}
     </Flex>
   )
 }
+
+export default SignUp

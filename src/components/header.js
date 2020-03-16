@@ -5,6 +5,7 @@ import Responsive from "react-responsive"
 import { Flex } from "rebass"
 import styled from "styled-components"
 import Navbar from "../components/navbar"
+import { baseLink } from "../utils/styles"
 
 const Default = props => <Responsive {...props} minWidth={900} />
 
@@ -29,22 +30,10 @@ const Header = ({ location }) => {
           <>
             <header>
               <Flex justifyContent="space-between">
-                <Link
-                  style={{
-                    boxShadow: `none`,
-                    textDecoration: `none`,
-                    color: `inherit`,
-                    backgroundImage: `none`,
-                    flex: `0 0 20%`,
-                  }}
-                  to={`/`}
-                >
+                <Link style={{ ...baseLink, flex: `0 0 20%` }} to={`/`}>
                   <Image fluid={logo} />
                 </Link>
-                <Flex
-                  alignItems="center"
-                  style={{ flex: `auto` }}
-                >
+                <Flex alignItems="center" style={{ flex: `auto` }}>
                   <Default>
                     <Navbar location={location} />
                   </Default>

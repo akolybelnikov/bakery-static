@@ -1,10 +1,10 @@
+import { Link } from "gatsby"
 import React from "react"
 import { Box, Flex, Text } from "rebass"
 import styled from "styled-components"
 import FacebookIcon from "./svg/facebook"
-import InstagramIcon from "./svg/instagram"
 import GoogleMapIcon from "./svg/googlemap"
-import { Link } from "gatsby"
+import InstagramIcon from "./svg/instagram"
 
 const StyledLink = styled.a`
   background-image: none;
@@ -26,7 +26,14 @@ const PhoneButton = styled.a`
   text-shadow: none;
 `
 
-export default () => {
+const Copyright = styled(Flex)`
+  @media (max-width: 600px) {
+    border-block-start: 4px dotted ${props => props.theme.colors.secondary};
+    border-block-end: 4px dotted ${props => props.theme.colors.secondary};
+  }
+`
+
+const Footer = () => {
   return (
     <footer>
       <Flex flexWrap="wrap" mx={[-2, 2]} my={4}>
@@ -81,9 +88,15 @@ export default () => {
             Наши часы работы:
           </Text>
           <Text mb={[1, 2]} fontSize={[2, 2, 3]}>
-            с понедельника по субботу: с 8.00 до 20.00
+            с понедельника по пятницу:
           </Text>
-          <Text fontSize={[2, 2, 3]}>в воскресенье: с 9.00 до 18.00</Text>
+          <Text mb={[1, 2]} fontSize={[2, 2, 3]}>
+            9.00 - 21.00
+          </Text>
+          <Text fontSize={[2, 2, 3]}>
+            в субботу, воскресенье и праздничные дни:
+          </Text>
+          <Text fontSize={[2, 2, 3]}>10.00 - 18.00</Text>
         </Flex>
       </Flex>
       <Flex justifyContent={[`flex-start`, `space-around`]} alignItems="center">
@@ -117,65 +130,93 @@ export default () => {
           </StyledLink>
         </Box>
       </Flex>
-      <Flex flexDirection="column" mx={-2} my={4}>
-        <Text px={2} py={1} width={1} textAlign={["left", "center"]}>
-          <StyledLink
-            href="https://www.copyright.ru/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Copyright
-          </StyledLink>
-          <StyledLink
-            href="https://www.copyright.ru/ru/documents/zashita_avtorskih_prav/znak_ohrani_avtorskih_i_smegnih_prav/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            ©<span>2019</span>
-          </StyledLink>
-          <strong>Все Булочки Тут</strong>
-        </Text>
-        <Text px={2} py={1} width={1} textAlign={["left", "center"]}>
-          <StyledLink
-            href="https://www.copyright.ru/ru/documents/registraciy_avtorskih_prav/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Все права защищены
-          </StyledLink>
-          <StyledLink
-            href="https://copyright.ru"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src="https://copyright.ru/images/TMCIMG/copyright_2.gif"
-              alt="www.copyright.ru"
-              title="Copyright защита прав"
-            />
-          </StyledLink>
-        </Text>
-        <Text px={2} py={1} width={1} textAlign={["left", "center"]}>
-          Услуги разработчика:
-          <StyledLink
-            href="https://akolybelnikov.now.sh"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span>Андрей Колыбельников</span>
-          </StyledLink>
-        </Text>
-        <Text px={2} py={1} width={1} textAlign={["left", "center"]}>
-          <span>Программный код страницы защищён лицензией:</span>
-          <StyledLink
-            href="https://opensource.org/licenses/mit-license.php"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span>MIT</span>
-          </StyledLink>
-        </Text>
+      <Flex flexWrap="wrap" mx={[-2, 2]} mt={[0, 4]}>
+        <Copyright flex={["100%", "60%"]} flexDirection="column" p={2} my={[2]}>
+          <Text py={1} width={1}>
+            <Link aria-label="Privacy policy" to={`/privacy`}>
+              Правила и условия пользования сайтом{" "}
+            </Link>
+          </Text>
+          <Text py={1} width={1}>
+            <StyledLink
+              href="https://www.copyright.ru/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Copyright
+            </StyledLink>
+            <StyledLink
+              href="https://www.copyright.ru/ru/documents/zashita_avtorskih_prav/znak_ohrani_avtorskih_i_smegnih_prav/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ©<span>2019</span>
+            </StyledLink>
+            <strong>Все Булочки Тут</strong>
+          </Text>
+          <Text py={1} width={1}>
+            <StyledLink
+              href="https://www.copyright.ru/ru/documents/registraciy_avtorskih_prav/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Все права защищены
+            </StyledLink>
+            <StyledLink
+              href="https://copyright.ru"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="https://copyright.ru/images/TMCIMG/copyright_2.gif"
+                alt="www.copyright.ru"
+                title="Copyright защита прав"
+              />
+            </StyledLink>
+          </Text>
+          <Text py={1} width={1}>
+            Услуги разработчика:
+            <StyledLink
+              href="https://akolybelnikov.now.sh"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Андрей Колыбельников</span>
+            </StyledLink>
+          </Text>
+          <Text py={1} width={1}>
+            <span>Программный код страницы защищён лицензией:</span>
+            <StyledLink
+              href="https://opensource.org/licenses/mit-license.php"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>MIT</span>
+            </StyledLink>
+          </Text>
+        </Copyright>
+        <Flex flex={["100%", "40%"]} flexDirection="column" p={2} my={[0, 2]}>
+          <Text py={1} width={1}>
+            <strong>Юридические данные:</strong>
+          </Text>
+          <Text py={1} width={1}>
+            <strong>ИП</strong> Хмельникер Анастасия Андреевна
+          </Text>
+          <Text py={1} width={1}>
+            <strong>ИНН</strong> 772391045036
+          </Text>
+          <Text py={1} width={1}>
+            <strong>ГРНИП</strong> 319774600190685
+          </Text>
+          <Text>
+            <Link aria-label="Company data" to={`/company`}>
+              Полные данные компании
+            </Link>
+          </Text>
+        </Flex>
       </Flex>
     </footer>
   )
 }
+
+export default Footer

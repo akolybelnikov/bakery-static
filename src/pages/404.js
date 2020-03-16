@@ -14,9 +14,10 @@ class NotFoundPage extends React.Component {
       <Layout location={this.props.location} title={siteTitle}>
         <SEO title="404: Not Found" />
         <Flex
-          style={{ minHeight: "50vh" }}
+          style={{ minHeight: "75vh" }}
           flexDirection="column"
-          alignItems="space-around"
+          alignItems="center"
+          justifyContent="center"
         >
           <Heading color="primary" textAlign="center">
             Страница не найдена

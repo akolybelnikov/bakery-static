@@ -34,47 +34,48 @@ export default ({
   },
   location,
 }) => {
-   const pageTitle = `Специальные предложения`
+  const pageTitle = `Специальные предложения`
 
   return (
     <Layout location={location} title={pageTitle}>
       <SEO title={pageTitle} />
-      <Heading color="primary" mb={4}>
+      <Heading color="primary" px={[0, 3]} mb={4}>
         {pageTitle}
       </Heading>
       <Flex flexWrap={"wrap"}>
-        {edges && edges.map(
-          (
-            {
-              node: {
-                content: { content },
-                image: { fluid },
+        {edges &&
+          edges.map(
+            (
+              {
+                node: {
+                  content: { content },
+                  image: { fluid },
+                },
               },
-            },
-            idx
-          ) => (
-            <Card
-              width={[1, 3 / 10]}
-              mb={[4]}
-              mx={[0, "auto"]}
-              key={idx}
-              boxShadow={`0 2px 8px ${theme.colors.primary}`}
-              borderRadius={8}
-            >
-              <Image fluid={fluid} />
-              <CardText
-                px={[3]}
-                py={[2]}
-                my={[2]}
-                fontSize={[2, 3]}
-                textAlign="center"
-                color="primary"
+              idx
+            ) => (
+              <Card
+                width={[1, 3 / 10]}
+                mb={[4]}
+                mx={[0, "auto"]}
+                key={idx}
+                boxShadow={`0 2px 8px ${theme.colors.primary}`}
+                borderRadius={8}
               >
-                {content}
-              </CardText>
-            </Card>
-          )
-        )}
+                <Image fluid={fluid} />
+                <CardText
+                  px={[3]}
+                  py={[2]}
+                  my={[2]}
+                  fontSize={[2, 3]}
+                  textAlign="center"
+                  color="primary"
+                >
+                  {content}
+                </CardText>
+              </Card>
+            )
+          )}
       </Flex>
     </Layout>
   )
