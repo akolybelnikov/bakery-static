@@ -69,7 +69,7 @@ const Category = ({
       "productName",
       "ingridients.ingridients",
       "description.internal.content",
-      "filling",
+      "filling.name",
     ],
   }
 
