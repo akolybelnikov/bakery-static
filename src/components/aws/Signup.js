@@ -46,6 +46,7 @@ const Card = styled(RebassCard).attrs({
 })`
   position: relative;
   min-width: 350px;
+  max-width: 450px;
   @media all and (max-width: 350px) {
     min-width: 300px;
   }
