@@ -1,11 +1,11 @@
 import Img from "gatsby-image/withIEPolyfill"
 import React from "react"
-import { Card, Flex, Text, Box } from "rebass"
+import { Box, Card, Flex, Text } from "rebass"
 import styled from "styled-components"
 import Social from "../components/sociallinks"
+import { theme } from "../utils/styles"
 import { parseIngridients } from "../utils/utils"
 import Accordion from "./accordion"
-import { theme } from "../utils/styles"
 
 const PhoneButton = styled.a`
   color: ${props => props.theme.colors.secondary};

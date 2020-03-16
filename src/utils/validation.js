@@ -34,6 +34,9 @@ export const validateEmail = value => {
     : null
 }
 
+export const validateAlphabetic = value =>
+  !lower.test(value) && !upper.test(value)
+
 export const validatePassword = value => {
   switch (true) {
     case validateNotNull(value):

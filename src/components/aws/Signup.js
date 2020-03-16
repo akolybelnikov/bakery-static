@@ -1,5 +1,5 @@
 import { Auth } from "aws-amplify"
-import { navigate } from "gatsby"
+import { navigate, Link } from "gatsby"
 import { Form, Text } from "informed"
 import React, { useRef, useState } from "react"
 import { FaEye } from "react-icons/fa"
@@ -71,6 +71,10 @@ const OutlinedButton = styled(RebassButton).attrs({
 })`
   cursor: pointer;
   letter-spacing: 1px;
+`
+
+const Signin = styled(Flex)`
+  border-block-end: 4px dotted ${props => props.theme.colors.secondary};
 `
 
 const SignUp = ({ onStateChange, authState, username, setUsername }) => {
@@ -282,7 +286,7 @@ const SignUp = ({ onStateChange, authState, username, setUsername }) => {
       <LoadingModal open={modalOpen} hideLoading={hideLoading} />
       {authState === "signUp" && (
         <>
-          <Heading py={[2, 4]} color="primary">
+          <Heading py={[4]} color="primary">
             Регистрация пользователя
           </Heading>
           <Form apiRef={apiRef}>
@@ -381,14 +385,19 @@ const SignUp = ({ onStateChange, authState, username, setUsername }) => {
                 </OutlinedButton>
               </Box>
 
-              <Flex justifyContent="space-between" alignItems="center">
+              <Signin
+                mb={[2]}
+                pb={[2]}
+                justifyContent="space-between"
+                alignItems="center"
+              >
                 <RebassText fontSize={[1, 2]} color="#282828;">
                   Зарегистрированы?
                 </RebassText>
                 <Button type="button" onClick={() => onStateChange("signIn")}>
                   Войти
                 </Button>
-              </Flex>
+              </Signin>
 
               <BottomSheet
                 toggle={closeSheet}
@@ -396,6 +405,15 @@ const SignUp = ({ onStateChange, authState, username, setUsername }) => {
                 children={message}
                 color={error ? theme.colors.red : theme.colors.primary}
               />
+              <RebassText fontSize={["12px", "14px"]} color="#282828;">
+                * Заполняя данную форму, Вы выражаете свое согласие с нашей
+                политикой обработки персональных данных
+              </RebassText>
+              <RebassText py={1} width={1} fontSize={["12px", "14px"]}>
+                <Link aria-label="Privacy policy" to={`/privacy`}>
+                  Ознакомиться
+                </Link>
+              </RebassText>
             </Card>
           </Form>
         </>

@@ -1,5 +1,5 @@
 import Img from "gatsby-image/withIEPolyfill"
-import React, { Fragment, useState } from "react"
+import React, { useState } from "react"
 import Modal from "react-responsive-modal"
 import { Button, Card, Flex } from "rebass"
 import styled from "styled-components"
@@ -28,7 +28,9 @@ const Container = styled(Flex)`
   position: relative;
 `
 
-const StyledCard = styled(Card)`
+const StyledCard = styled(Card).attrs({
+  width: [3 / 10],
+})`
   background: ${props => props.theme.colors.primaryBR3};
 `
 
@@ -38,9 +40,12 @@ const Image = styled(Img)`
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   background: white;
+  @media (min-width: 1199px) {
+    height: 25vw;
+  }
 `
 
-export default ({ products, location }) => {
+const ProductFeed = ({ products, location }) => {
   const [open, setOpen] = useState(false)
   const toggle = () => setOpen(!open)
 
@@ -51,13 +56,12 @@ export default ({ products, location }) => {
   }
 
   return (
-    <Fragment>
+    <>
       <Container mb={4} flexWrap={"wrap"}>
         {products.map(({ category: { name }, image, productName }, index) => {
           return (
             <StyledCard
               key={index}
-              width={3 / 10}
               mx={"auto"}
               my={3}
               borderRadius={12}
@@ -107,6 +111,8 @@ export default ({ products, location }) => {
           }
         />
       )}
-    </Fragment>
+    </>
   )
 }
+
+export default ProductFeed

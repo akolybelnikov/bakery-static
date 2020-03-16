@@ -8,7 +8,7 @@ import { theme } from "../../utils/styles"
 const Flex = styled(RebassFlex).attrs({
   alignItems: "center",
   justifyContent: "center",
-  pt: [3]
+  pt: [3],
 })`
   position: relative;
   height: 100%;
@@ -30,13 +30,18 @@ const styles = {
   overflow: "hidden",
   position: "absolute",
   bottom: 0,
-  left: 0,
-  background: theme.colors.secondary,
-  width: '100%',
-  padding: '0 8px'
+  padding: "12px",
 }
 
-export default ({ children, toggle, open, color }) => {
+export default ({
+  children,
+  toggle,
+  open,
+  color,
+  width,
+  left,
+  backgroundColor,
+}) => {
   return (
     <Spring
       from={{ height: 0, opacity: 0 }}
@@ -46,9 +51,19 @@ export default ({ children, toggle, open, color }) => {
       }}
     >
       {style => (
-        <animated.div style={{ ...style, ...styles }}>
+        <animated.div
+          style={{
+            ...style,
+            ...styles,
+            ...{
+              width: width || `100%`,
+              left: left || 0,
+              background: backgroundColor || theme.colors.secondary,
+            },
+          }}
+        >
           <Flex>
-            <Text color={color} fontSize={[1]} textAlign="center">
+            <Text color={color} fontSize={[1, 2]} textAlign="center">
               {children}
             </Text>
             <Button onClick={toggle}>
