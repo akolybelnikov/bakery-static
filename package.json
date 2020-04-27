@@ -87,5 +87,9 @@
         "serve": "gatsby serve",
         "inspect": "node --inspect node_modules/.bin/gatsby build",
         "test": "jest"
+    },
+    "resolutions": {
+        "@aws-amplify/analytics": "1.2.16",
+        "@aws-amplify/auth": "1.2.24"
     }
 }
