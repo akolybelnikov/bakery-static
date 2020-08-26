@@ -150,8 +150,6 @@ const ResetPassword = ({ onStateChange, authState, username, setUsername }) => {
       errors,
     } = apiRef.current.getState()
 
-    console.log(password, confirmpassword, errors)
-
     return !confirmpassword
       ? "Подтвердите пароль"
       : confirmpassword !== password
