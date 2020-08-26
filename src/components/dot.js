@@ -29,13 +29,9 @@ export default ({ onClick, index, active }) => {
     onClick(event, index)
   }
 
-  let styleDot
-
-  if (active) {
-    styleDot = Object.assign({}, styles.dot, styles.active)
-  } else {
-    styleDot = styles.dot
-  }
+  const styleDot = active
+    ? Object.assign({}, styles.dot, styles.active)
+    : styles.dots
 
   return (
     <Button style={styles.root} onClick={handleClick}>

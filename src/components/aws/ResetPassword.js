@@ -60,6 +60,7 @@ const OutlinedButton = styled(RebassButton).attrs({
 
 const ResetPassword = ({ onStateChange, authState, username, setUsername }) => {
   const [attribute, setAttribute] = useState("password")
+  const [confirmAttribute, setConfirmAttribute] = useState("password")
   const [error, setError] = useState(false)
   const [open, setSheet] = useState(false)
   const [active, setActive] = useState({
@@ -137,17 +138,25 @@ const ResetPassword = ({ onStateChange, authState, username, setUsername }) => {
     attribute === "password" ? setAttribute("text") : setAttribute("password")
   }
 
+  const toggleConfirmAttr = () => {
+    confirmAttribute === "password"
+      ? setConfirmAttribute("text")
+      : setConfirmAttribute("password")
+  }
+
   const passwordMatch = apiRef => {
     const {
       values: { password, confirmpassword },
       errors,
     } = apiRef.current.getState()
 
-    return errors.confirmpassword
+    console.log(password, confirmpassword, errors)
+
+    return !confirmpassword
       ? "Подтвердите пароль"
       : confirmpassword !== password
       ? "Пароль не совпадает с указанным"
-      : undefined
+      : null
   }
 
   const sendcode = async form => {
@@ -369,7 +378,7 @@ const ResetPassword = ({ onStateChange, authState, username, setUsername }) => {
                   <Text
                     validateOnBlur
                     validateOnChange
-                    type={"password"}
+                    type={confirmAttribute}
                     field="confirmpassword"
                     id="confirmpassword"
                     placeholder="Подтвердите пароль"
@@ -378,7 +387,7 @@ const ResetPassword = ({ onStateChange, authState, username, setUsername }) => {
                     validate={() => passwordMatch(apiRef)}
                   />
                 </Field>
-                <Icon onClick={toggleAttr}>
+                <Icon onClick={toggleConfirmAttr}>
                   <FaEye />
                 </Icon>
               </Flex>

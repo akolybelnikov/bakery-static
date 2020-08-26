@@ -11,12 +11,12 @@ const Field = styled(Flex).attrs({
   height: 56px;
   border-radius: 4px;
   position: relative;
-  background-color: ${theme.colors.primary};
+  background-color: ${theme.colors.secondaryWashed};
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
 
   &:hover {
-    background-color: ${theme.colors.primaryBR4};
-    box-shadow: 0 2px 8px ${theme.colors.primaryBR2};
+    background-color: ${theme.colors.secondary};
+    box-shadow: 0 2px 8px ${theme.colors.secondary};
 
     input::-webkit-input-placeholder {
       color: ${theme.colors.primary};
@@ -40,19 +40,19 @@ const Field = styled(Flex).attrs({
     box-shadow: 0 2px 8px ${theme.colors.primary};
     
     input::-webkit-input-placeholder {
-      color: rgba(255, 255, 255, 1);
+      color: rgba(0,0,0,1);
     }
   
     input::-moz-placeholder {
-      color: rgba(255, 255, 255, 1);
+      color: rgba(0,0,0,1);
     }
   
     input:-ms-input-placeholder {
-      color: rgba(255, 255, 255, 1);
+      color: rgba(0,0,0,1);
     }
   
     input:-moz-placeholder {
-      color: rgba(255, 255, 255, 1);
+      color: rgba(0,0,0,1);
     }
   
   }
@@ -83,7 +83,7 @@ const Field = styled(Flex).attrs({
     font-weight: normal;
     line-height: normal;
     background-color: transparent;
-    color: #282828;
+    color: black;
     outline: none;
     box-shadow: 0px 4px 20px 0px transparent;
     transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out,
@@ -92,19 +92,19 @@ const Field = styled(Flex).attrs({
   }
 
   input::-webkit-input-placeholder {
-    color: rgba(255, 255, 255, 1);
+    color: rgba(0,0,0,1);
   }
 
   input::-moz-placeholder {
-    color: rgba(255, 255, 255, 1);
+    color: rgba(0,0,0,1);
   }
 
   input:-ms-input-placeholder {
-    color: rgba(255, 255, 255, 1);
+    color: rgba(0,0,0,1);
   }
 
   input:-moz-placeholder {
-    color: rgba(255, 255, 255, 1);
+    color: rgba(0,0,0,1);
   }
 
   input + label {
@@ -134,7 +134,7 @@ export default ({ label, error, locked, active, children, id, value }) => {
     <Field className={fieldClassName}>
       {children}
       <label htmlFor={id} className={error && "error"}>
-        {error || label}
+        {error ? error : label}
       </label>
     </Field>
   )

@@ -167,11 +167,6 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img
-                src="https://copyright.ru/images/TMCIMG/copyright_2.gif"
-                alt="www.copyright.ru"
-                title="Copyright защита прав"
-              />
             </StyledLink>
           </Text>
           <Text py={1} width={1}>

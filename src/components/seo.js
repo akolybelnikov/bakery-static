@@ -78,13 +78,6 @@ function SEO({ description, lang, meta, title }) {
             src="https://www.facebook.com/tr?id=549514382358073&ev=PageView&noscript=1" />
         `}
       </noscript>
-      <script
-        src="https://cdn.lr-ingest.io/LogRocket.min.js"
-        crossorigin="anonymous"
-      ></script>
-      <script>
-        {`window.LogRocket && window.LogRocket.init('6tlyrx/vsebulochki');`}
-      </script>
     </Helmet>
   )
 }

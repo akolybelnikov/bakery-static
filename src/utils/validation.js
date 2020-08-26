@@ -52,7 +52,7 @@ export const validatePassword = value => {
     case validateSpecial(value):
       return special_invalid
     default:
-      return undefined
+      return null
   }
 }
 
