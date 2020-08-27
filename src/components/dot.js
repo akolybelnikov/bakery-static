@@ -13,15 +13,12 @@ const styles = {
     marginRight: 6,
   },
   dot: {
-    backgroundColor: "#e4e6e7",
+    backgroundColor: theme.colors.secondary,
     height: 16,
     width: 16,
     borderRadius: 8,
     margin: 6,
-  },
-  active: {
-    backgroundColor: theme.colors.primary,
-  },
+  }
 }
 
 export default ({ onClick, index, active }) => {
@@ -29,13 +26,16 @@ export default ({ onClick, index, active }) => {
     onClick(event, index)
   }
 
-  const styleDot = active
-    ? Object.assign({}, styles.dot, styles.active)
-    : styles.dots
-
   return (
     <Button style={styles.root} onClick={handleClick}>
-      <div style={styleDot} />
+      <div
+        style={{
+          ...styles.dot,
+          backgroundColor: active
+            ? theme.colors.primary
+            : theme.colors.secondary,
+        }}
+      />
     </Button>
   )
 }
