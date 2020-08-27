@@ -146,8 +146,7 @@ const ResetPassword = ({ onStateChange, authState, username, setUsername }) => {
 
   const passwordMatch = apiRef => {
     const {
-      values: { password, confirmpassword },
-      errors,
+      values: { password, confirmpassword }
     } = apiRef.current.getState()
 
     return !confirmpassword

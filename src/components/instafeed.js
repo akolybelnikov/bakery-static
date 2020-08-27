@@ -59,7 +59,7 @@ export default () => {
               i
             ) => {
               const lastSpace = caption.normalize().substring(0, 170).lastIndexOf(" ")
-
+console.log(timestamp)
               return (
                 <Card
                   key={i}
@@ -73,7 +73,7 @@ export default () => {
                 >
                   <Flex justifyContent="space-between" mb={2}>
                     <Text>
-                      <Moment unix locale="ru" format="LL">
+                      <Moment locale="ru" format="LL">
                         {timestamp}
                       </Moment>
                     </Text>
