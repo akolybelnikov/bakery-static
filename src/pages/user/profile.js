@@ -1,9 +1,10 @@
 import { Auth } from "aws-amplify"
-import { navigate } from "gatsby"
+import { Link, navigate } from "gatsby"
 import React from "react"
 import { Button, Flex as FlexRebass, Heading, Text } from "rebass"
 import styled from "styled-components"
 import { getCurrentUser, isLoggedIn, logout } from "../../utils/auth"
+import { baseLink } from "../../utils/styles"
 
 const Flex = styled(FlexRebass).attrs({
   py: [2],
@@ -32,6 +33,11 @@ const Profile = () => {
           <Text textAlign="center" color="primary">
             Вы зарегистрированы с адресом эл. почты: <b>{user.email}</b>
           </Text>
+          <Button variant="primary" width={[1, 1 / 2, 1 / 3]}>
+            <Link style={baseLink} to={"/shopping-cart"}>
+              Моя корзина
+            </Link>
+          </Button>
           <Button
             variant="primary"
             width={[1, 1 / 2, 1 / 3]}

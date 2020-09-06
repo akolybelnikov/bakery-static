@@ -1,8 +1,8 @@
 import { navigate } from "gatsby"
 import React from "react"
 import { Button, Flex } from "rebass"
-import Dropdown from "./dropdown"
 import { isLoggedIn } from "../utils/auth"
+import Dropdown from "./dropdown"
 
 export default ({ location }) => {
   return (
@@ -28,11 +28,17 @@ export default ({ location }) => {
           Новости
         </Button>
       )}
-      {(location.pathname !== "/auth" && !location.pathname.includes('user')) && (
+      {location.pathname !== "/auth" && !location.pathname.includes("user") && (
         <Button onClick={() => navigate("/user/profile")} variant="outline">
           {!isLoggedIn() ? "Вход пользователя" : "Мой профиль"}
         </Button>
       )}
+      {location.pathname !== "/shopping-cart" &&
+        !location.pathname.includes("user") && (
+          <Button onClick={() => navigate("/shopping-cart")} variant="outline">
+            Корзина
+          </Button>
+        )}
     </Flex>
   )
 }
