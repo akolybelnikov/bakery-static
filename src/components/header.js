@@ -5,9 +5,11 @@ import Responsive from "react-responsive"
 import { Flex } from "rebass"
 import styled from "styled-components"
 import Navbar from "../components/navbar"
-import { baseLink } from "../utils/styles"
+import { baseLink, theme } from "../utils/styles"
+import Cart from "./svg/cart"
 
 const Default = props => <Responsive {...props} minWidth={900} />
+const Touch = props => <Responsive {...props} maxWidth={899} />
 
 const Image = styled(Img)`
   width: 150px;
@@ -33,7 +35,20 @@ const Header = ({ location }) => {
                 <Link style={{ ...baseLink, flex: `0 0 20%` }} to={`/`}>
                   <Image fluid={logo} />
                 </Link>
-                <Flex alignItems="center" style={{ flex: `auto` }}>
+                <Flex
+                  justifyContent="center"
+                  alignItems="center"
+                  style={{ flex: `auto` }}
+                >
+                  <Touch>
+                    <Link style={baseLink} to={`/shopping-cart`}>
+                      <Cart
+                        width={70}
+                        height={70}
+                        fill={theme.colors.primary}
+                      />
+                    </Link>
+                  </Touch>
                   <Default>
                     <Navbar location={location} />
                   </Default>
