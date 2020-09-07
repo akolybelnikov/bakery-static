@@ -1,9 +1,9 @@
 import { Link } from "gatsby"
 import React from "react"
 import { Box, Flex, Text } from "rebass"
-import { isLoggedIn } from "../utils/auth"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import { isLoggedIn } from "../utils/auth"
 
 const ShoppingCart = ({ location }) => {
   const pageTitle = "Корзина покупателя"
