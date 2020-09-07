@@ -1,5 +1,15 @@
 import React, { createContext, useContext, useReducer } from "react"
 
+class Product {
+  constructor(image, productName, weight, price, filling) {
+    this.image = image
+    this.productName = productName
+    this.price = price
+    this.filling = filling
+    this.weight = weight
+  }
+}
+
 const initialState = {
   products: [],
 }
@@ -11,15 +21,19 @@ const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer((state, action) => {
     switch (action.type) {
       case "ADD_PRODUCT":
-        return {
-          ...initialState,
-          products: [...initialState.products, ...state.products],
-        }
+        const product = new Product(
+          action.image,
+          action.productName,
+          action.weight,
+          action.price,
+          action.filling
+        )
+        return { products: [...state.products, product] }
       case "REMOVE_PRODUCT":
-        return {
-          ...initialState,
-          products: [...initialState.products, ...state.products],
-        }
+        const products = state.products.filter(
+          p => p.productName !== action.productName
+        )
+        return { products }
       default:
         throw new Error()
     }

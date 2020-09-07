@@ -30,14 +30,20 @@ const ShoppingCart = ({ location }) => {
             justifyContent="center"
             alignItems="center"
           >
-            <Text as="h4" color="primary">{`Корзина пуста`}</Text>
-            {!isLoggedIn() && (
+            {!shoppingCart.products.length && (
+              <Text as="h4" color="primary">{`Корзина пуста`}</Text>
+            )}
+            {!isLoggedIn() && !shoppingCart.products.length && (
               <Text as="h6" pt={[4]} textAlign="center" maxWidth={["80vw"]}>
                 {"Если в корзине были товары – "}
                 <Link to={"/auth"}>войдите</Link>
                 {", чтобы посмотреть список."}
               </Text>
             )}
+            {shoppingCart.products &&
+              shoppingCart.products.map((item, i) => (
+                <p key={i}>{item.productName}</p>
+              ))}
           </Flex>
         </Box>
       </Flex>

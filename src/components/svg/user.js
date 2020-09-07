@@ -30,28 +30,28 @@ export default ({ width, height, fill }) => {
       <path
         d="M21.8 7.5H31.9"
         stroke={fill}
-        stroke-linecap="round"
+        strokeLinecap="round"
         strokemitterlimit="10"
         strokeWidth="1"
       />
       <path
         d="M21.8 11.2H31.9"
         stroke={fill}
-        stroke-linecap="round"
+        strokeLinecap="round"
         strokemitterlimit="10"
         strokeWidth="1"
       />
       <path
         d="M21.8 14.8H31.9"
         stroke={fill}
-        stroke-linecap="round"
+        strokeLinecap="round"
         strokemitterlimit="10"
         strokeWidth="1"
       />
       <path
         d="M21.8 18.5H31.9"
         stroke={fill}
-        stroke-linecap="round"
+        strokeLinecap="round"
         strokemitterlimit="10"
         strokeWidth="1"
       />

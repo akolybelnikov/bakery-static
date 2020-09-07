@@ -107,7 +107,7 @@ const ProductFeed = ({ products, location }) => {
             </>
           }
           children={
-            <ProductCard product={products[current]} location={location} />
+            <ProductCard product={products[current]} location={location} toggle={toggle} />
           }
         />
       )}

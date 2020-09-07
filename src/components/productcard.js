@@ -1,9 +1,9 @@
 import Img from "gatsby-image/withIEPolyfill"
 import React from "react"
-import { Card, Flex, Heading, Text } from "rebass"
+import { Button, Card, Flex, Heading, Text } from "rebass"
 import styled from "styled-components"
 import Social from "../components/sociallinks"
-import { useCartDispatch, useCartState } from "../state/cart"
+import { useCartDispatch } from "../state/cart"
 import { theme } from "../utils/styles"
 import { parseIngridients } from "../utils/utils"
 
@@ -40,11 +40,20 @@ export default ({
     filling,
   },
   location,
+  toggle,
 }) => {
   const dispatch = useCartDispatch()
-  console.log(dispatch)
-  const cart = useCartState()
-  console.log(cart)
+  const addProductToCart = () => {
+    dispatch({
+      type: "ADD_PRODUCT",
+      image,
+      productName,
+      filling,
+      weight,
+      price,
+    })
+    toggle()
+  }
 
   return (
     <Card bg="secondary" pb={4} borderRadius={12}>
@@ -123,15 +132,31 @@ export default ({
       )}
       <hr style={{ background: theme.colors.primary, margin: `20px` }} />
       <Flex p={2} justifyContent="space-around" alignItems="center">
-        <Text color="primary" fontSize={1}>
-          Закажи по телефону:
-        </Text>
-        <PhoneButton href="tel:+79266298726" target="_self" name="phone number">
-          +7 (926) 629 87 26
-        </PhoneButton>
-        <PhoneButton href="tel:+79269823572" target="_self" name="phone number">
-          +7 (926) 982 35 72
-        </PhoneButton>
+        {category.name === "order" ? (
+          <>
+            <Text color="primary" fontSize={1}>
+              Закажи по телефону:
+            </Text>
+            <PhoneButton
+              href="tel:+79266298726"
+              target="_self"
+              name="phone number"
+            >
+              +7 (926) 629 87 26
+            </PhoneButton>
+            <PhoneButton
+              href="tel:+79269823572"
+              target="_self"
+              name="phone number"
+            >
+              +7 (926) 982 35 72
+            </PhoneButton>
+          </>
+        ) : (
+          <Button variant="inverted" onClick={addProductToCart}>
+            В корзину
+          </Button>
+        )}
       </Flex>
       <Flex px={2} flexDirection="column" alignItems="space-around">
         <Text

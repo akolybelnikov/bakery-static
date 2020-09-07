@@ -20,8 +20,18 @@ const theme = {
     primary: {
       color: primary,
       backgroundColor: "transparent",
-      bcursor: "pointer",
+      cursor: "pointer",
       border: `1px solid ${primary}`,
+    },
+    inverted: {
+      color: "white",
+      backgroundColor: primary,
+      cursor: "pointer",
+      border: `1px solid ${primary}`,
+      outline: "none",
+      fontSize: 18,
+      lineHeight: 1.5,
+      transition: "all 200ms ease-in",
     },
     clear: {
       color: primary,
