@@ -5,8 +5,10 @@ import Responsive from "react-responsive"
 import { Flex } from "rebass"
 import styled from "styled-components"
 import Navbar from "../components/navbar"
+import { isLoggedIn } from "../utils/auth"
 import { baseLink, theme } from "../utils/styles"
 import Cart from "./svg/cart"
+import User from "./svg/user"
 
 const Default = props => <Responsive {...props} minWidth={900} />
 const Touch = props => <Responsive {...props} maxWidth={899} />
@@ -41,13 +43,36 @@ const Header = ({ location }) => {
                   style={{ flex: `auto` }}
                 >
                   <Touch>
-                    <Link style={baseLink} to={`/shopping-cart`}>
-                      <Cart
-                        width={70}
-                        height={70}
-                        fill={theme.colors.primary}
-                      />
-                    </Link>
+                    {location.pathname !== "/shopping-cart" &&
+                      !location.pathname.includes("user") && (
+                        <Link
+                          style={{ ...baseLink, paddingBlockEnd: "0.35rem" }}
+                          to={`/shopping-cart`}
+                        >
+                          <Cart
+                            width={60}
+                            height={60}
+                            fill={theme.colors.primary}
+                          />
+                        </Link>
+                      )}
+                    {location.pathname !== "/auth" &&
+                      !location.pathname.includes("user") && (
+                        <Link
+                          style={{
+                            ...baseLink,
+                            paddingInlineStart: "1rem",
+                            paddingBlockEnd: "0.25rem",
+                          }}
+                          to={isLoggedIn() ? `/user/profile` : `/auth`}
+                        >
+                          <User
+                            width={45}
+                            height={35}
+                            fill={theme.colors.primary}
+                          />
+                        </Link>
+                      )}
                   </Touch>
                   <Default>
                     <Navbar location={location} />

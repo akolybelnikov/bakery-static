@@ -91,7 +91,7 @@ const menuStyles = {
   },
   bmBurgerBars: {
     background: theme.colors.primary,
-    height: "18%",
+    height: "10%",
   },
   bmBurgerBarsHover: {
     background: "#a90000",

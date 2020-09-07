@@ -80,7 +80,7 @@ const ProductFeed = ({ products, location }) => {
               >
                 <Button
                   onClick={() => handleClick(index)}
-                  fontWeight={"lighter"}
+                  style={{fontWeight: 300}}
                   variant="clear"
                 >
                   {productName}

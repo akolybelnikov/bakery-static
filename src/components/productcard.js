@@ -3,6 +3,7 @@ import React from "react"
 import { Card, Flex, Heading, Text } from "rebass"
 import styled from "styled-components"
 import Social from "../components/sociallinks"
+import { useCartDispatch, useCartState } from "../state/cart"
 import { theme } from "../utils/styles"
 import { parseIngridients } from "../utils/utils"
 
@@ -40,6 +41,11 @@ export default ({
   },
   location,
 }) => {
+  const dispatch = useCartDispatch()
+  console.log(dispatch)
+  const cart = useCartState()
+  console.log(cart)
+
   return (
     <Card bg="secondary" pb={4} borderRadius={12}>
       {image && (

@@ -3,10 +3,15 @@ import React from "react"
 import { Box, Flex, Text } from "rebass"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import { useCartDispatch, useCartState } from "../state/cart"
 import { isLoggedIn } from "../utils/auth"
 
 const ShoppingCart = ({ location }) => {
   const pageTitle = "Корзина покупателя"
+  const shoppingCart = useCartState()
+  console.log(shoppingCart)
+  const dispatch = useCartDispatch()
+  console.log(dispatch)
 
   return (
     <Layout location={location} title={pageTitle}>
