@@ -31,7 +31,7 @@ const Container = styled(Flex)`
 const StyledCard = styled(Card).attrs({
   width: [3 / 10],
 })`
-  background: ${props => props.theme.colors.primaryBR3};
+  background: ${props => props.theme.colors.secondary};
 `
 
 const Image = styled(Img)`
@@ -80,7 +80,7 @@ const ProductFeed = ({ products, location }) => {
               >
                 <Button
                   onClick={() => handleClick(index)}
-                  style={{fontWeight: 300}}
+                  style={{ fontWeight: 400 }}
                   variant="clear"
                 >
                   {productName}
@@ -107,7 +107,11 @@ const ProductFeed = ({ products, location }) => {
             </>
           }
           children={
-            <ProductCard product={products[current]} location={location} toggle={toggle} />
+            <ProductCard
+              product={products[current]}
+              location={location}
+              toggle={toggle}
+            />
           }
         />
       )}

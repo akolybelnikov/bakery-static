@@ -1,6 +1,11 @@
-const React = require("react")
-const { CartProvider } = require("./src/state/cart")
+import React from "react"
+import TopLayout from "./src/config/TopLayout"
+import { CartProvider } from "./src/state/cart"
 
-exports.wrapRootElement = ({ element }) => {
-  return <CartProvider>{element}</CartProvider>
+export const wrapRootElement = ({ element }) => {
+  return (
+    <TopLayout>
+      <CartProvider>{element}</CartProvider>
+    </TopLayout>
+  )
 }

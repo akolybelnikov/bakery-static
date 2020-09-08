@@ -1,11 +1,12 @@
 import Img from "gatsby-image/withIEPolyfill"
 import React from "react"
-import { Box, Card, Flex, Text } from "rebass"
+import { Box, Card, Flex, Text, Button } from "rebass"
 import styled from "styled-components"
 import Social from "../components/sociallinks"
 import { theme } from "../utils/styles"
 import { parseIngridients } from "../utils/utils"
 import Accordion from "./accordion"
+import { useCartDispatch } from "../state/cart"
 
 const PhoneButton = styled.a`
   color: ${props => props.theme.colors.secondary};
@@ -27,7 +28,7 @@ const Container = styled(Flex)`
   }
 `
 const StyledCard = styled(Card)`
-  background: ${props => props.theme.colors.primaryBR4};
+  background: ${props => props.theme.colors.secondary};
 `
 
 const Image = styled(Img)`
@@ -40,6 +41,8 @@ const Image = styled(Img)`
 const StyledText = styled(Text)``
 
 export default ({ products, location }) => {
+  const dispatch = useCartDispatch()
+
   return (
     <Container mb={4} flexWrap="wrap">
       {products.map(
@@ -58,6 +61,16 @@ export default ({ products, location }) => {
           },
           index
         ) => {
+          const addProductToCart = () => {
+            dispatch({
+              type: "ADD_PRODUCT",
+              image,
+              productName,
+              filling,
+              weight,
+              price,
+            })
+          }
           return (
             <StyledCard
               key={index}
@@ -142,20 +155,28 @@ export default ({ products, location }) => {
                   justifyContent="space-around"
                   alignItems="center"
                 >
-                  <PhoneButton
-                    href="tel:+79266298726"
-                    target="_self"
-                    name="phone number"
-                  >
-                    +7 (926) 629 87 26
-                  </PhoneButton>
-                  <PhoneButton
-                    href="tel:+79269823572"
-                    target="_self"
-                    name="phone number"
-                  >
-                    +7 (926) 982 35 72
-                  </PhoneButton>
+                  {name === "order" ? (
+                    <>
+                      <PhoneButton
+                        href="tel:+79266298726"
+                        target="_self"
+                        name="phone number"
+                      >
+                        +7 (926) 629 87 26
+                      </PhoneButton>
+                      <PhoneButton
+                        href="tel:+79269823572"
+                        target="_self"
+                        name="phone number"
+                      >
+                        +7 (926) 982 35 72
+                      </PhoneButton>
+                    </>
+                  ) : (
+                    <Button variant="inverted" onClick={addProductToCart}>
+                      В корзину
+                    </Button>
+                  )}
                 </Flex>
                 <Flex
                   px={1}

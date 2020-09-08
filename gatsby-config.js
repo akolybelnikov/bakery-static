@@ -43,8 +43,14 @@ module.exports = {
     `gatsby-plugin-sharp`,
     `gatsby-plugin-react-helmet`,
     {
-      resolve: `gatsby-plugin-styled-components`,
+      resolve: `gatsby-plugin-material-ui`,
+      options: {
+        stylesProvider: {
+          injectFirst: true,
+        },
+      },
     },
+    `gatsby-plugin-styled-components`,
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
@@ -80,13 +86,6 @@ module.exports = {
         },
       },
     },
-    // {
-    //   resolve: `gatsby-plugin-offline`,
-    //   options: {
-    //     importScripts: [`sw-extension.js`],
-    //   }
-    // },
-    // `gatsby-plugin-remove-serviceworker`,
     `gatsby-plugin-offline`,
     {
       resolve: `gatsby-plugin-typography`,

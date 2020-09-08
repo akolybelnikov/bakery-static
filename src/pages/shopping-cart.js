@@ -9,9 +9,8 @@ import { isLoggedIn } from "../utils/auth"
 const ShoppingCart = ({ location }) => {
   const pageTitle = "Корзина покупателя"
   const shoppingCart = useCartState()
-  console.log(shoppingCart)
+  const { products } = shoppingCart
   const dispatch = useCartDispatch()
-  console.log(dispatch)
 
   return (
     <Layout location={location} title={pageTitle}>
@@ -30,20 +29,31 @@ const ShoppingCart = ({ location }) => {
             justifyContent="center"
             alignItems="center"
           >
-            {!shoppingCart.products.length && (
+            {!products.length && (
               <Text as="h4" color="primary">{`Корзина пуста`}</Text>
             )}
-            {!isLoggedIn() && !shoppingCart.products.length && (
+            {!isLoggedIn() && !products.length && (
               <Text as="h6" pt={[4]} textAlign="center" maxWidth={["80vw"]}>
                 {"Если в корзине были товары – "}
                 <Link to={"/auth"}>войдите</Link>
                 {", чтобы посмотреть список."}
               </Text>
             )}
-            {shoppingCart.products &&
-              shoppingCart.products.map((item, i) => (
-                <p key={i}>{item.productName}</p>
-              ))}
+            {products.map((product, i) => {
+              return (
+                <p
+                  key={i}
+                  onClick={() =>
+                    dispatch({
+                      type: "REMOVE_PRODUCT",
+                      productName: product.productName,
+                    })
+                  }
+                >
+                  {product.productName} - {product.count}
+                </p>
+              )
+            })}
           </Flex>
         </Box>
       </Flex>

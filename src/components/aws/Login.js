@@ -35,6 +35,7 @@ const OutlinedButton = styled(RebassButton).attrs({
   color: "#fff",
   backgroundColor: theme.colors.primary,
   fontWeight: "normal",
+  fontFamily: `'Roboto Slab',sans-serif`,
   fontSize: 16,
   width: [1 / 2],
 })`

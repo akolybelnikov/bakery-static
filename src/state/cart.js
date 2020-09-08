@@ -1,13 +1,18 @@
 import React, { createContext, useContext, useReducer } from "react"
+import { Product } from "../models/Project"
 
-class Product {
-  constructor(image, productName, weight, price, filling) {
-    this.image = image
-    this.productName = productName
-    this.price = price
-    this.filling = filling
-    this.weight = weight
-  }
+const updateObject = (oldObject, newValues) =>
+  Object.assign({}, oldObject, newValues)
+
+const updateItemInArray = (array, productName, updateItemCb) => {
+  const updatedItems = array.map(item => {
+    if (item.productName !== productName) {
+      return item
+    }
+    const updatedItem = updateItemCb(item)
+    return updatedItem
+  })
+  return updatedItems
 }
 
 const initialState = {
@@ -20,22 +25,33 @@ const CartDispatchContext = createContext()
 const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer((state, action) => {
     switch (action.type) {
-      case "ADD_PRODUCT":
-        const product = new Product(
-          action.image,
-          action.productName,
-          action.weight,
-          action.price,
-          action.filling
+      case "ADD_PRODUCT": {
+        const idx = state.products.findIndex(
+          product => product.productName === action.productName
         )
-        return { products: [...state.products, product] }
+        const products =
+          idx === -1
+            ? state.products.concat({
+                ...new Product(action),
+                count: 1,
+                total: action.price,
+              })
+            : updateItemInArray(state.products, action.productName, product =>
+                updateObject(product, {
+                  count: product.count + 1,
+                  total: product.total + action.price,
+                })
+              )
+
+        return updateObject(state, { products })
+      }
       case "REMOVE_PRODUCT":
         const products = state.products.filter(
-          p => p.productName !== action.productName
+          item => item.productName !== action.productName
         )
-        return { products }
+        return Object.assign({}, state, { products })
       default:
-        throw new Error()
+        return state
     }
   }, initialState)
 

@@ -1,3 +1,4 @@
+import Badge from "@material-ui/core/Badge"
 import { graphql, Link, StaticQuery } from "gatsby"
 import Img from "gatsby-image/withIEPolyfill"
 import React from "react"
@@ -5,6 +6,7 @@ import Responsive from "react-responsive"
 import { Flex } from "rebass"
 import styled from "styled-components"
 import Navbar from "../components/navbar"
+import { useCartState } from "../state/cart"
 import { isLoggedIn } from "../utils/auth"
 import { baseLink, theme } from "../utils/styles"
 import Cart from "./svg/cart"
@@ -24,6 +26,8 @@ const Image = styled(Img)`
 `
 
 const Header = ({ location }) => {
+  const { products } = useCartState()
+
   return (
     <StaticQuery
       query={logoQuery}
@@ -45,16 +49,22 @@ const Header = ({ location }) => {
                   <Touch>
                     {location.pathname !== "/shopping-cart" &&
                       !location.pathname.includes("user") && (
-                        <Link
-                          style={{ ...baseLink, paddingBlockEnd: "0.35rem" }}
-                          to={`/shopping-cart`}
+                        <Badge
+                          badgeContent={products.length}
+                          color="secondary"
+                          overlap="circle"
                         >
-                          <Cart
-                            width={60}
-                            height={60}
-                            fill={theme.colors.primary}
-                          />
-                        </Link>
+                          <Link
+                            style={{ ...baseLink, paddingBlockEnd: "0.35rem" }}
+                            to={`/shopping-cart`}
+                          >
+                            <Cart
+                              width={60}
+                              height={60}
+                              fill={theme.colors.primary}
+                            />
+                          </Link>
+                        </Badge>
                       )}
                     {location.pathname !== "/auth" &&
                       !location.pathname.includes("user") && (
