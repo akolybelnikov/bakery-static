@@ -211,6 +211,7 @@ export default ({
           </Fragment>
         ) : (
           <Button
+            disableFocusRipple
             color="primary"
             variant="contained"
             onClick={addProductToCart}

@@ -15,6 +15,7 @@ import AddIcon from "@material-ui/icons/Add"
 import CakeIcon from "@material-ui/icons/Cake"
 import DeleteIcon from "@material-ui/icons/Delete"
 import RemoveIcon from "@material-ui/icons/Remove"
+import { window } from "browser-monads"
 import { Link } from "gatsby"
 import React, { Fragment } from "react"
 import { Box, Flex, Text } from "rebass"
@@ -56,23 +57,43 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const ShoppingCart = ({ location }) => {
+  // Page title
   const pageTitle = "Корзина покупателя"
+  // MaterialUI classes
   const classes = useStyles()
+  const matches = useMediaQuery("(max-width:899px)")
+  // State
   const shoppingCart = useCartState()
   const { products } = shoppingCart
   const dispatch = useCartDispatch()
-  const matches = useMediaQuery("(max-width:899px)")
+
+  const calculateTotal = () =>
+    products.reduce((total, item) => (total += item.total), 0)
+  const concatItems = () =>
+    products.reduce(
+      (list, item, idx) =>
+        `${list} ${idx !== 0 ? "/ " : " "}${item.productName} (${
+          item.count
+        }) - ${item.total} руб.`,
+      ""
+    )
 
   const showSuccessfulPurchase = order => console.log(order)
   const showFailurefulPurchase = order => console.log(order)
 
-  const checkout = () =>
+  const checkout = () => {
+    const amount = calculateTotal(),
+      description = concatItems()
+    ipayCheckout(amount, description)
+  }
+
+  const ipayCheckout = (amount, description) => {
     window.ipayCheckout(
       {
-        amount: 499.99,
+        amount,
         currency: "RUB",
         order_number: "",
-        description: "Н. В. Гоголь. Вечера на хуторе близ Диканьки",
+        description,
       },
       function(order) {
         showSuccessfulPurchase(order)
@@ -81,6 +102,7 @@ const ShoppingCart = ({ location }) => {
         showFailurefulPurchase(order)
       }
     )
+  }
 
   return (
     <Layout location={location} title={pageTitle}>
@@ -143,6 +165,7 @@ const ShoppingCart = ({ location }) => {
                           </Avatar>
                         </ListItemAvatar>
                         <ListItemText
+                          component="div"
                           classes={{
                             secondary: classes.secondary,
                             multiline: classes.multiline,
@@ -164,11 +187,11 @@ const ShoppingCart = ({ location }) => {
                                 {weight}. - {price} руб.
                               </Typography>
                               {ingridients ? (
-                                <Typography component="p" variant="caption">
+                                <Typography component="span" variant="caption">
                                   {ingridients.internal.content}
                                 </Typography>
                               ) : (
-                                <Typography component="p" variant="caption">
+                                <Typography component="span" variant="caption">
                                   {content}
                                 </Typography>
                               )}
