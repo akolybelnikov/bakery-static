@@ -7,8 +7,15 @@ import Header from "../components/header"
 import { theme } from "../utils/styles"
 import { rhythm } from "../utils/typography"
 import Menu from "./menu"
+import styled from "styled-components"
 
 const Mobile = props => <Responsive {...props} maxWidth={899} />
+
+const Main = styled.main`
+@media all and (min-width: 900px) {
+    padding-block-start: 9rem;
+  }
+`
 
 export default ({ location, children }) => {
   // const rootPath = `${__PATH_PREFIX__}/`
@@ -30,7 +37,7 @@ export default ({ location, children }) => {
           }}
         >
           <Header location={location} />
-          <main id="page-wrap">{children}</main>
+          <Main id="page-wrap">{children}</Main>
           <Footer />
         </Box>
       </Box>

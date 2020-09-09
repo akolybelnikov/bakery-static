@@ -6,11 +6,36 @@ import SEO from "../components/seo"
 import { useCartDispatch, useCartState } from "../state/cart"
 import { isLoggedIn } from "../utils/auth"
 
+const options = {
+  api_token: "YRF3C5RFICWISEWFR6GJ",
+  language: "en",
+  classNamePreloader: "payment-preloader",
+  preloadBorderColor: "#13a024",
+}
+
 const ShoppingCart = ({ location }) => {
   const pageTitle = "Корзина покупателя"
   const shoppingCart = useCartState()
   const { products } = shoppingCart
   const dispatch = useCartDispatch()
+
+  window.IPAY(options)
+
+  const checkout = () =>
+    window.ipayCheckout(
+      {
+        amount: 499.99,
+        currency: "RUB",
+        order_number: "",
+        description: "Н. В. Гоголь. Вечера на хуторе близ Диканьки",
+      },
+      function(order) {
+        window.showSuccessfulPurchase(order)
+      },
+      function(order) {
+        window.showFailurefulPurchase(order)
+      }
+    )
 
   return (
     <Layout location={location} title={pageTitle}>
@@ -55,6 +80,13 @@ const ShoppingCart = ({ location }) => {
               )
             })}
           </Flex>
+
+          <button
+            onClick={checkout}
+            className="btn btn-xs btn-outline btn-primary"
+          >
+            Купить
+          </button>
         </Box>
       </Flex>
     </Layout>

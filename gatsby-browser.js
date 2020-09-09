@@ -15,9 +15,11 @@ Auth.configure({
 
 export const wrapRootElement = ({ element }) => {
   return (
-    <TopLayout>
-      <CartProvider>{element}</CartProvider>
-    </TopLayout>
+    <>
+      <TopLayout>
+        <CartProvider>{element}</CartProvider>
+      </TopLayout>
+    </>
   )
 }
 
