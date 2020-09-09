@@ -1,5 +1,22 @@
+import Avatar from "@material-ui/core/Avatar"
+import Button from "@material-ui/core/Button"
+import ButtonGroup from "@material-ui/core/ButtonGroup"
+import Divider from "@material-ui/core/Divider"
+import IconButton from "@material-ui/core/IconButton"
+import List from "@material-ui/core/List"
+import ListItem from "@material-ui/core/ListItem"
+import ListItemAvatar from "@material-ui/core/ListItemAvatar"
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction"
+import ListItemText from "@material-ui/core/ListItemText"
+import { makeStyles } from "@material-ui/core/styles"
+import Typography from "@material-ui/core/Typography"
+import useMediaQuery from "@material-ui/core/useMediaQuery"
+import AddIcon from "@material-ui/icons/Add"
+import CakeIcon from "@material-ui/icons/Cake"
+import DeleteIcon from "@material-ui/icons/Delete"
+import RemoveIcon from "@material-ui/icons/Remove"
 import { Link } from "gatsby"
-import React from "react"
+import React, { Fragment } from "react"
 import { Box, Flex, Text } from "rebass"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -13,13 +30,41 @@ const options = {
   preloadBorderColor: "#13a024",
 }
 
+window.IPAY(options)
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    backgroundColor: theme.palette.background.paper,
+  },
+  buttongroup: {
+    paddingBlockEnd: `.5rem`,
+  },
+  weight: {
+    maxWidth: `80%`,
+  },
+  image: {
+    minWidth: "100px",
+    minHeight: "100px",
+  },
+  secondary: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  multiline: {
+    paddingInline: "1rem",
+  },
+}))
+
 const ShoppingCart = ({ location }) => {
   const pageTitle = "Корзина покупателя"
+  const classes = useStyles()
   const shoppingCart = useCartState()
   const { products } = shoppingCart
   const dispatch = useCartDispatch()
+  const matches = useMediaQuery("(max-width:899px)")
 
-  window.IPAY(options)
+  const showSuccessfulPurchase = order => console.log(order)
+  const showFailurefulPurchase = order => console.log(order)
 
   const checkout = () =>
     window.ipayCheckout(
@@ -30,10 +75,10 @@ const ShoppingCart = ({ location }) => {
         description: "Н. В. Гоголь. Вечера на хуторе близ Диканьки",
       },
       function(order) {
-        window.showSuccessfulPurchase(order)
+        showSuccessfulPurchase(order)
       },
       function(order) {
-        window.showFailurefulPurchase(order)
+        showFailurefulPurchase(order)
       }
     )
 
@@ -64,29 +109,148 @@ const ShoppingCart = ({ location }) => {
                 {", чтобы посмотреть список."}
               </Text>
             )}
-            {products.map((product, i) => {
-              return (
-                <p
-                  key={i}
-                  onClick={() =>
-                    dispatch({
-                      type: "REMOVE_PRODUCT",
-                      productName: product.productName,
-                    })
-                  }
-                >
-                  {product.productName} - {product.count}
-                </p>
-              )
-            })}
+            <List className={classes.root}>
+              {products.map(
+                (
+                  {
+                    productName,
+                    weight,
+                    ingridients,
+                    price,
+                    count,
+                    image,
+                    total,
+                    content,
+                  },
+                  i
+                ) => {
+                  return (
+                    <Fragment key={i}>
+                      <ListItem
+                        alignItems="flex-start"
+                        color="primary"
+                        classes={{}}
+                      >
+                        <ListItemAvatar>
+                          <Avatar
+                            variant="square"
+                            src={image.fluid.srcWebp}
+                            srcSet={image.fluid.srcSetWebp}
+                            sizes={image.fluid.sizes}
+                            classes={{ square: classes.image }}
+                          >
+                            <CakeIcon />
+                          </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText
+                          classes={{
+                            secondary: classes.secondary,
+                            multiline: classes.multiline,
+                          }}
+                          primary={
+                            <Flex justifyContent="space-between">
+                              <Typography color="primary">
+                                {productName}
+                              </Typography>
+                            </Flex>
+                          }
+                          secondary={
+                            <Fragment>
+                              <Typography
+                                component="span"
+                                variant="caption"
+                                color="secondary"
+                              >
+                                {weight}. - {price} руб.
+                              </Typography>
+                              {ingridients ? (
+                                <Typography component="p" variant="caption">
+                                  {ingridients.internal.content}
+                                </Typography>
+                              ) : (
+                                <Typography component="p" variant="caption">
+                                  {content}
+                                </Typography>
+                              )}
+                              <Flex
+                                flexDirection={["column", "row"]}
+                                alignItems={["flex-start", "center"]}
+                                justifyContent="space-between"
+                                pt={[2]}
+                              >
+                                <ButtonGroup
+                                  size="small"
+                                  color="primary"
+                                  aria-label="small outlined button group"
+                                  classes={{
+                                    root: matches ? classes.buttongroup : "",
+                                  }}
+                                >
+                                  <Button
+                                    variant="outlined"
+                                    onClick={() =>
+                                      dispatch({
+                                        type: "DECREASE_QUANTITY",
+                                        productName,
+                                        price,
+                                      })
+                                    }
+                                  >
+                                    <RemoveIcon />
+                                  </Button>
+                                  <Button>{count}</Button>
+                                  <Button
+                                    variant="outlined"
+                                    onClick={() =>
+                                      dispatch({
+                                        type: "INCREASE_QUANTITY",
+                                        productName,
+                                        price,
+                                      })
+                                    }
+                                  >
+                                    <AddIcon />
+                                  </Button>
+                                </ButtonGroup>
+                                <Typography color="primary">
+                                  {total} руб.
+                                </Typography>
+                              </Flex>
+                            </Fragment>
+                          }
+                        />
+                        <ListItemSecondaryAction>
+                          <IconButton
+                            color="secondary"
+                            edge="end"
+                            onClick={() =>
+                              dispatch({
+                                type: "REMOVE_PRODUCT",
+                                productName,
+                              })
+                            }
+                            aria-label="remove product"
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                      {i < products.length - 1 && (
+                        <Divider variant="inset" component="li" />
+                      )}
+                    </Fragment>
+                  )
+                }
+              )}
+            </List>
           </Flex>
-
-          <button
-            onClick={checkout}
-            className="btn btn-xs btn-outline btn-primary"
-          >
-            Купить
-          </button>
+          {!products.length ? null : (
+            <Flex justifyContent="center" pt={[3]}>
+              <Button onClick={checkout} color="primary" variant="contained">
+                Оформить заказ
+              </Button>
+            </Flex>
+          )}
         </Box>
       </Flex>
     </Layout>

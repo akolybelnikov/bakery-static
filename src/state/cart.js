@@ -36,20 +36,46 @@ const CartProvider = ({ children }) => {
                 count: 1,
                 total: action.price,
               })
-            : updateItemInArray(state.products, action.productName, product =>
-                updateObject(product, {
-                  count: product.count + 1,
-                  total: product.total + action.price,
-                })
-              )
+            : state.products
 
         return updateObject(state, { products })
       }
-      case "REMOVE_PRODUCT":
+      case "INCREASE_QUANTITY": {
+        const products = updateItemInArray(
+          state.products,
+          action.productName,
+          product => {
+            return updateObject(product, {
+              count: product.count < 99 ? product.count + 1 : product.count,
+              total:
+                product.total < 99 * action.price ||
+                product.count === 0
+                  ? product.total + action.price
+                  : product.total,
+            })
+          }
+        )
+        return updateObject(state, { products })
+      }
+      case "DECREASE_QUANTITY": {
+        const products = updateItemInArray(
+          state.products,
+          action.productName,
+          product => {
+            return updateObject(product, {
+              count: product.count > 0 ? product.count - 1 : 0,
+              total: product.total > 0 ? product.total - action.price : 0,
+            })
+          }
+        )
+        return updateObject(state, { products })
+      }
+      case "REMOVE_PRODUCT": {
         const products = state.products.filter(
           item => item.productName !== action.productName
         )
-        return Object.assign({}, state, { products })
+        return updateObject(state, { products })
+      }
       default:
         return state
     }

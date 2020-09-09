@@ -7,5 +7,7 @@ export class Product {
     this.weight = item.weight
     this.count = item.count
     this.total = item.total
+    this.ingridients = item.ingridients
+    this.content = item.content
   }
 }

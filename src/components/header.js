@@ -34,11 +34,11 @@ const HeaderContainer = styled.header`
     z-index: 999;
     background: white;
     width: 100%;
-    max-width: 55.3rem;
+    padding-inline-end: 16px;
   }
 `
 
-const Header = ({ location }) => {
+const Header = ({ location, maxHeaderWidth }) => {
   const { products } = useCartState()
 
   return (
@@ -48,7 +48,7 @@ const Header = ({ location }) => {
         const logo = data.logo.childImageSharp.fluid
 
         return (
-          <HeaderContainer>
+          <HeaderContainer style={{ maxWidth: `${maxHeaderWidth}` }}>
             <Flex justifyContent="space-between">
               <Link style={{ ...baseLink, flex: `0 0 20%` }} to={`/`}>
                 <Image fluid={logo} />

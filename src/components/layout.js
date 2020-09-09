@@ -12,7 +12,7 @@ import styled from "styled-components"
 const Mobile = props => <Responsive {...props} maxWidth={899} />
 
 const Main = styled.main`
-@media all and (min-width: 900px) {
+  @media all and (min-width: 900px) {
     padding-block-start: 9rem;
   }
 `
@@ -36,7 +36,7 @@ export default ({ location, children }) => {
             overflowX: `hidden`,
           }}
         >
-          <Header location={location} />
+          <Header location={location} maxHeaderWidth={rhythm(35)} />
           <Main id="page-wrap">{children}</Main>
           <Footer />
         </Box>

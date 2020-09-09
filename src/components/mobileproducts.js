@@ -1,12 +1,15 @@
+import Button from "@material-ui/core/Button"
+import ButtonGroup from "@material-ui/core/ButtonGroup"
+import { navigateTo } from "gatsby"
 import Img from "gatsby-image/withIEPolyfill"
-import React from "react"
-import { Box, Card, Flex, Text, Button } from "rebass"
+import React, { Fragment } from "react"
+import { Box, Card, Flex, Text } from "rebass"
 import styled from "styled-components"
 import Social from "../components/sociallinks"
+import { useCartDispatch, useCartState } from "../state/cart"
 import { theme } from "../utils/styles"
 import { parseIngridients } from "../utils/utils"
 import Accordion from "./accordion"
-import { useCartDispatch } from "../state/cart"
 
 const PhoneButton = styled.a`
   color: ${props => props.theme.colors.secondary};
@@ -42,6 +45,8 @@ const StyledText = styled(Text)``
 
 export default ({ products, location }) => {
   const dispatch = useCartDispatch()
+  const cart = useCartState()
+  const goToCart = () => navigateTo("/shopping-cart")
 
   return (
     <Container mb={4} flexWrap="wrap">
@@ -61,6 +66,10 @@ export default ({ products, location }) => {
           },
           index
         ) => {
+          const findProductInCart = item => item.productName === productName
+
+          const isInCart = cart.products.find(findProductInCart)
+
           const addProductToCart = () => {
             dispatch({
               type: "ADD_PRODUCT",
@@ -69,8 +78,27 @@ export default ({ products, location }) => {
               filling,
               weight,
               price,
+              ingridients,
+              content,
             })
           }
+
+          const increaseProductQuantity = () => {
+            dispatch({
+              type: "INCREASE_QUANTITY",
+              productName,
+              price,
+            })
+          }
+
+          const decreaseProductQuantity = () => {
+            dispatch({
+              type: "DECREASE_QUANTITY",
+              productName,
+              price,
+            })
+          }
+
           return (
             <StyledCard
               key={index}
@@ -156,7 +184,7 @@ export default ({ products, location }) => {
                   alignItems="center"
                 >
                   {name === "order" ? (
-                    <>
+                    <Fragment>
                       <PhoneButton
                         href="tel:+79266298726"
                         target="_self"
@@ -171,9 +199,44 @@ export default ({ products, location }) => {
                       >
                         +7 (926) 982 35 72
                       </PhoneButton>
-                    </>
+                    </Fragment>
+                  ) : isInCart ? (
+                    <Fragment>
+                      <Button
+                        color="primary"
+                        variant="outlined"
+                        onClick={goToCart}
+                      >
+                        В корзинe
+                      </Button>
+                      <ButtonGroup
+                        size="small"
+                        color="primary"
+                        aria-label="small outlined button group"
+                      >
+                        <Button
+                          variant="contained"
+                          disableElevation
+                          onClick={decreaseProductQuantity}
+                        >
+                          -
+                        </Button>
+                        <Button>{isInCart.count}</Button>
+                        <Button
+                          variant="contained"
+                          disableElevation
+                          onClick={increaseProductQuantity}
+                        >
+                          +
+                        </Button>
+                      </ButtonGroup>
+                    </Fragment>
                   ) : (
-                    <Button variant="inverted" onClick={addProductToCart}>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={addProductToCart}
+                    >
                       В корзину
                     </Button>
                   )}
