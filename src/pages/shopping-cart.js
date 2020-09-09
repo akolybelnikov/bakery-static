@@ -156,8 +156,8 @@ const ShoppingCart = ({ location }) => {
                         <ListItemAvatar>
                           <Avatar
                             variant="square"
-                            src={image.fluid.srcWebp}
-                            srcSet={image.fluid.srcSetWebp}
+                            src={image.fluid.src}
+                            srcSet={image.fluid.srcSet}
                             sizes={image.fluid.sizes}
                             classes={{ square: classes.image }}
                           >

@@ -84,6 +84,7 @@
     "scripts": {
         "build": "rm -rf .cache/ && rm -rf public/ && gatsby build",
         "develop": "gatsby develop",
+        "develop:mobile": "gatsby develop -H 0.0.0.0 -p 8000",
         "format": "prettier --write src/**/*.{js,jsx}",
         "start": "rm -rf .cache/ && rm -rf public/ && netlify dev",
         "serve": "gatsby serve",
