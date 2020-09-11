@@ -15,7 +15,6 @@ import AddIcon from "@material-ui/icons/Add"
 import CakeIcon from "@material-ui/icons/Cake"
 import DeleteIcon from "@material-ui/icons/Delete"
 import RemoveIcon from "@material-ui/icons/Remove"
-import { window } from "browser-monads"
 import { Link } from "gatsby"
 import React, { Fragment } from "react"
 import { Box, Flex, Text } from "rebass"
@@ -23,15 +22,6 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { useCartDispatch, useCartState } from "../state/cart"
 import { isLoggedIn } from "../utils/auth"
-
-const options = {
-  api_token: "YRF3C5RFICWISEWFR6GJ",
-  language: "en",
-  classNamePreloader: "payment-preloader",
-  preloadBorderColor: "#13a024",
-}
-
-window.IPAY(options)
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -62,47 +52,10 @@ const ShoppingCart = ({ location }) => {
   // MaterialUI classes
   const classes = useStyles()
   const matches = useMediaQuery("(max-width:899px)")
-  // State
+  // Shopping cart store
+  const dispatch = useCartDispatch()
   const shoppingCart = useCartState()
   const { products } = shoppingCart
-  const dispatch = useCartDispatch()
-
-  const calculateTotal = () =>
-    products.reduce((total, item) => (total += item.total), 0)
-  const concatItems = () =>
-    products.reduce(
-      (list, item, idx) =>
-        `${list} ${idx !== 0 ? "/ " : " "}${item.productName} (${
-          item.count
-        }) - ${item.total} руб.`,
-      ""
-    )
-
-  const showSuccessfulPurchase = order => console.log(order)
-  const showFailurefulPurchase = order => console.log(order)
-
-  const checkout = () => {
-    const amount = calculateTotal(),
-      description = concatItems()
-    ipayCheckout(amount, description)
-  }
-
-  const ipayCheckout = (amount, description) => {
-    window.ipayCheckout(
-      {
-        amount,
-        currency: "RUB",
-        order_number: "",
-        description,
-      },
-      function(order) {
-        showSuccessfulPurchase(order)
-      },
-      function(order) {
-        showFailurefulPurchase(order)
-      }
-    )
-  }
 
   return (
     <Layout location={location} title={pageTitle}>
@@ -269,9 +222,11 @@ const ShoppingCart = ({ location }) => {
           </Flex>
           {!products.length ? null : (
             <Flex justifyContent="center" pt={[3]}>
-              <Button onClick={checkout} color="primary" variant="contained">
-                Оформить заказ
-              </Button>
+              <Link to="/process-order">
+                <Button color="primary" variant="contained">
+                  Оформить заказ
+                </Button>
+              </Link>
             </Flex>
           )}
         </Box>

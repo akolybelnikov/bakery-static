@@ -48,8 +48,7 @@ const CartProvider = ({ children }) => {
             return updateObject(product, {
               count: product.count < 99 ? product.count + 1 : product.count,
               total:
-                product.total < 99 * action.price ||
-                product.count === 0
+                product.total < 99 * action.price || product.count === 0
                   ? product.total + action.price
                   : product.total,
             })
@@ -74,6 +73,10 @@ const CartProvider = ({ children }) => {
         const products = state.products.filter(
           item => item.productName !== action.productName
         )
+        return updateObject(state, { products })
+      }
+      case "EMPTY_CART": {
+        const products = []
         return updateObject(state, { products })
       }
       default:
