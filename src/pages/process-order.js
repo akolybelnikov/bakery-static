@@ -15,7 +15,7 @@ import Button from "@material-ui/core/Button"
 // import CakeIcon from "@material-ui/icons/Cake"
 // import DeleteIcon from "@material-ui/icons/Delete"
 // import RemoveIcon from "@material-ui/icons/Remove"
-import { window } from "browser-monads"
+import { window, document } from "browser-monads"
 import { Link } from "gatsby"
 import React, { useState } from "react"
 import { Flex, Text } from "rebass"
@@ -23,7 +23,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { useCartDispatch, useCartState } from "../state/cart"
 import { isLoggedIn } from "../utils/auth"
-import { theme } from "../utils/styles"
+// import { theme } from "../utils/styles"
 
 function encode(data) {
   return Object.keys(data)
@@ -31,14 +31,14 @@ function encode(data) {
     .join("&")
 }
 
-const options = {
-  api_token: process.env.GATSBY_SBERBANK_API,
-  language: "en",
-  classNamePreloader: "payment-preloader",
-  preloadBorderColor: theme.colors.primary,
-}
+// const options = {
+//   api_token: process.env.GATSBY_SBERBANK_API,
+//   language: "en",
+//   classNamePreloader: "payment-preloader",
+//   preloadBorderColor: theme.colors.primary,
+// }
 
-window.IPAY(options)
+// window.IPAY(options)
 
 // const useStyles = makeStyles(theme => ({
 //   root: {
@@ -75,8 +75,9 @@ const ProcessOrder = ({ location }) => {
   const { products } = shoppingCart
 
   // Local state
-  const [state, setState] = useState({ products: concatItems() })
+  const [state, setState] = useState({})
   const [confirmation, setConfirmation] = useState(false)
+  const [error, setError] = useState(false)
 
   const calculateTotal = () =>
     products.reduce((total, item) => (total += item.total), 0)
@@ -91,15 +92,18 @@ const ProcessOrder = ({ location }) => {
     )
 
   const showSuccessfulPurchase = () => {
-    console.log(state)
     dispatch({ type: "EMPTY_CART" })
     handleFormSubmit()
   }
-  const showFailurefulPurchase = order => console.log(order)
+  const showFailurefulPurchase = order => {
+    console.log(order)
+    setError(true)
+  }
 
   const checkout = () => {
     const amount = calculateTotal(),
       description = concatItems()
+    setState({ ...state, products: description })
     ipayCheckout(amount, description)
   }
 
@@ -140,9 +144,13 @@ const ProcessOrder = ({ location }) => {
         ...state,
       }),
     })
-      .then(res => {
-        console.log(res)
+      .then(() => {
         setConfirmation(true)
+        const iframe = document.getElementsByTagName("iframe")[0]
+        document.body.removeChild(iframe)
+        document.body.getAttribute("style")
+        document.body.removeAttribute("style")
+        window.removeEventListener("message", window.closeModal)
       })
       .catch(error => console.error(error))
   }
@@ -220,7 +228,7 @@ const ProcessOrder = ({ location }) => {
             </Button>
           </form>
         </Flex>
-      ) : (
+      ) : !error ? (
         <Flex
           flexDirection="column"
           justifyItems="center"
@@ -230,6 +238,17 @@ const ProcessOrder = ({ location }) => {
         >
           <h1>Thank you!</h1>
           <p>This is a custom thank you page for form submissions</p>
+        </Flex>
+      ) : (
+        <Flex
+          flexDirection="column"
+          justifyItems="center"
+          justifyContent="center"
+          alignItems="center"
+          minHeight={["50vh"]}
+        >
+          <h1>Error</h1>
+          <p>This is a custom error page.</p>
         </Flex>
       )}
     </Layout>
