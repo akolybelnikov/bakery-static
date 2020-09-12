@@ -15,7 +15,7 @@ import Button from "@material-ui/core/Button"
 // import CakeIcon from "@material-ui/icons/Cake"
 // import DeleteIcon from "@material-ui/icons/Delete"
 // import RemoveIcon from "@material-ui/icons/Remove"
-import { window, document } from "browser-monads"
+import { document, window } from "browser-monads"
 import { Link } from "gatsby"
 import React, { useState } from "react"
 import { Flex, Text } from "rebass"
@@ -117,9 +117,7 @@ const ProcessOrder = ({ location }) => {
     setState({ ...state, [e.target.name]: e.target.value })
   }
 
-  const handleFormSubmit = order => {
-    const { refNum, formattedAmount, paymentDate } = order
-    console.log(order)
+  const handleFormSubmit = ({ refNum, formattedAmount, paymentDate }) => {
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -176,7 +174,7 @@ const ProcessOrder = ({ location }) => {
           <form
             name="contact"
             method="post"
-            action="/process-order"
+            action="/process-order/"
             data-netlify="true"
             data-netlify-honeypot="bot-field"
           >
