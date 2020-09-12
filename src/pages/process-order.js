@@ -74,14 +74,6 @@ const ProcessOrder = ({ location }) => {
   const shoppingCart = useCartState()
   const { products } = shoppingCart
 
-  // Local state
-  const [state, setState] = useState({})
-  const [confirmation, setConfirmation] = useState(false)
-  const [error, setError] = useState(false)
-
-  const calculateTotal = () =>
-    products.reduce((total, item) => (total += item.total), 0)
-
   const concatItems = () =>
     products.reduce(
       (list, item, idx) =>
@@ -90,6 +82,16 @@ const ProcessOrder = ({ location }) => {
         }) - ${item.total} руб.`,
       ""
     )
+  const calculateTotal = () =>
+    products.reduce((total, item) => (total += item.total), 0)
+
+  const description = concatItems()
+  const amount = calculateTotal()
+
+  // Local state
+  const [state, setState] = useState({ products: description })
+  const [confirmation, setConfirmation] = useState(false)
+  const [error, setError] = useState(false)
 
   const showSuccessfulPurchase = () => {
     dispatch({ type: "EMPTY_CART" })
@@ -101,9 +103,6 @@ const ProcessOrder = ({ location }) => {
   }
 
   const checkout = () => {
-    const amount = calculateTotal(),
-      description = concatItems()
-    setState({ ...state, products: description })
     ipayCheckout(amount, description)
   }
 
@@ -116,13 +115,13 @@ const ProcessOrder = ({ location }) => {
         description,
       },
       function(order) {
-        setState({
-          ...state,
-          refNum: order.refNum,
-          paymentDate: order.paymentDate,
-          email: order.email,
-          amount: order.amount,
-        })
+        // setState({
+        //   ...state,
+        //   refNum: order.refNum,
+        //   paymentDate: order.paymentDate,
+        //   email: order.email,
+        //   amount: order.amount,
+        // })
         showSuccessfulPurchase()
       },
       function(order) {
@@ -186,20 +185,16 @@ const ProcessOrder = ({ location }) => {
           <form
             name="contact"
             method="post"
+            action="/"
             data-netlify="true"
             data-netlify-honeypot="bot-field"
           >
             <input type="hidden" name="form-name" value="contact" />
+            <input type="hidden" name="products" value="description" />
             <p hidden>
               <label>
                 Don’t fill this out:{" "}
                 <input name="bot-field" onChange={handleChange} />
-              </label>
-            </p>
-            <p hidden>
-              <label>
-                Hidden products input
-                <input type="text" name="products" onChange={handleChange} />
               </label>
             </p>
             <p>
