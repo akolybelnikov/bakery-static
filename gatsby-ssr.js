@@ -2,15 +2,8 @@ import React from "react"
 import TopLayout from "./src/config/TopLayout"
 import { CartProvider } from "./src/state/cart"
 require("dotenv").config({
-    path: `.env.${process.env.NODE_ENV}`,
-  })
-
-const options = {
-  api_token: process.env.GATSBY_SBERBANK_API,
-  language: "en",
-  classNamePreloader: "payment-preloader",
-  preloadBorderColor: "#F3922B",
-}
+  path: `.env.${process.env.NODE_ENV}`,
+})
 
 const HeadComponents = [
   <script
@@ -25,7 +18,7 @@ const BodyComponents = [
     dangerouslySetInnerHTML={{
       __html: `
         var ipay = new IPAY({
-        api_token: "v1p8knm6f90pil0vcb2oo5mms3",
+        api_token: "${process.env.GATSBY_SBERBANK_API}",
         language: "en",
         classNamePreloader: "payment-preloader",
         preloadBorderColor: "#F3922B",

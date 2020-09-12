@@ -31,15 +31,6 @@ function encode(data) {
     .join("&")
 }
 
-// const options = {
-//   api_token: process.env.GATSBY_SBERBANK_API,
-//   language: "en",
-//   classNamePreloader: "payment-preloader",
-//   preloadBorderColor: theme.colors.primary,
-// }
-
-// window.IPAY(options)
-
 // const useStyles = makeStyles(theme => ({
 //   root: {
 //     backgroundColor: theme.palette.background.paper,
@@ -89,13 +80,12 @@ const ProcessOrder = ({ location }) => {
   const amount = calculateTotal()
 
   // Local state
-  const [state, setState] = useState({})
+  const [state, setState] = useState({ products: description })
   const [confirmation, setConfirmation] = useState(false)
   const [error, setError] = useState(false)
 
-  const showSuccessfulPurchase = () => {
-    dispatch({ type: "EMPTY_CART" })
-    handleFormSubmit()
+  const showSuccessfulPurchase = order => {
+    handleFormSubmit(order)
   }
   const showFailurefulPurchase = order => {
     console.log(order)
@@ -115,14 +105,7 @@ const ProcessOrder = ({ location }) => {
         description,
       },
       function(order) {
-        // setState({
-        //   ...state,
-        //   refNum: order.refNum,
-        //   paymentDate: order.paymentDate,
-        //   email: order.email,
-        //   amount: order.amount,
-        // })
-        showSuccessfulPurchase()
+        showSuccessfulPurchase(order)
       },
       function(order) {
         showFailurefulPurchase(order)
@@ -134,19 +117,27 @@ const ProcessOrder = ({ location }) => {
     setState({ ...state, [e.target.name]: e.target.value })
   }
 
-  const handleFormSubmit = () => {
+  const handleFormSubmit = order => {
+    const { refNum, formattedAmount, paymentDate } = order
+    console.log(order)
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: encode({
         "form-name": "contact",
+        "ref-num": refNum,
+        "payment-date": paymentDate,
+        "order-amount": formattedAmount,
         ...state,
       }),
     })
       .then(() => {
         setConfirmation(true)
+        dispatch({ type: "EMPTY_CART" })
         const iframe = document.getElementsByTagName("iframe")[0]
-        document.body.removeChild(iframe)
+        if (iframe) {
+          document.body.removeChild(iframe)
+        }
         document.body.getAttribute("style")
         document.body.removeAttribute("style")
         window.removeEventListener("message", window.closeModal)
@@ -185,13 +176,16 @@ const ProcessOrder = ({ location }) => {
           <form
             name="contact"
             method="post"
-            action="/"
+            action="/process-order"
             data-netlify="true"
             data-netlify-honeypot="bot-field"
           >
             <input type="hidden" name="form-name" value="contact" />
-            <input type="hidden" name="products" value="description" />
             <input type="hidden" name="bot-field" />
+            <input type="hidden" name="products" />
+            <input type="hidden" name="ref-num" />
+            <input type="hidden" name="order-date" />
+            <input type="hidden" name="order-amount" />
             <p>
               <label>
                 Your name:

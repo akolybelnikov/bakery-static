@@ -1,6 +1,6 @@
 import Button from "@material-ui/core/Button"
 import ButtonGroup from "@material-ui/core/ButtonGroup"
-import { navigateTo } from "gatsby"
+import { navigate } from "gatsby"
 import Img from "gatsby-image/withIEPolyfill"
 import React, { Fragment } from "react"
 import { Card, Flex, Heading, Text } from "rebass"
@@ -83,7 +83,7 @@ export default ({
     })
   }
 
-  const goToCart = () => navigateTo("/shopping-cart")
+  const goToCart = () => navigate("/shopping-cart")
 
   return (
     <Card bg="secondary" pb={4} borderRadius={12}>

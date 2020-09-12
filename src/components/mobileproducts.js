@@ -1,6 +1,6 @@
 import Button from "@material-ui/core/Button"
 import ButtonGroup from "@material-ui/core/ButtonGroup"
-import { navigateTo } from "gatsby"
+import { navigate } from "gatsby"
 import Img from "gatsby-image/withIEPolyfill"
 import React, { Fragment } from "react"
 import { Box, Card, Flex, Text } from "rebass"
@@ -46,7 +46,7 @@ const StyledText = styled(Text)``
 export default ({ products, location }) => {
   const dispatch = useCartDispatch()
   const cart = useCartState()
-  const goToCart = () => navigateTo("/shopping-cart")
+  const goToCart = () => navigate("/shopping-cart")
 
   return (
     <Container mb={4} flexWrap="wrap">
