@@ -89,7 +89,7 @@ const ProcessOrder = ({ location }) => {
   const amount = calculateTotal()
 
   // Local state
-  const [state, setState] = useState({ products: description })
+  const [state, setState] = useState({})
   const [confirmation, setConfirmation] = useState(false)
   const [error, setError] = useState(false)
 
@@ -191,12 +191,7 @@ const ProcessOrder = ({ location }) => {
           >
             <input type="hidden" name="form-name" value="contact" />
             <input type="hidden" name="products" value="description" />
-            <p hidden>
-              <label>
-                Don’t fill this out:{" "}
-                <input name="bot-field" onChange={handleChange} />
-              </label>
-            </p>
+            <input type="hidden" name="bot-field" />
             <p>
               <label>
                 Your name:
