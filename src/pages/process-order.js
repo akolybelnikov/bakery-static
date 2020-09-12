@@ -75,7 +75,7 @@ const ProcessOrder = ({ location }) => {
   const { products } = shoppingCart
 
   // Local state
-  const [state, setState] = useState({ products })
+  const [state, setState] = useState({ products: concatItems() })
   const [confirmation, setConfirmation] = useState(false)
 
   const calculateTotal = () =>
@@ -186,6 +186,12 @@ const ProcessOrder = ({ location }) => {
               <label>
                 Don’t fill this out:{" "}
                 <input name="bot-field" onChange={handleChange} />
+              </label>
+            </p>
+            <p hidden>
+              <label>
+                Hidden products input
+                <input type="text" name="products" onChange={handleChange} />
               </label>
             </p>
             <p>
