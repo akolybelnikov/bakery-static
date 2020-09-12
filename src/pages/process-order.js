@@ -24,11 +24,18 @@ import SEO from "../components/seo"
 import { useCartDispatch, useCartState } from "../state/cart"
 import { isLoggedIn } from "../utils/auth"
 // import { theme } from "../utils/styles"
+import axios from "axios"
 
-function encode(data) {
-  return Object.keys(data)
-    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-    .join("&")
+// function encode(data) {
+//   return Object.keys(data)
+//     .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+//     .join("&")
+// }
+
+const makeFormData = data => {
+  let formData = new FormData()
+  Object.keys(data).map(key => formData.append(key, data[key]))
+  return formData
 }
 
 // const useStyles = makeStyles(theme => ({
@@ -80,16 +87,17 @@ const ProcessOrder = ({ location }) => {
   const amount = calculateTotal()
 
   // Local state
-  const [state, setState] = useState({ products: description })
+  const [state, setState] = useState({
+    products: description,
+  })
+  const [error, setError] = useState(null)
   const [confirmation, setConfirmation] = useState(false)
-  const [error, setError] = useState(false)
 
   const showSuccessfulPurchase = order => {
     handleFormSubmit(order)
   }
-  const showFailurefulPurchase = order => {
-    console.log(order)
-    setError(true)
+  const showFailurefulPurchase = error => {
+    setError(error)
   }
 
   const checkout = () => {
@@ -118,16 +126,16 @@ const ProcessOrder = ({ location }) => {
   }
 
   const handleFormSubmit = ({ refNum, formattedAmount, paymentDate }) => {
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({
-        "form-name": "contact",
-        "ref-num": refNum,
-        "payment-date": paymentDate,
-        "order-amount": formattedAmount,
-        ...state,
-      }),
+    const data = makeFormData({
+      ...state,
+      "bank-ref": refNum,
+      "payment-date": paymentDate,
+      "order-amount": formattedAmount,
+    })
+    axios({
+      method: "post",
+      url: `${process.env.GATSBY_FORMSPREE}`,
+      data,
     })
       .then(() => {
         setConfirmation(true)
@@ -136,8 +144,6 @@ const ProcessOrder = ({ location }) => {
         if (iframe) {
           document.body.removeChild(iframe)
         }
-        document.body.getAttribute("style")
-        document.body.removeAttribute("style")
         window.removeEventListener("message", window.closeModal)
       })
       .catch(error => console.error(error))
@@ -171,17 +177,9 @@ const ProcessOrder = ({ location }) => {
           alignItems="center"
           minHeight={["50vh"]}
         >
-          <form
-            name="contact"
-            method="post"
-            action="/process-order/"
-            data-netlify="true"
-            data-netlify-honeypot="bot-field"
-          >
-            <input type="hidden" name="form-name" value="contact" />
-            <input type="hidden" name="bot-field" />
+          <form>
             <input type="hidden" name="products" />
-            <input type="hidden" name="ref-num" />
+            <input type="hidden" name="bank-ref" />
             <input type="hidden" name="order-date" />
             <input type="hidden" name="order-amount" />
             <p>
@@ -193,16 +191,23 @@ const ProcessOrder = ({ location }) => {
             </p>
             <p>
               <label>
-                Your email:
+                Your phone number:
                 <br />
-                <input type="email" name="email" onChange={handleChange} />
+                <input type="text" name="phone" onChange={handleChange} />
               </label>
             </p>
             <p>
               <label>
-                Message:
+                Your address:
                 <br />
-                <textarea name="message" onChange={handleChange} />
+                <textarea name="address" onChange={handleChange} />
+              </label>
+            </p>
+            <p>
+              <label>
+                Delivery time:
+                <br />
+                <input type="text" name="time" onChange={handleChange} />
               </label>
             </p>
             <Button onClick={checkout} color="secondary" variant="contained">
