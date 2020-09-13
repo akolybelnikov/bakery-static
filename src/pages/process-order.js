@@ -1,36 +1,15 @@
-//import Avatar from "@material-ui/core/Avatar"
-import Button from "@material-ui/core/Button"
-// import ButtonGroup from "@material-ui/core/ButtonGroup"
-// import Divider from "@material-ui/core/Divider"
-// import IconButton from "@material-ui/core/IconButton"
-// import List from "@material-ui/core/List"
-// import ListItem from "@material-ui/core/ListItem"
-// import ListItemAvatar from "@material-ui/core/ListItemAvatar"
-// import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction"
-// import ListItemText from "@material-ui/core/ListItemText"
-// import { makeStyles } from "@material-ui/core/styles"
-//import Typography from "@material-ui/core/Typography"
-// import useMediaQuery from "@material-ui/core/useMediaQuery"
-// import AddIcon from "@material-ui/icons/Add"
-// import CakeIcon from "@material-ui/icons/Cake"
-// import DeleteIcon from "@material-ui/icons/Delete"
-// import RemoveIcon from "@material-ui/icons/Remove"
+import axios from "axios"
 import { document, window } from "browser-monads"
-import { Link } from "gatsby"
 import React, { useState } from "react"
-import { Flex, Text } from "rebass"
+import { Flex } from "rebass"
+import EmptyCart from "../components/emtpy-cart"
+import FormTransition from "../components/form-transition"
 import Layout from "../components/layout"
+import FormHeader from "../components/order-form-header"
+import OrderResult from "../components/order-result"
 import SEO from "../components/seo"
 import { useCartDispatch, useCartState } from "../state/cart"
-import { isLoggedIn } from "../utils/auth"
-// import { theme } from "../utils/styles"
-import axios from "axios"
-
-// function encode(data) {
-//   return Object.keys(data)
-//     .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-//     .join("&")
-// }
+import { PAGE } from "../utils/utils"
 
 const makeFormData = data => {
   let formData = new FormData()
@@ -38,36 +17,12 @@ const makeFormData = data => {
   return formData
 }
 
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     backgroundColor: theme.palette.background.paper,
-//   },
-//   buttongroup: {
-//     paddingBlockEnd: `.5rem`,
-//   },
-//   weight: {
-//     maxWidth: `80%`,
-//   },
-//   image: {
-//     minWidth: "100px",
-//     minHeight: "100px",
-//   },
-//   secondary: {
-//     display: "flex",
-//     flexDirection: "column",
-//   },
-//   multiline: {
-//     paddingInline: "1rem",
-//   },
-// }))
-
 const ProcessOrder = ({ location }) => {
   // Page title
   const pageTitle = "Оформление заказа"
-  // MaterialUI classes
-  //   const classes = useStyles()
-  //   const matches = useMediaQuery("(max-width:899px)")
-  // Shopping cart store
+  const [currentPage, setCurrentPage] = useState(PAGE.DELIVERY)
+
+  // Shopping cart state
   const dispatch = useCartDispatch()
   const shoppingCart = useCartState()
   const { products } = shoppingCart
@@ -126,12 +81,20 @@ const ProcessOrder = ({ location }) => {
   }
 
   const handleFormSubmit = ({ refNum, formattedAmount, paymentDate }) => {
-    const data = makeFormData({
-      ...state,
-      "bank-ref": refNum,
-      "payment-date": paymentDate,
-      "order-amount": formattedAmount,
-    })
+    const data =
+      currentPage === PAGE.DELIVERY
+        ? makeFormData({
+            ...state,
+            "bank-ref": refNum,
+            "payment-date": paymentDate,
+            "order-amount": formattedAmount || amount,
+            type: PAGE.DELIVERY,
+          })
+        : makeFormData({
+            ...state,
+            type: PAGE.PICK_UP,
+          })
+    
     axios({
       method: "post",
       url: `${process.env.GATSBY_FORMSPREE}`,
@@ -142,9 +105,13 @@ const ProcessOrder = ({ location }) => {
         dispatch({ type: "EMPTY_CART" })
         const iframe = document.getElementsByTagName("iframe")[0]
         if (iframe) {
-          document.body.removeChild(iframe)
+          setTimeout(() => {
+            document.body.removeChild(iframe)
+            document.body.getAttribute("style")
+            document.body.removeAttribute("style")
+            window.removeEventListener("message", window.closeModal)
+          }, 3000)
         }
-        window.removeEventListener("message", window.closeModal)
       })
       .catch(error => console.error(error))
   }
@@ -152,91 +119,44 @@ const ProcessOrder = ({ location }) => {
   return (
     <Layout location={location} title={pageTitle}>
       <SEO title={pageTitle} />
-      {!products.length && !confirmation ? (
+      {confirmation ? (
+        <OrderResult
+          title={error ? "Error" : "Success"}
+          description={error ? "An error occured" : "Thank you for your order"}
+        />
+      ) : products.length ? (
         <Flex
           flexDirection="column"
-          justifyItems="center"
+          justifyItems="flex-start"
           justifyContent="center"
           alignItems="center"
-          minHeight={["50vh"]}
         >
-          <Text as="h4" color="primary">{`Корзина пуста`}</Text>
-          {isLoggedIn() ? null : (
-            <Text as="h6" pt={[4]} textAlign="center" maxWidth={["80vw"]}>
-              {"Если в корзине были товары – "}
-              <Link to={"/auth"}>войдите</Link>
-              {", чтобы посмотреть список."}
-            </Text>
-          )}
-        </Flex>
-      ) : !confirmation ? (
-        <Flex
-          flexDirection="column"
-          justifyItems="center"
-          justifyContent="center"
-          alignItems="center"
-          minHeight={["50vh"]}
-        >
-          <form>
-            <input type="hidden" name="products" />
-            <input type="hidden" name="bank-ref" />
-            <input type="hidden" name="order-date" />
-            <input type="hidden" name="order-amount" />
-            <p>
-              <label>
-                Your name:
-                <br />
-                <input type="text" name="name" onChange={handleChange} />
-              </label>
-            </p>
-            <p>
-              <label>
-                Your phone number:
-                <br />
-                <input type="text" name="phone" onChange={handleChange} />
-              </label>
-            </p>
-            <p>
-              <label>
-                Your address:
-                <br />
-                <textarea name="address" onChange={handleChange} />
-              </label>
-            </p>
-            <p>
-              <label>
-                Delivery time:
-                <br />
-                <input type="text" name="time" onChange={handleChange} />
-              </label>
-            </p>
-            <Button onClick={checkout} color="secondary" variant="contained">
-              Оформить заказ
-            </Button>
-          </form>
-        </Flex>
-      ) : !error ? (
-        <Flex
-          flexDirection="column"
-          justifyItems="center"
-          justifyContent="center"
-          alignItems="center"
-          minHeight={["50vh"]}
-        >
-          <h1>Thank you!</h1>
-          <p>This is a custom thank you page for form submissions</p>
+          <FormHeader
+            setPage={setCurrentPage}
+            handleChange={handleChange}
+            currentPage={currentPage}
+          />
+          <FormTransition
+            checkout={checkout}
+            handleChange={handleChange}
+            currentPage={currentPage}
+            sendOrder={handleFormSubmit}
+            pickUpFormInvalid={
+              !state.name ||
+              !state.phone ||
+              !state.pickup ||
+              state.pickup.length < 10
+            }
+            orderFormInvalid={
+              !state.name ||
+              !state.phone ||
+              !state.address ||
+              state.address.length < 10
+            }
+          />
         </Flex>
       ) : (
-        <Flex
-          flexDirection="column"
-          justifyItems="center"
-          justifyContent="center"
-          alignItems="center"
-          minHeight={["50vh"]}
-        >
-          <h1>Error</h1>
-          <p>This is a custom error page.</p>
-        </Flex>
+        <EmptyCart />
       )}
     </Layout>
   )

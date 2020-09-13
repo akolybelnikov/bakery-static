@@ -17,11 +17,11 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import RemoveIcon from "@material-ui/icons/Remove"
 import { Link } from "gatsby"
 import React, { Fragment } from "react"
-import { Box, Flex, Text } from "rebass"
+import { Flex } from "rebass"
+import EmptyCart from "../components/emtpy-cart"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { useCartDispatch, useCartState } from "../state/cart"
-import { isLoggedIn } from "../utils/auth"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -60,30 +60,21 @@ const ShoppingCart = ({ location }) => {
   return (
     <Layout location={location} title={pageTitle}>
       <SEO title={pageTitle} />
-      <Flex
-        flexDirection="column"
-        justifyItems="center"
-        justifyContent="center"
-        alignItems="center"
-        minHeight={["50vh"]}
-      >
-        <Box width={[1]}>
+      {products.length ? (
+        <Flex
+          flexDirection="column"
+          justifyItems="center"
+          justifyContent="flex-start"
+          alignItems="center"
+          minHeight={["50vh"]}
+        >
           <Flex
             flexDirection="column"
             justifyItems="center"
             justifyContent="center"
             alignItems="center"
+            width={[1]}
           >
-            {!products.length && (
-              <Text as="h4" color="primary">{`Корзина пуста`}</Text>
-            )}
-            {!isLoggedIn() && !products.length && (
-              <Text as="h6" pt={[4]} textAlign="center" maxWidth={["80vw"]}>
-                {"Если в корзине были товары – "}
-                <Link to={"/auth"}>войдите</Link>
-                {", чтобы посмотреть список."}
-              </Text>
-            )}
             <List className={classes.root}>
               {products.map(
                 (
@@ -220,17 +211,17 @@ const ShoppingCart = ({ location }) => {
               )}
             </List>
           </Flex>
-          {!products.length ? null : (
-            <Flex justifyContent="center" pt={[3]}>
-              <Link to="/process-order">
-                <Button color="primary" variant="contained">
-                  Оформить заказ
-                </Button>
-              </Link>
-            </Flex>
-          )}
-        </Box>
-      </Flex>
+          <Flex justifyContent="center" pt={[3]}>
+            <Link to="/process-order">
+              <Button color="primary" variant="contained">
+                Оформить заказ
+              </Button>
+            </Link>
+          </Flex>
+        </Flex>
+      ) : (
+        <EmptyCart />
+      )}
     </Layout>
   )
 }

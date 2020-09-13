@@ -210,7 +210,6 @@ export default ({ products, location }) => {
                         В корзинe
                       </Button>
                       <ButtonGroup
-                        size="small"
                         color="primary"
                         aria-label="small outlined button group"
                       >
