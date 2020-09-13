@@ -2,6 +2,7 @@ import { Analytics, Auth } from "aws-amplify"
 import React from "react"
 import TopLayout from "./src/config/TopLayout"
 import { CartProvider } from "./src/state/cart"
+import { UserProvider } from "./src/state/user"
 
 Analytics.configure({ disabled: true })
 
@@ -15,11 +16,11 @@ Auth.configure({
 
 export const wrapRootElement = ({ element }) => {
   return (
-    <>
-      <TopLayout>
+    <TopLayout>
+      <UserProvider>
         <CartProvider>{element}</CartProvider>
-      </TopLayout>
-    </>
+      </UserProvider>
+    </TopLayout>
   )
 }
 

@@ -1,20 +1,19 @@
 import Button from "@material-ui/core/Button"
 import ButtonGroup from "@material-ui/core/ButtonGroup"
+import TextField from "@material-ui/core/TextField"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
 import React from "react"
-import { PAGE } from "../utils/utils"
 import { Flex } from "rebass"
-import TextField from "@material-ui/core/TextField"
+import { useUserState } from "../state/user"
+import { PAGE } from "../utils/utils"
 
 export default ({ setPage, handleChange, currentPage }) => {
   const matches = useMediaQuery("(max-width:899px)")
+  const { user } = useUserState()
 
   return (
     <>
-      <ButtonGroup
-        disableElevation
-        color="primary"
-      >
+      <ButtonGroup disableElevation color="primary">
         <Button
           variant={currentPage === PAGE.PICK_UP ? "contained" : "outlined"}
           onClick={() => setPage(PAGE.PICK_UP)}
@@ -38,7 +37,7 @@ export default ({ setPage, handleChange, currentPage }) => {
           required
           name="name"
           label="Ваше имя"
-          defaultValue=""
+          defaultValue={user.name}
           variant="outlined"
           type="text"
           onChange={handleChange}
@@ -49,9 +48,9 @@ export default ({ setPage, handleChange, currentPage }) => {
           required
           name="phone"
           label="Nомер телефона"
-          defaultValue=""
+          defaultValue={user.phone}
           variant="outlined"
-          type="text"
+          type="phone"
           onChange={handleChange}
           margin="normal"
           fullWidth={matches}

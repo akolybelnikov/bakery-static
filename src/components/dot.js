@@ -1,6 +1,6 @@
 import React from "react"
-import { theme } from "../utils/styles"
 import { Button } from "rebass"
+import { theme } from "../utils/styles"
 
 const styles = {
   root: {
@@ -18,7 +18,7 @@ const styles = {
     width: 16,
     borderRadius: 8,
     margin: 6,
-  }
+  },
 }
 
 export default ({ onClick, index, active }) => {
@@ -33,7 +33,7 @@ export default ({ onClick, index, active }) => {
           ...styles.dot,
           backgroundColor: active
             ? theme.colors.primary
-            : theme.colors.secondary,
+            : theme.colors.primaryBR4,
         }}
       />
     </Button>

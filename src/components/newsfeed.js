@@ -13,7 +13,7 @@ const Slide = styled(Box)`
 
 const StyledCard = styled(Card)`
   display: flex;
-  background: ${props => props.theme.colors.primaryBR3};
+  background: ${props => props.theme.colors.secondaryWashed};
 `
 
 const Image = styled(Img)`

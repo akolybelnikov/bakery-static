@@ -1,15 +1,31 @@
+import Typography from "@material-ui/core/Typography"
 import React from "react"
-import { Flex, Text, Heading } from "rebass"
+import { Flex } from "rebass"
+import CakeIcon from "@material-ui/icons/Cake"
 
-export default ({ title, description }) => (
+export default ({ title, description, error }) => (
   <Flex
+    style={{ margin: "0 auto" }}
     flexDirection="column"
     justifyItems="center"
     justifyContent="center"
     alignItems="center"
     minHeight={["50vh"]}
+    width={[1, 2 / 3]}
   >
-    <Heading>{title}</Heading>
-    <Text>{description}</Text>
+    <Typography
+      component="h5"
+      variant="h5"
+      color={error ? "error" : "primary"}
+      paragraph
+    >
+      {title}
+    </Typography>
+    <Typography color="primary">{description}</Typography>
+    {!error && (
+      <Flex mt={[3]}>
+        <CakeIcon color="primary" fontSize="large" />
+      </Flex>
+    )}
   </Flex>
 )

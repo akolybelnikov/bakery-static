@@ -6,12 +6,14 @@ import TextField from "@material-ui/core/TextField"
 import { Link } from "gatsby"
 import React, { useState } from "react"
 import { Box } from "rebass"
+import { useUserState } from "../state/user"
 
 const Form = styled("form")({
   width: "100%",
 })
 
 export default ({ handleChange, checkout, invalid }) => {
+  const { user } = useUserState()
   const [confirmed, setState] = useState(false)
 
   const handleCBChange = event => {
@@ -32,7 +34,7 @@ export default ({ handleChange, checkout, invalid }) => {
           multiline
           rows={3}
           fullWidth
-          defaultValue=""
+          defaultValue={user.address}
         />
         <FormControlLabel
           control={

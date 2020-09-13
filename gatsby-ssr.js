@@ -1,6 +1,8 @@
 import React from "react"
 import TopLayout from "./src/config/TopLayout"
 import { CartProvider } from "./src/state/cart"
+import { UserProvider } from "./src/state/user"
+
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
@@ -31,7 +33,9 @@ const BodyComponents = [
 export const wrapRootElement = ({ element }) => {
   return (
     <TopLayout>
-      <CartProvider>{element}</CartProvider>
+      <UserProvider>
+        <CartProvider>{element}</CartProvider>
+      </UserProvider>
     </TopLayout>
   )
 }

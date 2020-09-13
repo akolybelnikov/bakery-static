@@ -21,9 +21,7 @@ export default () => {
 
   const fetchData = async () => {
     const result = await axios(
-      `https://graph.instagram.com/me/media?fields=id,caption,media_url,timestamp, permalink&access_token=${
-        process.env.GATSBY_INSTAGRAM_ACCESS_TOKEN
-      }&limit=4`
+      `https://graph.instagram.com/me/media?fields=id,caption,media_url,timestamp, permalink&access_token=${process.env.GATSBY_INSTAGRAM_ACCESS_TOKEN}&limit=4`
     )
     setData(result.data.data)
   }
@@ -48,68 +46,61 @@ export default () => {
       )}
       {posts.length && (
         <Flex flexWrap="wrap">
-          {posts.map(
-            (
-              {
-                timestamp,
-                media_url,
-                caption,
-                permalink,
-              },
-              i
-            ) => {
-              const lastSpace = caption.normalize().substring(0, 170).lastIndexOf(" ")
-console.log(timestamp)
-              return (
-                <Card
-                  key={i}
-                  width={[96 / 100, 46 / 100]}
-                  mx="auto"
-                  p={2}
-                  mb={4}
-                  bg="secondary"
-                  borderRadius={8}
-                  boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
-                >
-                  <Flex justifyContent="space-between" mb={2}>
-                    <Text>
-                      <Moment locale="ru" format="LL">
-                        {timestamp}
-                      </Moment>
-                    </Text>
-                    <StyledLink
-                      aria-label="Instagram link"
-                      href={permalink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <InstagramIcon width={24} />
-                    </StyledLink>
-                  </Flex>
-                  <StyledImage
-                    src={media_url}
-                    alt="instagram post image"
-                    borderRadius={2}
-                  />
-                  <Text p={2} style={{ wordBreak: "break-word" }}>
-                    {caption && caption.normalize().substring(0, lastSpace)}
-                    &nbsp;...&nbsp;
-                    <StyledLink
-                      style={{
-                        backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 1px, #950451 1px, #950451 2px, rgba(0, 0, 0, 0) 2px)`,
-                      }}
-                      aria-label="Instagram link"
-                      href={permalink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      читать дальше.
-                    </StyledLink>
+          {posts.map(({ timestamp, media_url, caption, permalink }, i) => {
+            const lastSpace = caption
+              .normalize()
+              .substring(0, 170)
+              .lastIndexOf(" ")
+
+            return (
+              <Card
+                key={i}
+                width={[96 / 100, 46 / 100]}
+                mx="auto"
+                p={2}
+                mb={4}
+                bg="secondary"
+                borderRadius={8}
+                boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
+              >
+                <Flex justifyContent="space-between" mb={2}>
+                  <Text>
+                    <Moment locale="ru" format="LL">
+                      {timestamp}
+                    </Moment>
                   </Text>
-                </Card>
-              )
-            }
-          )}
+                  <StyledLink
+                    aria-label="Instagram link"
+                    href={permalink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <InstagramIcon width={24} />
+                  </StyledLink>
+                </Flex>
+                <StyledImage
+                  src={media_url}
+                  alt="instagram post image"
+                  borderRadius={2}
+                />
+                <Text p={2} style={{ wordBreak: "break-word" }}>
+                  {caption && caption.normalize().substring(0, lastSpace)}
+                  &nbsp;...&nbsp;
+                  <StyledLink
+                    style={{
+                      backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 1px, #950451 1px, #950451 2px, rgba(0, 0, 0, 0) 2px)`,
+                    }}
+                    aria-label="Instagram link"
+                    href={permalink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    читать дальше.
+                  </StyledLink>
+                </Text>
+              </Card>
+            )
+          })}
         </Flex>
       )}
     </>

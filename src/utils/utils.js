@@ -14,4 +14,14 @@ const PAGE = {
 
 Object.freeze(PAGE)
 
-export { PAGE, parseIngridients }
+const USER = {
+  NAME: "name",
+  EMAIL: "email",
+  PHONE: "phone",
+  ADDRESS: "address",
+  PICKUP: "pickup",
+}
+
+Object.freeze(USER)
+
+export { USER, PAGE, parseIngridients }

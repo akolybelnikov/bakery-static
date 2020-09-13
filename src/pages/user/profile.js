@@ -44,7 +44,7 @@ const Profile = () => {
             onClick={() =>
               Auth.signOut()
                 .then(logout(() => navigate("/auth")))
-                .catch(err => console.log("eror:", err))
+                .catch(err => console.error("eror:", err))
             }
           >
             Выйти
