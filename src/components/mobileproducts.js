@@ -1,8 +1,12 @@
+import Button from "@material-ui/core/Button"
+import ButtonGroup from "@material-ui/core/ButtonGroup"
+import { navigate } from "gatsby"
 import Img from "gatsby-image/withIEPolyfill"
-import React from "react"
+import React, { Fragment } from "react"
 import { Box, Card, Flex, Text } from "rebass"
 import styled from "styled-components"
 import Social from "../components/sociallinks"
+import { useCartDispatch, useCartState } from "../state/cart"
 import { theme } from "../utils/styles"
 import { parseIngridients } from "../utils/utils"
 import Accordion from "./accordion"
@@ -27,7 +31,7 @@ const Container = styled(Flex)`
   }
 `
 const StyledCard = styled(Card)`
-  background: ${props => props.theme.colors.primaryBR4};
+  background: ${props => props.theme.colors.secondary};
 `
 
 const Image = styled(Img)`
@@ -40,6 +44,10 @@ const Image = styled(Img)`
 const StyledText = styled(Text)``
 
 export default ({ products, location }) => {
+  const dispatch = useCartDispatch()
+  const cart = useCartState()
+  const goToCart = () => navigate("/shopping-cart")
+
   return (
     <Container mb={4} flexWrap="wrap">
       {products.map(
@@ -58,6 +66,39 @@ export default ({ products, location }) => {
           },
           index
         ) => {
+          const findProductInCart = item => item.productName === productName
+
+          const isInCart = cart.products.find(findProductInCart)
+
+          const addProductToCart = () => {
+            dispatch({
+              type: "ADD_PRODUCT",
+              image,
+              productName,
+              filling,
+              weight,
+              price,
+              ingridients,
+              content,
+            })
+          }
+
+          const increaseProductQuantity = () => {
+            dispatch({
+              type: "INCREASE_QUANTITY",
+              productName,
+              price,
+            })
+          }
+
+          const decreaseProductQuantity = () => {
+            dispatch({
+              type: "DECREASE_QUANTITY",
+              productName,
+              price,
+            })
+          }
+
           return (
             <StyledCard
               key={index}
@@ -142,20 +183,62 @@ export default ({ products, location }) => {
                   justifyContent="space-around"
                   alignItems="center"
                 >
-                  <PhoneButton
-                    href="tel:+79266298726"
-                    target="_self"
-                    name="phone number"
-                  >
-                    +7 (926) 629 87 26
-                  </PhoneButton>
-                  <PhoneButton
-                    href="tel:+79269823572"
-                    target="_self"
-                    name="phone number"
-                  >
-                    +7 (926) 982 35 72
-                  </PhoneButton>
+                  {name === "order" ? (
+                    <Fragment>
+                      <PhoneButton
+                        href="tel:+79266298726"
+                        target="_self"
+                        name="phone number"
+                      >
+                        +7 (926) 629 87 26
+                      </PhoneButton>
+                      <PhoneButton
+                        href="tel:+79269823572"
+                        target="_self"
+                        name="phone number"
+                      >
+                        +7 (926) 982 35 72
+                      </PhoneButton>
+                    </Fragment>
+                  ) : isInCart ? (
+                    <Fragment>
+                      <Button
+                        color="primary"
+                        variant="outlined"
+                        onClick={goToCart}
+                      >
+                        В корзинe
+                      </Button>
+                      <ButtonGroup
+                        color="primary"
+                        aria-label="small outlined button group"
+                      >
+                        <Button
+                          variant="contained"
+                          disableElevation
+                          onClick={decreaseProductQuantity}
+                        >
+                          -
+                        </Button>
+                        <Button>{isInCart.count}</Button>
+                        <Button
+                          variant="contained"
+                          disableElevation
+                          onClick={increaseProductQuantity}
+                        >
+                          +
+                        </Button>
+                      </ButtonGroup>
+                    </Fragment>
+                  ) : (
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={addProductToCart}
+                    >
+                      В корзину
+                    </Button>
+                  )}
                 </Flex>
                 <Flex
                   px={1}

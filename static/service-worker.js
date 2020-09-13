@@ -1,7 +1,7 @@
 self.addEventListener("install", () => self.skipWaiting())
 
 self.addEventListener("activate", async () => {
-  console.log("Service Worker activated")
+  console.info("Service Worker activated")
 
   const cacheKeys = await caches.keys()
 

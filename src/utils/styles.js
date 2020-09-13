@@ -20,8 +20,20 @@ const theme = {
     primary: {
       color: primary,
       backgroundColor: "transparent",
-      bcursor: "pointer",
+      cursor: "pointer",
       border: `1px solid ${primary}`,
+      fontFamily: `'Roboto Slab',sans-serif`,
+    },
+    inverted: {
+      color: "white",
+      backgroundColor: primary,
+      cursor: "pointer",
+      border: `1px solid ${primary}`,
+      outline: "none",
+      fontSize: 18,
+      lineHeight: 1.5,
+      transition: "all 200ms ease-in",
+      fontFamily: `'Roboto Slab',sans-serif`,
     },
     clear: {
       color: primary,
@@ -35,6 +47,7 @@ const theme = {
       alignItems: "center",
       justifyContent: "space-around",
       cursor: "pointer",
+      fontFamily: `'Roboto Slab',sans-serif`,
     },
     noOutline: {
       color: primary,
@@ -44,6 +57,7 @@ const theme = {
       fontSize: [2, 3],
       lineHeight: 1.5,
       cursor: "pointer",
+      fontFamily: `'Roboto Slab',sans-serif`,
     },
     outline: {
       color: primary,
@@ -52,6 +66,7 @@ const theme = {
       width: "auto",
       minWidth: "125px",
       fontWeight: "normal",
+      fontFamily: `'Roboto Slab',sans-serif`,
       marginBottom: 8,
       fontSize: 16,
       "&:hover": {
@@ -91,7 +106,7 @@ const menuStyles = {
   },
   bmBurgerBars: {
     background: theme.colors.primary,
-    height: "18%",
+    height: "10%",
   },
   bmBurgerBarsHover: {
     background: "#a90000",

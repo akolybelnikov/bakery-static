@@ -43,26 +43,19 @@ module.exports = {
     `gatsby-plugin-sharp`,
     `gatsby-plugin-react-helmet`,
     {
-      resolve: `gatsby-plugin-styled-components`,
+      resolve: `gatsby-plugin-material-ui`,
+      options: {
+        stylesProvider: {
+          injectFirst: true,
+        },
+      },
     },
+    `gatsby-plugin-styled-components`,
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: process.env.GATSBY_GA_ID,
         head: true,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Все Булочки Тут`,
-        short_name: `vsebulochki.com`,
-        start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#5E1839`,
-        display: `standalone`,
-        icon: `content/assets/icon.png`,
-        include_favicon: false,
       },
     },
     {
@@ -80,13 +73,19 @@ module.exports = {
         },
       },
     },
-    // {
-    //   resolve: `gatsby-plugin-offline`,
-    //   options: {
-    //     importScripts: [`sw-extension.js`],
-    //   }
-    // },
-    // `gatsby-plugin-remove-serviceworker`,
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Все Булочки Тут`,
+        short_name: `vsebulochki.com`,
+        start_url: `/`,
+        background_color: `#ffffff`,
+        theme_color: `#5E1839`,
+        display: `standalone`,
+        icon: `content/assets/icon.png`,
+        include_favicon: false,
+      },
+    },
     `gatsby-plugin-offline`,
     {
       resolve: `gatsby-plugin-typography`,

@@ -1,6 +1,8 @@
 import { Analytics, Auth } from "aws-amplify"
-import "typeface-roboto-cyrillic"
-import "typeface-roboto-slab-cyrillic"
+import React from "react"
+import TopLayout from "./src/config/TopLayout"
+import { CartProvider } from "./src/state/cart"
+import { UserProvider } from "./src/state/user"
 
 Analytics.configure({ disabled: true })
 
@@ -11,6 +13,16 @@ Auth.configure({
   userPoolWebClientId: process.env.GATSBY_WEBCLIENT_ID,
   mandatorySignIn: false,
 })
+
+export const wrapRootElement = ({ element }) => {
+  return (
+    <TopLayout>
+      <UserProvider>
+        <CartProvider>{element}</CartProvider>
+      </UserProvider>
+    </TopLayout>
+  )
+}
 
 // export const onServiceWorkerUpdateReady = () => {
 //   const answer = window.confirm(

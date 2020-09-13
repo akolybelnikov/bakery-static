@@ -12,6 +12,7 @@ import {
   Text as RebassText,
 } from "rebass"
 import styled from "styled-components"
+import { useUserDispatch } from "../../state/user"
 import { setUser } from "../../utils/auth"
 import { mapError } from "../../utils/aws"
 import { theme } from "../../utils/styles"
@@ -35,6 +36,7 @@ const OutlinedButton = styled(RebassButton).attrs({
   color: "#fff",
   backgroundColor: theme.colors.primary,
   fontWeight: "normal",
+  fontFamily: `'Roboto Slab',sans-serif`,
   fontSize: 16,
   width: [1 / 2],
 })`
@@ -77,6 +79,8 @@ export default ({ onStateChange, setUsername }) => {
   const [modalOpen, setModal] = useState(false)
 
   const apiRef = useRef()
+
+  const dispatch = useUserDispatch()
 
   const showLoading = () => {
     setModal(true)
@@ -123,6 +127,7 @@ export default ({ onStateChange, setUsername }) => {
       values: { email, password },
       errors,
     } = form.current.getState()
+
     if (email && password && !errors.email && !errors.password) {
       showLoading()
       try {
@@ -133,6 +138,7 @@ export default ({ onStateChange, setUsername }) => {
           username: user.username,
         }
         setUser(userInfo)
+        dispatch({ type: "ADD_USER", user: userInfo })
         navigate("/user/profile")
         hideLoading()
       } catch (err) {

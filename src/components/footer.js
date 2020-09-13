@@ -77,6 +77,11 @@ const Footer = () => {
           >
             +7 (926) 629-87-26
           </PhoneButton>
+          <Text pt={[3, 2]} fontSize={[2, 2, 3]}>
+            <Link aria-label="Delivery and payment" to={`/delivery`}>
+              Оплата и доставка{" "}
+            </Link>
+          </Text>
         </Flex>
         <Flex flexDirection="column" p={2} width={[1, 3.33 / 10]}>
           <Text
@@ -166,8 +171,7 @@ const Footer = () => {
               href="https://copyright.ru"
               target="_blank"
               rel="noopener noreferrer"
-            >
-            </StyledLink>
+            ></StyledLink>
           </Text>
           <Text py={1} width={1}>
             Услуги разработчика:
