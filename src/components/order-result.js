@@ -21,7 +21,9 @@ export default ({ title, description, error }) => (
     >
       {title}
     </Typography>
-    <Typography color="primary">{description}</Typography>
+    <Typography color="primary" align="center" paragraph>
+      {description}
+    </Typography>
     {!error && (
       <Flex mt={[3]}>
         <CakeIcon color="primary" fontSize="large" />

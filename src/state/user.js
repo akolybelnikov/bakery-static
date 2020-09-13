@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useReducer } from "react"
+import { User } from "../models/User"
 
 const updateObject = (oldObject, newValues) =>
   Object.assign({}, oldObject, newValues)
 
 const initialState = {
-  user: { name: "", phone: "", email: "", address: "", pickup: "" },
+  user: { name: "", phone: "", email: "", address: "", pickup: "", metro: "" },
 }
 
 const UserStateContext = createContext(initialState)
@@ -13,6 +14,10 @@ const UserDispatchContext = createContext()
 const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer((state, action) => {
     switch (action.type) {
+      case "ADD_USER": {
+        const user = new User(action.user)
+        return updateObject(state, { user })
+      }
       case "ADD_NAME": {
         const user = updateObject(state.user, { name: action.name })
         return updateObject(state, { user })
@@ -31,6 +36,10 @@ const UserProvider = ({ children }) => {
       }
       case "ADD_PICKUP": {
         const user = updateObject(state.user, { pickup: action.pickup })
+        return updateObject(state, { user })
+      }
+      case "ADD_METRO": {
+        const user = updateObject(state.user, { metro: action.metro })
         return updateObject(state, { user })
       }
       case "REMOVE_USER": {

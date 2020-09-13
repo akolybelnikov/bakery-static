@@ -61,7 +61,8 @@
         "typeface-roboto-slab": "^1.1.4",
         "typography": "^0.16.19",
         "typography-theme-ocean-beach": "^0.16.19",
-        "url-join": "^4.0.0"
+        "url-join": "^4.0.0",
+        "uuid": "^8.3.0"
     },
     "devDependencies": {
         "babel-jest": "^25.1.0",

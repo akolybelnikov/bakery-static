@@ -5,11 +5,19 @@ import useMediaQuery from "@material-ui/core/useMediaQuery"
 import React from "react"
 import { Flex } from "rebass"
 import { useUserState } from "../state/user"
+import { getCurrentUser } from "../utils/auth"
 import { PAGE } from "../utils/utils"
 
 export default ({ setPage, handleChange, currentPage }) => {
   const matches = useMediaQuery("(max-width:899px)")
   const { user } = useUserState()
+
+  // Auth
+  const loggedInUser = getCurrentUser()
+  const defaultNameValue = loggedInUser ? loggedInUser.name : user.name
+  const defaultPhoneValue = loggedInUser
+    ? loggedInUser.phone_number
+    : user.phone
 
   return (
     <>
@@ -37,7 +45,7 @@ export default ({ setPage, handleChange, currentPage }) => {
           required
           name="name"
           label="Ваше имя"
-          defaultValue={user.name}
+          defaultValue={defaultNameValue}
           variant="outlined"
           type="text"
           onChange={handleChange}
@@ -48,7 +56,7 @@ export default ({ setPage, handleChange, currentPage }) => {
           required
           name="phone"
           label="Nомер телефона"
-          defaultValue={user.phone}
+          defaultValue={defaultPhoneValue}
           variant="outlined"
           type="phone"
           onChange={handleChange}

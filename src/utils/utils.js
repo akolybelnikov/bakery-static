@@ -20,6 +20,7 @@ const USER = {
   PHONE: "phone",
   ADDRESS: "address",
   PICKUP: "pickup",
+  METRO: "metro",
 }
 
 Object.freeze(USER)

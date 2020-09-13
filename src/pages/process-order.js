@@ -1,7 +1,13 @@
+import Button from "@material-ui/core/Button"
+import Checkbox from "@material-ui/core/Checkbox"
+import FormControlLabel from "@material-ui/core/FormControlLabel"
+import { makeStyles, styled } from "@material-ui/core/styles"
 import axios from "axios"
 import { document, window } from "browser-monads"
+import { Link } from "gatsby"
 import React, { useState } from "react"
-import { Flex } from "rebass"
+import { Box, Flex } from "rebass"
+import { v4 as uuidv4 } from "uuid"
 import EmptyCart from "../components/emtpy-cart"
 import FormTransition from "../components/form-transition"
 import Layout from "../components/layout"
@@ -9,8 +15,23 @@ import FormHeader from "../components/order-form-header"
 import OrderResult from "../components/order-result"
 import SEO from "../components/seo"
 import { useCartDispatch, useCartState } from "../state/cart"
-import { useUserState, useUserDispatch } from "../state/user"
+import { useUserDispatch, useUserState } from "../state/user"
 import { PAGE, USER } from "../utils/utils"
+
+const useStyles = makeStyles({
+  root: {
+    marginBlockEnd: "2rem",
+  },
+})
+
+const Form = styled("form")({
+  width: "100%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  marginBottom: 0,
+})
 
 const makeFormData = data => {
   let formData = new FormData()
@@ -21,6 +42,9 @@ const makeFormData = data => {
 const ProcessOrder = ({ location }) => {
   // Page title
   const pageTitle = "Оформление заказа"
+
+  // MUI styles
+  const classes = useStyles()
 
   // Shopping cart state
   const dispatch = useCartDispatch()
@@ -54,6 +78,11 @@ const ProcessOrder = ({ location }) => {
     pickup: user.pickup,
   })
   const [response, setResponse] = useState({})
+  const [confirmed, setCBChecked] = useState(false)
+
+  const handleCBChange = event => {
+    setCBChecked(event.target.checked)
+  }
 
   const showSuccessfulPurchase = order => {
     handleFormSubmit(order)
@@ -122,6 +151,9 @@ const ProcessOrder = ({ location }) => {
       case USER.PICKUP:
         dispatchUser({ type: "ADD_PICKUP", pickup: e.target.value })
         break
+      case USER.METRO:
+        dispatchUser({ type: "ADD_METRO", metro: e.target.value })
+        break
       default:
         break
     }
@@ -142,10 +174,12 @@ const ProcessOrder = ({ location }) => {
             "order-amount": formattedAmount || amount,
             email: email,
             type: PAGE.DELIVERY,
+            "order-id": uuidv4(),
           })
         : makeFormData({
             ...state,
             type: PAGE.PICK_UP,
+            "order-id": uuidv4(),
           })
 
     axios({
@@ -160,20 +194,26 @@ const ProcessOrder = ({ location }) => {
         setResponse({
           success: {
             title: "Спасибо за заказ!",
-            description: "Ваш заказ принят",
+            description:
+              currentPage === PAGE.PICK_UP
+                ? "Ваш заказ принят."
+                : "Ваш заказ принят. Для того, чтобы уточнить условия доставки, с Вами в ближайшее время свяжется наш менеджер.",
           },
         })
         dispatch({ type: "EMPTY_CART" })
         cleanUpIPay()
       })
-      .catch(error => {
+      .catch(() => {
         setResponse({
           error: {
-            title: "Ошибка подтверждения!",
+            title:
+              currentPage === PAGE.PICK_UP
+                ? "Ошибка подтверждения!"
+                : "Спасибо за заказ!",
             description:
               currentPage === PAGE.PICK_UP
                 ? "К сожалению произошла ошибка при отправке подтверждения. Пожалуйста, свяжитесь с нами по телефону, или попробуйте оформить заказ ещё раз позже."
-                : "Ваш платёж принят, но произошла ошибка при отправке подтверждения. Пожалуйста, свяжитесь с нами по телефону во избежание недоразумения.",
+                : "Ваш платёж принят, но произошла ошибка при отправке подтверждения. Для того, чтобы уточнить условия доставки, с Вами в ближайшее время свяжется наш менеджер.",
           },
         })
         if (currentPage !== PAGE.PICK_UP) {
@@ -196,6 +236,21 @@ const ProcessOrder = ({ location }) => {
     }, 2000)
   }
 
+  const invalid = () =>
+    currentPage === PAGE.DELIVERY
+      ? !state.address ||
+        !state.metro ||
+        !state.name ||
+        !state.phone ||
+        !confirmed
+      : !state.pickup ||
+        !state.email ||
+        !state.name ||
+        !state.phone ||
+        !confirmed
+
+  const buttonDisabled = invalid()
+
   return (
     <Layout location={location} title={pageTitle}>
       <SEO title={pageTitle} />
@@ -212,33 +267,49 @@ const ProcessOrder = ({ location }) => {
       ) : products.length ? (
         <Flex
           flexDirection="column"
-          justifyItems="flex-start"
+          justifyItems="center"
           justifyContent="center"
           alignItems="center"
+          minHeight={["50vh"]}
         >
-          <FormHeader
-            setPage={setCurrentPage}
-            handleChange={handleChange}
-            currentPage={currentPage}
-          />
-          <FormTransition
-            checkout={checkout}
-            handleChange={handleChange}
-            currentPage={currentPage}
-            sendOrder={handleFormSubmit}
-            pickUpFormInvalid={
-              !state.name ||
-              !state.phone ||
-              !state.pickup ||
-              state.pickup.length < 10
+          <Form>
+            <FormHeader
+              setPage={setCurrentPage}
+              handleChange={handleChange}
+              currentPage={currentPage}
+            />
+            <FormTransition
+              handleChange={handleChange}
+              currentPage={currentPage}
+            />
+          </Form>
+          <Box pb={[4]}>
+            <Link to="/delivery">Условия оплаты и доставки</Link>
+          </Box>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={confirmed}
+                onChange={handleCBChange}
+                name="confirmed"
+                color="primary"
+              />
             }
-            orderFormInvalid={
-              !state.name ||
-              !state.phone ||
-              !state.address ||
-              state.address.length < 10
-            }
+            label="Условия оплаты и доставки подтверждаю"
+            classes={{ root: classes.root }}
           />
+          <Button
+            onClick={
+              currentPage === PAGE.DELIVERY ? checkout : handleFormSubmit
+            }
+            color="primary"
+            variant="contained"
+            disabled={buttonDisabled}
+          >
+            {currentPage === PAGE.DELIVERY
+              ? "Оплатить заказ"
+              : "Отправить заказ"}
+          </Button>
         </Flex>
       ) : (
         <EmptyCart />

@@ -5,14 +5,7 @@ import OrderForm from "./order-form"
 import PickUpForm from "./pickup-form"
 import { PAGE } from "../utils/utils"
 
-export default ({
-  checkout,
-  handleChange,
-  currentPage,
-  orderFormInvalid,
-  pickUpFormInvalid,
-  sendOrder,
-}) => (
+export default ({ handleChange, currentPage }) => (
   <Transition
     items={currentPage}
     from={{
@@ -46,15 +39,11 @@ export default ({
               justifyItems="center"
               justifyContent="flex-start"
               alignItems="center"
-              minHeight={["35vh"]}
+              minHeight={["25vh"]}
               pt={[3, 4]}
               width={[1, 1 / 2]}
             >
-              <OrderForm
-                checkout={checkout}
-                handleChange={handleChange}
-                invalid={orderFormInvalid}
-              />
+              <OrderForm handleChange={handleChange} />
             </Flex>
           )
         : props => (
@@ -64,15 +53,11 @@ export default ({
               justifyItems="center"
               justifyContent="flex-start"
               alignItems="center"
-              minHeight={["35vh"]}
+              minHeight={["25vh"]}
               pt={[3, 4]}
               width={[1, 1 / 2]}
             >
-              <PickUpForm
-                sendOrder={sendOrder}
-                handleChange={handleChange}
-                invalid={pickUpFormInvalid}
-              />
+              <PickUpForm handleChange={handleChange} />
             </Flex>
           )
     }
