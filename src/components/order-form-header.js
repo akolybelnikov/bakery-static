@@ -37,8 +37,8 @@ export default ({ setPage, handleChange, currentPage }) => {
       </ButtonGroup>
       <Flex
         pt={[3, 4]}
-        width={[1, 1 / 2]}
-        flexDirection={["column", "row"]}
+        width={[1, 2 / 3, 1 / 2]}
+        flexDirection={["column", "column", "row"]}
         justifyContent="space-between"
       >
         <TextField

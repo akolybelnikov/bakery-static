@@ -17,6 +17,7 @@ import SEO from "../components/seo"
 import { useCartDispatch, useCartState } from "../state/cart"
 import { useUserDispatch, useUserState } from "../state/user"
 import { PAGE, USER } from "../utils/utils"
+import { getCurrentUser } from "../utils/auth"
 
 const useStyles = makeStyles({
   root: {
@@ -53,6 +54,9 @@ const ProcessOrder = ({ location }) => {
   const dispatchUser = useUserDispatch()
   const { user } = useUserState()
 
+  // Auth user
+  const loggedInUser = getCurrentUser()
+
   const concatItems = () =>
     products.reduce(
       (list, item, idx) =>
@@ -71,11 +75,12 @@ const ProcessOrder = ({ location }) => {
   const [currentPage, setCurrentPage] = useState(PAGE.DELIVERY)
   const [state, setState] = useState({
     products: description,
-    name: user.name,
-    email: user.email,
-    phone: user.phone,
+    name: loggedInUser ? loggedInUser.name : user.name,
+    email: loggedInUser ? loggedInUser.email : user.email,
+    phone: loggedInUser ? loggedInUser.phone_number : user.phone,
     address: user.address,
     pickup: user.pickup,
+    metro: user.metro,
   })
   const [response, setResponse] = useState({})
   const [confirmed, setCBChecked] = useState(false)

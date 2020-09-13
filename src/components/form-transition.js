@@ -41,7 +41,7 @@ export default ({ handleChange, currentPage }) => (
               alignItems="center"
               minHeight={["25vh"]}
               pt={[3, 4]}
-              width={[1, 1 / 2]}
+              width={[1, 2 / 3, 1 / 2]}
             >
               <OrderForm handleChange={handleChange} />
             </Flex>
@@ -55,7 +55,7 @@ export default ({ handleChange, currentPage }) => (
               alignItems="center"
               minHeight={["25vh"]}
               pt={[3, 4]}
-              width={[1, 1 / 2]}
+              width={[1, 2 / 3, 1 / 2]}
             >
               <PickUpForm handleChange={handleChange} />
             </Flex>
