@@ -36,7 +36,10 @@ export default ({ location, children }) => {
             overflowX: `hidden`,
           }}
         >
-          <Header location={location} maxHeaderWidth={rhythm(35)} />
+          <Header
+            location={location}
+            maxHeaderWidth={rhythm(35)}
+          />
           <Main id="page-wrap">{children}</Main>
           <Footer />
         </Box>

@@ -44,12 +44,30 @@ const useStyles = makeStyles(theme => ({
     flex: "1 0 auto",
   },
   cover: {
-    width: 151,
-    height: 151,
-    minHeight: 151,
-    minWidth: 151,
+    width: 150,
+    height: 150,
+    minHeight: 150,
+    minWidth: 150,
   },
 }))
+
+let regexp = /[0-9]{1,5}/g
+
+const parseWeight = weight => {
+  const matches = weight.matchAll(regexp)
+  let reduced = Array.from(matches).reduce((acc, curr) => [...acc, ...curr], [])
+  if (!reduced.length || !weight.includes("гр")) return
+  if (reduced.length === 1) return Number(reduced[0])
+  if (weight.includes("*")) return Number(reduced[0]) * Number(reduced[1])
+  return
+}
+
+const calculateTotalWeight = products =>
+  products.reduce(
+    (total, product) =>
+      (total += parseWeight(product.weight) * product.count || 0),
+    0
+  )
 
 const ShoppingCart = ({ location }) => {
   // Page title
@@ -64,6 +82,7 @@ const ShoppingCart = ({ location }) => {
   const calculateTotal = () =>
     products.reduce((total, item) => (total += item.total), 0)
   const totalInCart = calculateTotal()
+  const totalWeight = calculateTotalWeight(products)
 
   return (
     <Layout location={location} title={pageTitle}>
@@ -116,6 +135,7 @@ const ShoppingCart = ({ location }) => {
                           alignItems="center"
                           width={[1, 1 / 2]}
                           justifyContent="space-between"
+                          flexDirection={["column", "row"]}
                         >
                           <ButtonGroup
                             size={"small"}
@@ -177,12 +197,20 @@ const ShoppingCart = ({ location }) => {
               }
             )}
           </>
-          <Flex width={[1]}>
-            <Typography component="p" variant="h6" color="primary">
+          <Flex
+            width={[1]}
+            flexDirection={["column", "row"]}
+            justifyContent="space-around"
+            my={[3]}
+          >
+            <Typography component="span" variant="h6" color="primary">
               Общая сумма: {totalInCart} руб.
             </Typography>
+            <Typography component="span" variant="h6" color="primary">
+              Общий вес: {totalWeight} гр.
+            </Typography>
           </Flex>
-          <Flex justifyContent="center" pt={[3]}>
+          <Flex justifyContent="center" mt={[3]}>
             <Link to="/process-order">
               <Button color="primary" variant="contained">
                 Оформить заказ
