@@ -74,13 +74,13 @@ const ProcessOrder = ({ location }) => {
   // Local state
   const [currentPage, setCurrentPage] = useState(PAGE.DELIVERY)
   const [state, setState] = useState({
-    products: description,
-    name: loggedInUser ? loggedInUser.name : user.name,
-    email: loggedInUser ? loggedInUser.email : user.email,
-    phone: loggedInUser ? loggedInUser.phone_number : user.phone,
-    address: user.address,
-    pickup: user.pickup,
-    metro: user.metro,
+    _products: description,
+    _name: loggedInUser ? loggedInUser.name : user._name,
+    _replyto: loggedInUser ? loggedInUser.email : user._replyto,
+    _phone: loggedInUser ? loggedInUser.phone_number : user._phone,
+    _address: user._address || "",
+    _pickup: user._pickup || "",
+    _metro: user._metro || "",
   })
   const [response, setResponse] = useState({})
   const [confirmed, setCBChecked] = useState(false)
@@ -142,22 +142,22 @@ const ProcessOrder = ({ location }) => {
     setState({ ...state, [e.target.name]: e.target.value })
     switch (e.target.name) {
       case USER.NAME:
-        dispatchUser({ type: "ADD_NAME", name: e.target.value })
+        dispatchUser({ type: "ADD_NAME", _name: e.target.value })
         break
       case USER.ADDRESS:
-        dispatchUser({ type: "ADD_ADDRESS", address: e.target.value })
+        dispatchUser({ type: "ADD_ADDRESS", _address: e.target.value })
         break
       case USER.EMAIL:
-        dispatchUser({ type: "ADD_EMAIL", email: e.target.value })
+        dispatchUser({ type: "ADD_EMAIL", _replyto: e.target.value })
         break
       case USER.PHONE:
-        dispatchUser({ type: "ADD_PHONE", phone: e.target.value })
+        dispatchUser({ type: "ADD_PHONE", _phone: e.target.value })
         break
       case USER.PICKUP:
-        dispatchUser({ type: "ADD_PICKUP", pickup: e.target.value })
+        dispatchUser({ type: "ADD_PICKUP", _pickup: e.target.value })
         break
       case USER.METRO:
-        dispatchUser({ type: "ADD_METRO", metro: e.target.value })
+        dispatchUser({ type: "ADD_METRO", _metro: e.target.value })
         break
       default:
         break
@@ -174,17 +174,17 @@ const ProcessOrder = ({ location }) => {
       currentPage === PAGE.DELIVERY
         ? makeFormData({
             ...state,
-            "bank-ref": refNum,
-            "payment-date": paymentDate,
-            "order-amount": formattedAmount || amount,
-            email: email,
-            type: PAGE.DELIVERY,
-            "order-id": uuidv4(),
+            _bankref: refNum,
+            _paymentdate: paymentDate,
+            _amount: formattedAmount || amount,
+            _replyto: email,
+            _type: PAGE.DELIVERY,
+            _orderid: uuidv4(),
           })
         : makeFormData({
             ...state,
-            type: PAGE.PICK_UP,
-            "order-id": uuidv4(),
+            _type: PAGE.PICK_UP,
+            _orderid: uuidv4(),
           })
 
     axios({
@@ -243,15 +243,15 @@ const ProcessOrder = ({ location }) => {
 
   const invalid = () =>
     currentPage === PAGE.DELIVERY
-      ? !state.address ||
-        !state.metro ||
-        !state.name ||
-        !state.phone ||
+      ? !state._address ||
+        !state._metro ||
+        !state._name ||
+        !state._phone ||
         !confirmed
-      : !state.pickup ||
-        !state.email ||
-        !state.name ||
-        !state.phone ||
+      : !state._pickup ||
+        !state._replyto ||
+        !state._name ||
+        !state._phone ||
         !confirmed
 
   const buttonDisabled = invalid()

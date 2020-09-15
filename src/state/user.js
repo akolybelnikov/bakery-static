@@ -5,7 +5,7 @@ const updateObject = (oldObject, newValues) =>
   Object.assign({}, oldObject, newValues)
 
 const initialState = {
-  user: { name: "", phone: "", email: "", address: "", pickup: "", metro: "" },
+  user: { _name: "", _phone: "", _replyto: "", _address: "", _pickup: "", _metro: "" },
 }
 
 const UserStateContext = createContext(initialState)
@@ -19,27 +19,27 @@ const UserProvider = ({ children }) => {
         return updateObject(state, { user })
       }
       case "ADD_NAME": {
-        const user = updateObject(state.user, { name: action.name })
+        const user = updateObject(state.user, { _name: action.name })
         return updateObject(state, { user })
       }
       case "ADD_EMAIL": {
-        const user = updateObject(state.user, { email: action.email })
+        const user = updateObject(state.user, { _replyto: action.email })
         return updateObject(state, { user })
       }
       case "ADD_PHONE": {
-        const user = updateObject(state.user, { phone: action.phone })
+        const user = updateObject(state.user, { _phone: action.phone })
         return updateObject(state, { user })
       }
       case "ADD_ADDRESS": {
-        const user = updateObject(state.user, { address: action.address })
+        const user = updateObject(state.user, { _address: action.address })
         return updateObject(state, { user })
       }
       case "ADD_PICKUP": {
-        const user = updateObject(state.user, { pickup: action.pickup })
+        const user = updateObject(state.user, { _pickup: action.pickup })
         return updateObject(state, { user })
       }
       case "ADD_METRO": {
-        const user = updateObject(state.user, { metro: action.metro })
+        const user = updateObject(state.user, { _metro: action.metro })
         return updateObject(state, { user })
       }
       case "REMOVE_USER": {

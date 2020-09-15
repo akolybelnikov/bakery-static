@@ -43,7 +43,7 @@ export default ({ setPage, handleChange, currentPage }) => {
       >
         <TextField
           required
-          name="name"
+          name="_name"
           label="Ваше имя"
           defaultValue={defaultNameValue}
           variant="outlined"
@@ -54,7 +54,7 @@ export default ({ setPage, handleChange, currentPage }) => {
         />
         <TextField
           required
-          name="phone"
+          name="_phone"
           label="Nомер телефона"
           defaultValue={defaultPhoneValue}
           variant="outlined"

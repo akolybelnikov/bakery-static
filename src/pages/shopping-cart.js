@@ -120,9 +120,9 @@ const ShoppingCart = ({ location }) => {
                         <Typography variant="caption" color="secondary">
                           {weight}. - {price} руб.
                         </Typography>
-                        <Typography component="p" variant="caption">
+                        {!matches && <Typography component="p" variant="caption">
                           {ingridients ? ingridients.internal.content : content}
-                        </Typography>
+                        </Typography>}
                       </CardContent>
                       <Flex
                         p={[2, 3]}
@@ -134,8 +134,7 @@ const ShoppingCart = ({ location }) => {
                         <Flex
                           alignItems="center"
                           width={[1, 1 / 2]}
-                          justifyContent="space-between"
-                          flexDirection={["column", "row"]}
+                          justifyItems="flex-start"
                         >
                           <ButtonGroup
                             size={"small"}
@@ -171,21 +170,28 @@ const ShoppingCart = ({ location }) => {
                               <AddIcon />
                             </Button>
                           </ButtonGroup>
-                          <Typography color="primary">{total} руб.</Typography>
                         </Flex>
-                        <IconButton
-                          color="secondary"
-                          edge="end"
-                          onClick={() =>
-                            dispatch({
-                              type: "REMOVE_PRODUCT",
-                              productName,
-                            })
-                          }
-                          aria-label="remove product"
+                        <Flex
+                          //flexDirection={["column", "row"]}
+                          justifyContent={['space-between']}
+                          alignItems={['center']}
+                          width={[1]}
                         >
-                          <DeleteIcon />
-                        </IconButton>
+                          <Typography color="primary">{total} руб.</Typography>
+                          <IconButton
+                            color="secondary"
+                            edge="end"
+                            onClick={() =>
+                              dispatch({
+                                type: "REMOVE_PRODUCT",
+                                productName,
+                              })
+                            }
+                            aria-label="remove product"
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Flex>
                       </Flex>
                     </Flex>
                     <CardMedia

@@ -9,7 +9,7 @@ export default ({ handleChange }) => {
     <>
       <TextField
         required
-        name="metro"
+        name="_metro"
         label="Ближайшая ст. метро"
         defaultValue={user.metro}
         variant="outlined"
@@ -20,7 +20,7 @@ export default ({ handleChange }) => {
       />
       <TextField
         required
-        name="address"
+        name="_address"
         label="Подробный адрес доставки"
         variant="outlined"
         type="text"
