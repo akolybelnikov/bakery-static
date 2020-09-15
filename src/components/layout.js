@@ -1,13 +1,12 @@
 import React from "react"
 import Responsive from "react-responsive"
 import { Box } from "rebass"
-import { ThemeProvider } from "styled-components"
+import styled, { ThemeProvider } from "styled-components"
 import Footer from "../components/footer"
 import Header from "../components/header"
 import { theme } from "../utils/styles"
 import { rhythm } from "../utils/typography"
 import Menu from "./menu"
-import styled from "styled-components"
 
 const Mobile = props => <Responsive {...props} maxWidth={899} />
 
@@ -36,10 +35,7 @@ export default ({ location, children }) => {
             overflowX: `hidden`,
           }}
         >
-          <Header
-            location={location}
-            maxHeaderWidth={rhythm(35)}
-          />
+          <Header location={location} maxHeaderWidth={rhythm(35)} />
           <Main id="page-wrap">{children}</Main>
           <Footer />
         </Box>

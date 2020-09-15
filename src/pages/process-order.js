@@ -3,7 +3,7 @@ import Checkbox from "@material-ui/core/Checkbox"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import { makeStyles, styled } from "@material-ui/core/styles"
 import axios from "axios"
-import { document, window } from "browser-monads"
+import { window } from "browser-monads"
 import { Link } from "gatsby"
 import React, { useState } from "react"
 import { Box, Flex } from "rebass"
@@ -16,8 +16,8 @@ import OrderResult from "../components/order-result"
 import SEO from "../components/seo"
 import { useCartDispatch, useCartState } from "../state/cart"
 import { useUserDispatch, useUserState } from "../state/user"
-import { PAGE, USER } from "../utils/utils"
 import { getCurrentUser } from "../utils/auth"
+import { PAGE, USER } from "../utils/utils"
 
 const useStyles = makeStyles({
   root: {
@@ -206,7 +206,7 @@ const ProcessOrder = ({ location }) => {
           },
         })
         dispatch({ type: "EMPTY_CART" })
-        cleanUpIPay()
+        // cleanUpIPay()
       })
       .catch(() => {
         setResponse({
@@ -227,19 +227,19 @@ const ProcessOrder = ({ location }) => {
       })
   }
 
-  const cleanUpIPay = () => {
-    const iframe = document.getElementsByTagName("iframe")[0]
-    const style = document.body.getAttribute("style")
-    setTimeout(() => {
-      if (iframe) {
-        document.body.removeChild(iframe)
-      }
-      if (style) {
-        document.body.removeAttribute("style")
-      }
-      window.removeEventListener("message", window.closeModal)
-    }, 2000)
-  }
+  //   const cleanUpIPay = () => {
+  //     const iframe = document.getElementsByTagName("iframe")[0]
+  //     const style = document.body.getAttribute("style")
+  //     setTimeout(() => {
+  //       if (iframe) {
+  //         document.body.removeChild(iframe)
+  //       }
+  //       if (style) {
+  //         document.body.removeAttribute("style")
+  //       }
+  //       window.removeEventListener("message", window.closeModal)
+  //     }, 2000)
+  //   }
 
   const invalid = () =>
     currentPage === PAGE.DELIVERY

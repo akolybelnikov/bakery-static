@@ -19,27 +19,28 @@ const UserProvider = ({ children }) => {
         return updateObject(state, { user })
       }
       case "ADD_NAME": {
-        const user = updateObject(state.user, { _name: action.name })
+        const user = updateObject(state.user, { _name: action._name })
+        console.log(user)
         return updateObject(state, { user })
       }
       case "ADD_EMAIL": {
-        const user = updateObject(state.user, { _replyto: action.email })
+        const user = updateObject(state.user, { _replyto: action._replyto })
         return updateObject(state, { user })
       }
       case "ADD_PHONE": {
-        const user = updateObject(state.user, { _phone: action.phone })
+        const user = updateObject(state.user, { _phone: action._phone })
         return updateObject(state, { user })
       }
       case "ADD_ADDRESS": {
-        const user = updateObject(state.user, { _address: action.address })
+        const user = updateObject(state.user, { _address: action._address })
         return updateObject(state, { user })
       }
       case "ADD_PICKUP": {
-        const user = updateObject(state.user, { _pickup: action.pickup })
+        const user = updateObject(state.user, { _pickup: action._pickup })
         return updateObject(state, { user })
       }
       case "ADD_METRO": {
-        const user = updateObject(state.user, { _metro: action.metro })
+        const user = updateObject(state.user, { _metro: action._metro })
         return updateObject(state, { user })
       }
       case "REMOVE_USER": {
