@@ -1,3 +1,3 @@
-import App from './user/user'
+import App from "./user/user"
 
 export default App

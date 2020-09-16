@@ -1,9 +1,9 @@
-import React from "react";
-import { FaSpinner } from "react-icons/fa";
-import Modal from "react-responsive-modal";
-import { Box } from "rebass";
-import styled, { keyframes } from "styled-components";
-import { theme } from "../utils/styles";
+import React from "react"
+import { FaSpinner } from "react-icons/fa"
+import Modal from "react-responsive-modal"
+import { Box } from "rebass"
+import styled, { keyframes } from "styled-components"
+import { theme } from "../utils/styles"
 
 const Icon = styled(Box).attrs({
   color: theme.colors.primary,
@@ -28,13 +28,13 @@ const Spinner = styled(FaSpinner)`
 
 const modalStyles = {
   overlay: {
-    alignItems: 'center',
+    alignItems: "center",
     background: "rgba(244, 229, 216, 0.5)",
   },
   modal: {
     background: "transparent",
     padding: 0,
-    boxShadow: 'none',
+    boxShadow: "none",
   },
 }
 

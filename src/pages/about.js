@@ -1,17 +1,15 @@
-import { graphql } from "gatsby";
-import React from "react";
-import Responsive from "react-responsive";
-import { Heading } from "rebass";
-import Instafeed from "../components/instafeed";
-import Layout from "../components/layout";
-import MobileNewsfeed from "../components/mobilenewsfeed";
-import Newsfeed from "../components/newsfeed";
-import SEO from "../components/seo";
+import { graphql } from "gatsby"
+import React from "react"
+import Responsive from "react-responsive"
+import { Heading } from "rebass"
+import Instafeed from "../components/instafeed"
+import Layout from "../components/layout"
+import MobileNewsfeed from "../components/mobilenewsfeed"
+import Newsfeed from "../components/newsfeed"
+import SEO from "../components/seo"
 
 const Default = props => <Responsive {...props} minWidth={768} />
-const Mobile = props => (
-  <Responsive {...props} maxWidth={767}/>
-)
+const Mobile = props => <Responsive {...props} maxWidth={767} />
 
 export default ({ data, location }) => {
   const pageTitle = `Наши новости`

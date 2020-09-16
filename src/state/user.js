@@ -5,7 +5,14 @@ const updateObject = (oldObject, newValues) =>
   Object.assign({}, oldObject, newValues)
 
 const initialState = {
-  user: { _name: "", _phone: "", _replyto: "", _address: "", _pickup: "", _metro: "" },
+  user: {
+    _name: "",
+    _phone: "",
+    _replyto: "",
+    _address: "",
+    _pickup: "",
+    _metro: "",
+  },
 }
 
 const UserStateContext = createContext(initialState)
@@ -20,7 +27,6 @@ const UserProvider = ({ children }) => {
       }
       case "ADD_NAME": {
         const user = updateObject(state.user, { _name: action._name })
-        console.log(user)
         return updateObject(state, { user })
       }
       case "ADD_EMAIL": {

@@ -26,10 +26,7 @@ const Image = styled(Img)`
   }
 `
 
-const AutoPlaySwipeView = flowRight(
-  bindKeyboard,
-  autoPlay
-)(SwipeableViews)
+const AutoPlaySwipeView = flowRight(bindKeyboard, autoPlay)(SwipeableViews)
 
 const Carousel = ({ offers }) => {
   const [activeIndex, setActiveIndex] = React.useState(0)

@@ -7,7 +7,9 @@ import { window } from "browser-monads"
 import { Link } from "gatsby"
 import React, { useState } from "react"
 import { Box, Flex } from "rebass"
+import safe from "safe-await"
 import { v4 as uuidv4 } from "uuid"
+import { createOrder } from "../api/api"
 import EmptyCart from "../components/emtpy-cart"
 import FormTransition from "../components/form-transition"
 import Layout from "../components/layout"
@@ -89,9 +91,26 @@ const ProcessOrder = ({ location }) => {
     setCBChecked(event.target.checked)
   }
 
-  const showSuccessfulPurchase = order => {
+  const showSuccessfulPurchase = async ({
+    refNum,
+    formattedAmount,
+    paymentDate,
+    email,
+  }) => {
+    const order = {
+      ...state,
+      _bankref: refNum,
+      _paymentdate: paymentDate,
+      _amount: formattedAmount || amount,
+      _replyto: email,
+      _type: PAGE.DELIVERY,
+      _orderid: uuidv4(),
+    }
     handleFormSubmit(order)
+    // save the order to the database
+    await safe(createOrder(order))
   }
+
   const showFailurefulPurchase = response => {
     setResponse({
       error: {
@@ -164,67 +183,59 @@ const ProcessOrder = ({ location }) => {
     }
   }
 
-  const handleFormSubmit = ({
-    refNum,
-    formattedAmount,
-    paymentDate,
-    email,
-  }) => {
-    const data =
+  const handleFormSubmit = async orderdata => {
+    const order =
       currentPage === PAGE.DELIVERY
-        ? makeFormData({
-            ...state,
-            _bankref: refNum,
-            _paymentdate: paymentDate,
-            _amount: formattedAmount || amount,
-            _replyto: email,
-            _type: PAGE.DELIVERY,
-            _orderid: uuidv4(),
-          })
-        : makeFormData({
+        ? orderdata
+        : {
             ...state,
             _type: PAGE.PICK_UP,
             _orderid: uuidv4(),
-          })
+          }
 
-    axios({
-      method: "post",
-      headers: {
-        Accept: "application/json",
-      },
-      url: `${process.env.GATSBY_FORMSPREE}`,
-      data,
-    })
-      .then(() => {
-        setResponse({
-          success: {
-            title: "Спасибо за заказ!",
-            description:
-              currentPage === PAGE.PICK_UP
-                ? "Ваш заказ принят."
-                : "Ваш заказ принят. Для того, чтобы уточнить условия доставки, с Вами в ближайшее время свяжется наш менеджер.",
-          },
-        })
+    // handle user form submission
+    const data = makeFormData(order)
+
+    const [FSerror, FSsuccess] = await safe(
+      // eslint-disable-line no-unused-vars
+      axios({
+        method: "post",
+        headers: {
+          Accept: "application/json",
+        },
+        url: `${process.env.GATSBY_FORMSPREE}`,
+        data,
+      })
+    )
+
+    if (FSerror) {
+      setResponse({
+        error: {
+          title:
+            currentPage === PAGE.PICK_UP
+              ? "Ошибка подтверждения!"
+              : "Спасибо за заказ!",
+          description:
+            currentPage === PAGE.PICK_UP
+              ? "К сожалению произошла ошибка при отправке подтверждения. Пожалуйста, свяжитесь с нами по телефону, или попробуйте оформить заказ ещё раз позже."
+              : "Ваш платёж принят, но произошла ошибка при отправке подтверждения. Для того, чтобы уточнить условия доставки, с Вами в ближайшее время свяжется наш менеджер.",
+        },
+      })
+      if (currentPage !== PAGE.PICK_UP) {
         dispatch({ type: "EMPTY_CART" })
-        // cleanUpIPay()
+      }
+    } else {
+      setResponse({
+        success: {
+          title: "Спасибо за заказ!",
+          description:
+            currentPage === PAGE.PICK_UP
+              ? "Ваш заказ принят."
+              : "Ваш заказ принят. Для того, чтобы уточнить условия доставки, с Вами в ближайшее время свяжется наш менеджер.",
+        },
       })
-      .catch(() => {
-        setResponse({
-          error: {
-            title:
-              currentPage === PAGE.PICK_UP
-                ? "Ошибка подтверждения!"
-                : "Спасибо за заказ!",
-            description:
-              currentPage === PAGE.PICK_UP
-                ? "К сожалению произошла ошибка при отправке подтверждения. Пожалуйста, свяжитесь с нами по телефону, или попробуйте оформить заказ ещё раз позже."
-                : "Ваш платёж принят, но произошла ошибка при отправке подтверждения. Для того, чтобы уточнить условия доставки, с Вами в ближайшее время свяжется наш менеджер.",
-          },
-        })
-        if (currentPage !== PAGE.PICK_UP) {
-          dispatch({ type: "EMPTY_CART" })
-        }
-      })
+      dispatch({ type: "EMPTY_CART" })
+    }
   }
 
   //   const cleanUpIPay = () => {
