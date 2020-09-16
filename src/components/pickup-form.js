@@ -13,7 +13,7 @@ export default ({ handleChange }) => {
     <>
       <TextField
         required
-        name="email"
+        name="_replyto"
         label="Адрес эл. почты"
         defaultValue={defaultEmailValue}
         variant="outlined"
@@ -24,7 +24,7 @@ export default ({ handleChange }) => {
       />
       <TextField
         required
-        name="pickup"
+        name="_pickup"
         label="Время и дата самовывоза"
         defaultValue={user.pickup}
         variant="outlined"

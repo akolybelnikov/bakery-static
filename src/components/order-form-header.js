@@ -37,13 +37,13 @@ export default ({ setPage, handleChange, currentPage }) => {
       </ButtonGroup>
       <Flex
         pt={[3, 4]}
-        width={[1, 1 / 2]}
-        flexDirection={["column", "row"]}
+        width={[1, 2 / 3, 1 / 2]}
+        flexDirection={["column", "column", "row"]}
         justifyContent="space-between"
       >
         <TextField
           required
-          name="name"
+          name="_name"
           label="Ваше имя"
           defaultValue={defaultNameValue}
           variant="outlined"
@@ -54,7 +54,7 @@ export default ({ setPage, handleChange, currentPage }) => {
         />
         <TextField
           required
-          name="phone"
+          name="_phone"
           label="Nомер телефона"
           defaultValue={defaultPhoneValue}
           variant="outlined"

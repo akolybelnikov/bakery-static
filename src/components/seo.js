@@ -55,7 +55,7 @@ function SEO({ description, lang, meta, title }) {
     >
       <link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
       <link rel="icon" type="image/png" sizes="16x16" href={favicon16} />
-      {/* <script>
+      <script>
         {`
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -77,7 +77,7 @@ function SEO({ description, lang, meta, title }) {
             width="1"
             src="https://www.facebook.com/tr?id=549514382358073&ev=PageView&noscript=1" />
         `}
-      </noscript> */}
+      </noscript>
     </Helmet>
   )
 }

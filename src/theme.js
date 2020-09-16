@@ -8,7 +8,7 @@ const theme = createMuiTheme({
       main: "#5E1839",
     },
     secondary: {
-      main: "#F3922B"
+      main: "#F3922B",
     },
     error: {
       main: red.A400,
@@ -23,6 +23,17 @@ const theme = createMuiTheme({
         color: "#5E1839",
       },
     },
+    // MuiCssBaseline: {
+    //   "@global": {
+    //     html: {
+         
+    //     },
+    //     body: {
+    //       overflowX: "hidden",
+    //       maxWidth: "100vw",
+    //     },
+    //   },
+    // },
   },
 })
 

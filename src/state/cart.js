@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer } from "react"
-import { Product } from "../models/Project"
+import { Product } from "../models/Product"
 
 const updateObject = (oldObject, newValues) =>
   Object.assign({}, oldObject, newValues)

@@ -3,7 +3,7 @@ import Checkbox from "@material-ui/core/Checkbox"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import { makeStyles, styled } from "@material-ui/core/styles"
 import axios from "axios"
-import { document, window } from "browser-monads"
+import { window } from "browser-monads"
 import { Link } from "gatsby"
 import React, { useState } from "react"
 import { Box, Flex } from "rebass"
@@ -16,6 +16,7 @@ import OrderResult from "../components/order-result"
 import SEO from "../components/seo"
 import { useCartDispatch, useCartState } from "../state/cart"
 import { useUserDispatch, useUserState } from "../state/user"
+import { getCurrentUser } from "../utils/auth"
 import { PAGE, USER } from "../utils/utils"
 
 const useStyles = makeStyles({
@@ -53,6 +54,9 @@ const ProcessOrder = ({ location }) => {
   const dispatchUser = useUserDispatch()
   const { user } = useUserState()
 
+  // Auth user
+  const loggedInUser = getCurrentUser()
+
   const concatItems = () =>
     products.reduce(
       (list, item, idx) =>
@@ -70,12 +74,13 @@ const ProcessOrder = ({ location }) => {
   // Local state
   const [currentPage, setCurrentPage] = useState(PAGE.DELIVERY)
   const [state, setState] = useState({
-    products: description,
-    name: user.name,
-    email: user.email,
-    phone: user.phone,
-    address: user.address,
-    pickup: user.pickup,
+    _products: description,
+    _name: loggedInUser ? loggedInUser.name : user._name,
+    _replyto: loggedInUser ? loggedInUser.email : user._replyto,
+    _phone: loggedInUser ? loggedInUser.phone_number : user._phone,
+    _address: user._address || "",
+    _pickup: user._pickup || "",
+    _metro: user._metro || "",
   })
   const [response, setResponse] = useState({})
   const [confirmed, setCBChecked] = useState(false)
@@ -137,22 +142,22 @@ const ProcessOrder = ({ location }) => {
     setState({ ...state, [e.target.name]: e.target.value })
     switch (e.target.name) {
       case USER.NAME:
-        dispatchUser({ type: "ADD_NAME", name: e.target.value })
+        dispatchUser({ type: "ADD_NAME", _name: e.target.value })
         break
       case USER.ADDRESS:
-        dispatchUser({ type: "ADD_ADDRESS", address: e.target.value })
+        dispatchUser({ type: "ADD_ADDRESS", _address: e.target.value })
         break
       case USER.EMAIL:
-        dispatchUser({ type: "ADD_EMAIL", email: e.target.value })
+        dispatchUser({ type: "ADD_EMAIL", _replyto: e.target.value })
         break
       case USER.PHONE:
-        dispatchUser({ type: "ADD_PHONE", phone: e.target.value })
+        dispatchUser({ type: "ADD_PHONE", _phone: e.target.value })
         break
       case USER.PICKUP:
-        dispatchUser({ type: "ADD_PICKUP", pickup: e.target.value })
+        dispatchUser({ type: "ADD_PICKUP", _pickup: e.target.value })
         break
       case USER.METRO:
-        dispatchUser({ type: "ADD_METRO", metro: e.target.value })
+        dispatchUser({ type: "ADD_METRO", _metro: e.target.value })
         break
       default:
         break
@@ -169,17 +174,17 @@ const ProcessOrder = ({ location }) => {
       currentPage === PAGE.DELIVERY
         ? makeFormData({
             ...state,
-            "bank-ref": refNum,
-            "payment-date": paymentDate,
-            "order-amount": formattedAmount || amount,
-            email: email,
-            type: PAGE.DELIVERY,
-            "order-id": uuidv4(),
+            _bankref: refNum,
+            _paymentdate: paymentDate,
+            _amount: formattedAmount || amount,
+            _replyto: email,
+            _type: PAGE.DELIVERY,
+            _orderid: uuidv4(),
           })
         : makeFormData({
             ...state,
-            type: PAGE.PICK_UP,
-            "order-id": uuidv4(),
+            _type: PAGE.PICK_UP,
+            _orderid: uuidv4(),
           })
 
     axios({
@@ -201,7 +206,7 @@ const ProcessOrder = ({ location }) => {
           },
         })
         dispatch({ type: "EMPTY_CART" })
-        cleanUpIPay()
+        // cleanUpIPay()
       })
       .catch(() => {
         setResponse({
@@ -222,31 +227,31 @@ const ProcessOrder = ({ location }) => {
       })
   }
 
-  const cleanUpIPay = () => {
-    const iframe = document.getElementsByTagName("iframe")[0]
-    const style = document.body.getAttribute("style")
-    setTimeout(() => {
-      if (iframe) {
-        document.body.removeChild(iframe)
-      }
-      if (style) {
-        document.body.removeAttribute("style")
-      }
-      window.removeEventListener("message", window.closeModal)
-    }, 2000)
-  }
+  //   const cleanUpIPay = () => {
+  //     const iframe = document.getElementsByTagName("iframe")[0]
+  //     const style = document.body.getAttribute("style")
+  //     setTimeout(() => {
+  //       if (iframe) {
+  //         document.body.removeChild(iframe)
+  //       }
+  //       if (style) {
+  //         document.body.removeAttribute("style")
+  //       }
+  //       window.removeEventListener("message", window.closeModal)
+  //     }, 2000)
+  //   }
 
   const invalid = () =>
     currentPage === PAGE.DELIVERY
-      ? !state.address ||
-        !state.metro ||
-        !state.name ||
-        !state.phone ||
+      ? !state._address ||
+        !state._metro ||
+        !state._name ||
+        !state._phone ||
         !confirmed
-      : !state.pickup ||
-        !state.email ||
-        !state.name ||
-        !state.phone ||
+      : !state._pickup ||
+        !state._replyto ||
+        !state._name ||
+        !state._phone ||
         !confirmed
 
   const buttonDisabled = invalid()

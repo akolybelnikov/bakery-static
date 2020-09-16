@@ -15,12 +15,12 @@ const PAGE = {
 Object.freeze(PAGE)
 
 const USER = {
-  NAME: "name",
-  EMAIL: "email",
-  PHONE: "phone",
-  ADDRESS: "address",
-  PICKUP: "pickup",
-  METRO: "metro",
+  NAME: "_name",
+  EMAIL: "_replyto",
+  PHONE: "_phone",
+  ADDRESS: "_address",
+  PICKUP: "_pickup",
+  METRO: "_metro",
 }
 
 Object.freeze(USER)

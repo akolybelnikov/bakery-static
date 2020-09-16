@@ -5,7 +5,7 @@ require("dotenv").config({
 module.exports = {
   siteMetadata: {
     title: `Все Булочки Тут`,
-    author: `Andrey Kolybelnikov`,
+    author: `Andrey Kolybelnikov / Irina Kmelniker`,
     description: `Веб страница московской булочной.`,
     siteUrl: `https://vsebulochki.com`,
     social: {
