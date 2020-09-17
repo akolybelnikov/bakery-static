@@ -102,5 +102,13 @@ module.exports = {
         policy: [{ userAgent: "*", disallow: "" }],
       },
     },
+    {
+      resolve: `gatsby-source-faunadb`,
+      options: {
+        secret: process.env.GATSBY_FAUNADB,
+        index: `all_orders`,
+        type: `order`
+      },
+    },
   ],
 }

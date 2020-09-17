@@ -233,12 +233,12 @@ const ProcessOrder = ({ location }) => {
               : "Ваш заказ принят. Для того, чтобы уточнить условия доставки, с Вами в ближайшее время свяжется наш менеджер.",
         },
       })
+      // empty the cart
+      dispatch({ type: "EMPTY_CART" })
       // save the order to the database
       if (currentPage === PAGE.PICK_UP) {
         await safe(createOrder(order))
       }
-      // empty the cart
-      dispatch({ type: "EMPTY_CART" })
     }
   }
 

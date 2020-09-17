@@ -5,7 +5,7 @@ const client = new faunadb.Client({
   secret: process.env.GATSBY_FAUNADB,
 })
 
-exports.handler = function(event, context, callback) {
+exports.handler = function(event, context) {
   console.log("Function `orders-read-all` invoked")
 
   return client
