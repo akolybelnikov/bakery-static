@@ -77,9 +77,10 @@ const ProcessOrder = ({ location }) => {
   const [currentPage, setCurrentPage] = useState(PAGE.DELIVERY)
   const [state, setState] = useState({
     _products: description,
-    _name: loggedInUser ? loggedInUser.name : user._name,
-    _replyto: loggedInUser ? loggedInUser.email : user._replyto,
-    _phone: loggedInUser ? loggedInUser.phone_number : user._phone,
+    _username: loggedInUser.username ? loggedInUser.username : user._username,
+    _name: loggedInUser.name ? loggedInUser.name : user._name,
+    _replyto: loggedInUser.email ? loggedInUser.email : user._replyto,
+    _phone: loggedInUser.phone_number ? loggedInUser.phone_number : user._phone,
     _address: user._address || "",
     _pickup: user._pickup || "",
     _metro: user._metro || "",
@@ -192,12 +193,10 @@ const ProcessOrder = ({ location }) => {
             _type: PAGE.PICK_UP,
             _orderid: uuidv4(),
           }
-
     // handle user form submission
     const data = makeFormData(order)
 
     const [FSerror, FSsuccess] = await safe(
-      // eslint-disable-line no-unused-vars
       axios({
         method: "post",
         headers: {
@@ -224,7 +223,7 @@ const ProcessOrder = ({ location }) => {
       if (currentPage !== PAGE.PICK_UP) {
         dispatch({ type: "EMPTY_CART" })
       }
-    } else {
+    } else if (FSsuccess) {
       setResponse({
         success: {
           title: "Спасибо за заказ!",
@@ -234,6 +233,11 @@ const ProcessOrder = ({ location }) => {
               : "Ваш заказ принят. Для того, чтобы уточнить условия доставки, с Вами в ближайшее время свяжется наш менеджер.",
         },
       })
+      // save the order to the database
+      if (currentPage === PAGE.PICK_UP) {
+        await safe(createOrder(order))
+      }
+      // empty the cart
       dispatch({ type: "EMPTY_CART" })
     }
   }

@@ -7,7 +7,7 @@ export default ({ handleChange }) => {
   const { user } = useUserState()
   // Auth
   const loggedInUser = getCurrentUser()
-  const defaultEmailValue = loggedInUser ? loggedInUser.email : user.email
+  const defaultEmailValue = loggedInUser.email ? loggedInUser.email : user._email
 
   return (
     <>
@@ -17,7 +17,7 @@ export default ({ handleChange }) => {
         label="Адрес эл. почты"
         defaultValue={defaultEmailValue}
         variant="outlined"
-        type="text"
+        type="email"
         onChange={handleChange}
         margin="normal"
         fullWidth

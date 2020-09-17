@@ -12,6 +12,7 @@ const initialState = {
     _address: "",
     _pickup: "",
     _metro: "",
+    _username: "guest"
   },
 }
 

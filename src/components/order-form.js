@@ -11,7 +11,7 @@ export default ({ handleChange }) => {
         required
         name="_metro"
         label="Ближайшая ст. метро"
-        defaultValue={user.metro}
+        defaultValue={user._metro}
         variant="outlined"
         type="text"
         onChange={handleChange}
@@ -29,7 +29,7 @@ export default ({ handleChange }) => {
         multiline
         rows={3}
         fullWidth
-        defaultValue={user.address}
+        defaultValue={user._address}
       />
     </>
   )
