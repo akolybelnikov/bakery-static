@@ -67,9 +67,9 @@ const Category = ({
     distance: 1000,
     keys: [
       "productName",
-      "ingridients.ingridients",
-      "description.internal.content",
-      "filling.name",
+      ["ingridients", "ingridients"],
+      ["description", "internal", "content"],
+      ["filling", "name"],
     ],
   }
 

@@ -44,7 +44,7 @@ const Profile = () => {
               Моя корзина
             </Link>
           </Button>
-          {user.roles.includes("admin") && (
+          {user.roles && user.roles.includes("admin") && (
             <Button variant="primary" width={[1, 1 / 2, 1 / 3]}>
               <Link style={baseLink} to={"/user/orders"}>
                 Orders

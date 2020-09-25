@@ -54,9 +54,7 @@ export default ({ products, location }) => {
         (
           {
             category: { name },
-            description: {
-              internal: { content },
-            },
+            description,
             filling,
             image,
             ingridients,
@@ -66,6 +64,10 @@ export default ({ products, location }) => {
           },
           index
         ) => {
+          let content = null
+          if (description) {
+            content = description.internal.content
+          }
           const findProductInCart = item => item.productName === productName
 
           const isInCart = cart.products.find(findProductInCart)
@@ -252,7 +254,7 @@ export default ({ products, location }) => {
                       iconSize={32}
                       quote={`${productName}: ${content}`}
                       title={productName}
-                      description={`${content}`}
+                      description={content}
                       image={`https:${image && image.fluid.src}`}
                     />
                   </Box>

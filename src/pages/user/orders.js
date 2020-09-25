@@ -34,7 +34,7 @@ const Orders = () => {
 
   return (
     <>
-      {isLoggedIn() && user.roles.includes("admin") ? (
+      {isLoggedIn() && (user.roles && user.roles.includes("admin")) ? (
         <Flex>
           {orders.map(order => (
             <p key={order.ref["@ref"].id}>{order.data._orderid}</p>
