@@ -3,7 +3,6 @@ import { Link, navigate } from "gatsby"
 import React from "react"
 import { Button, Flex as FlexRebass, Heading, Text } from "rebass"
 import styled from "styled-components"
-import { admins } from "../../config/creds"
 import { useUserDispatch } from "../../state/user"
 import { getCurrentUser, isLoggedIn, logout } from "../../utils/auth"
 import { baseLink } from "../../utils/styles"
@@ -45,7 +44,7 @@ const Profile = () => {
               Моя корзина
             </Link>
           </Button>
-          {admins.includes(user.username) && (
+          {user.roles.includes("admin") && (
             <Button variant="primary" width={[1, 1 / 2, 1 / 3]}>
               <Link style={baseLink} to={"/user/orders"}>
                 Orders

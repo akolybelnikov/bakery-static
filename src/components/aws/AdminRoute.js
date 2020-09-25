@@ -2,7 +2,6 @@ import { exists, window } from "browser-monads"
 import { navigate } from "gatsby"
 import React from "react"
 import { getCurrentUser, isLoggedIn } from "../../utils/auth"
-import { admins } from '../../config/creds';
 
 export default ({ component: Component, ...rest }) => {
   if (exists(window) && !isLoggedIn()) {
@@ -10,10 +9,10 @@ export default ({ component: Component, ...rest }) => {
   }
   const user = getCurrentUser()
 
-  if (!admins.includes(user.username)) {
+  if (!user.roles.includes("admin")) {
     navigate(`/user/profile`)
   }
-  return isLoggedIn() && admins.includes(user.username) ? (
+  return isLoggedIn() && user.roles.includes("admin") ? (
     <Component {...rest} />
   ) : null
 }
