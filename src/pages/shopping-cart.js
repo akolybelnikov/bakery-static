@@ -120,9 +120,13 @@ const ShoppingCart = ({ location }) => {
                         <Typography variant="caption" color="secondary">
                           {weight}. - {price} руб.
                         </Typography>
-                        {!matches && <Typography component="p" variant="caption">
-                          {ingridients ? ingridients.internal.content : content}
-                        </Typography>}
+                        {!matches && (
+                          <Typography component="p" variant="caption">
+                            {ingridients
+                              ? ingridients.internal.content
+                              : content}
+                          </Typography>
+                        )}
                       </CardContent>
                       <Flex
                         p={[2, 3]}
@@ -173,8 +177,8 @@ const ShoppingCart = ({ location }) => {
                         </Flex>
                         <Flex
                           //flexDirection={["column", "row"]}
-                          justifyContent={['space-between']}
-                          alignItems={['center']}
+                          justifyContent={["space-between"]}
+                          alignItems={["center"]}
                           width={[1]}
                         >
                           <Typography color="primary">{total} руб.</Typography>

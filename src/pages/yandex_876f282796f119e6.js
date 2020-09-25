@@ -1,10 +1,12 @@
 import React from "react"
 import SEO from "../components/seo"
 
-const meta = [{
-  "http-equiv": `Content-Type`,
-  content: `text/html; charset=UTF-8`,
-}]
+const meta = [
+  {
+    "http-equiv": `Content-Type`,
+    content: `text/html; charset=UTF-8`,
+  },
+]
 
 export default () => (
   <>

@@ -53,7 +53,7 @@ export default ({ news }) => {
                   <Image fluid={fluid} />
                   <Flex alignItems="center">
                     <Text
-                      style={{minHeight: 'fit-content'}}
+                      style={{ minHeight: "fit-content" }}
                       fontSize={3}
                       color="primary"
                       px={3}

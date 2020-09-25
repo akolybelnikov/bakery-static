@@ -49,9 +49,10 @@ export default ({
   const findProductInCart = item => item.productName === productName
   const isInCart = products.find(findProductInCart)
   const dispatch = useCartDispatch()
-  const {
-    internal: { content },
-  } = description
+  let content = null
+  if (description) {
+      content = description.internal.content
+  }
 
   const addProductToCart = () => {
     dispatch({
@@ -103,7 +104,7 @@ export default ({
       >
         {productName}
       </Heading>
-      {description && (
+      {content && (
         <Text
           fontWeight={"lighter"}
           color="primary"
@@ -112,7 +113,7 @@ export default ({
           py={2}
           fontSize={2}
         >
-          {description.internal.content}
+          {content}
         </Text>
       )}
       {ingridients && (
@@ -235,10 +236,9 @@ export default ({
         <Social
           location={location}
           iconSize={40}
-          quote={`${productName}: ${description &&
-            description.internal.content}`}
+          quote={`${productName}: ${content && content}`}
           title={productName}
-          description={`${description && description.internal.content}`}
+          description={`${content && content}`}
           image={`https:${image && image.fluid.src}`}
         />
       </Flex>

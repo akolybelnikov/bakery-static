@@ -14,10 +14,10 @@ export default ({ setPage, handleChange, currentPage }) => {
 
   // Auth
   const loggedInUser = getCurrentUser()
-  const defaultNameValue = loggedInUser ? loggedInUser.name : user.name
-  const defaultPhoneValue = loggedInUser
+  const defaultNameValue = loggedInUser.name ? loggedInUser.name : user._name
+  const defaultPhoneValue = loggedInUser.phone_number
     ? loggedInUser.phone_number
-    : user.phone
+    : user._phone
 
   return (
     <>

@@ -7,7 +7,9 @@ import { window } from "browser-monads"
 import { Link } from "gatsby"
 import React, { useState } from "react"
 import { Box, Flex } from "rebass"
+import safe from "safe-await"
 import { v4 as uuidv4 } from "uuid"
+import { createOrder } from "../api/api"
 import EmptyCart from "../components/emtpy-cart"
 import FormTransition from "../components/form-transition"
 import Layout from "../components/layout"
@@ -75,9 +77,10 @@ const ProcessOrder = ({ location }) => {
   const [currentPage, setCurrentPage] = useState(PAGE.DELIVERY)
   const [state, setState] = useState({
     _products: description,
-    _name: loggedInUser ? loggedInUser.name : user._name,
-    _replyto: loggedInUser ? loggedInUser.email : user._replyto,
-    _phone: loggedInUser ? loggedInUser.phone_number : user._phone,
+    _username: loggedInUser.username ? loggedInUser.username : user._username,
+    _name: loggedInUser.name ? loggedInUser.name : user._name,
+    _replyto: loggedInUser.email ? loggedInUser.email : user._replyto,
+    _phone: loggedInUser.phone_number ? loggedInUser.phone_number : user._phone,
     _address: user._address || "",
     _pickup: user._pickup || "",
     _metro: user._metro || "",
@@ -89,9 +92,28 @@ const ProcessOrder = ({ location }) => {
     setCBChecked(event.target.checked)
   }
 
-  const showSuccessfulPurchase = order => {
+  const showSuccessfulPurchase = async ({
+    refNum,
+    formattedAmount,
+    paymentDate,
+    email,
+  }) => {
+    const date = new Date(Date.now())
+    const order = {
+      ...state,
+      _bankref: refNum,
+      _paymentdate: paymentDate,
+      _amount: formattedAmount || amount,
+      _replyto: email,
+      _type: PAGE.DELIVERY,
+      _orderid: uuidv4(),
+      _orderdate: date.toLocaleDateString("ru-RU"),
+    }
     handleFormSubmit(order)
+    // save the order to the database
+    await safe(createOrder(order))
   }
+
   const showFailurefulPurchase = response => {
     setResponse({
       error: {
@@ -164,67 +186,66 @@ const ProcessOrder = ({ location }) => {
     }
   }
 
-  const handleFormSubmit = ({
-    refNum,
-    formattedAmount,
-    paymentDate,
-    email,
-  }) => {
-    const data =
+  const handleFormSubmit = async orderdata => {
+    const date = new Date(Date.now())
+    const order =
       currentPage === PAGE.DELIVERY
-        ? makeFormData({
-            ...state,
-            _bankref: refNum,
-            _paymentdate: paymentDate,
-            _amount: formattedAmount || amount,
-            _replyto: email,
-            _type: PAGE.DELIVERY,
-            _orderid: uuidv4(),
-          })
-        : makeFormData({
+        ? orderdata
+        : {
             ...state,
             _type: PAGE.PICK_UP,
             _orderid: uuidv4(),
-          })
+            _orderdate: date.toLocaleDateString("ru-Ru"),
+          }
+    console.log(order)
+    // handle user form submission
+    const data = makeFormData(order)
 
-    axios({
-      method: "post",
-      headers: {
-        Accept: "application/json",
-      },
-      url: `${process.env.GATSBY_FORMSPREE}`,
-      data,
-    })
-      .then(() => {
-        setResponse({
-          success: {
-            title: "Спасибо за заказ!",
-            description:
-              currentPage === PAGE.PICK_UP
-                ? "Ваш заказ принят."
-                : "Ваш заказ принят. Для того, чтобы уточнить условия доставки, с Вами в ближайшее время свяжется наш менеджер.",
-          },
-        })
+    const [FSerror, FSsuccess] = await safe(
+      axios({
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          Referer: "https://vsebulochki.com/process-order",
+        },
+        url: `${process.env.GATSBY_FORMSPREE}`,
+        data,
+      })
+    )
+
+    if (FSerror) {
+      setResponse({
+        error: {
+          title:
+            currentPage === PAGE.PICK_UP
+              ? "Ошибка подтверждения!"
+              : "Спасибо за заказ!",
+          description:
+            currentPage === PAGE.PICK_UP
+              ? "К сожалению произошла ошибка при отправке подтверждения. Пожалуйста, свяжитесь с нами по телефону, или попробуйте оформить заказ ещё раз позже."
+              : "Ваш платёж принят, но произошла ошибка при отправке подтверждения. Для того, чтобы уточнить условия доставки, с Вами в ближайшее время свяжется наш менеджер.",
+        },
+      })
+      if (currentPage !== PAGE.PICK_UP) {
         dispatch({ type: "EMPTY_CART" })
-        // cleanUpIPay()
+      }
+    } else if (FSsuccess) {
+      setResponse({
+        success: {
+          title: "Спасибо за заказ!",
+          description:
+            currentPage === PAGE.PICK_UP
+              ? "Ваш заказ принят."
+              : "Ваш заказ принят. Для того, чтобы уточнить условия доставки, с Вами в ближайшее время свяжется наш менеджер.",
+        },
       })
-      .catch(() => {
-        setResponse({
-          error: {
-            title:
-              currentPage === PAGE.PICK_UP
-                ? "Ошибка подтверждения!"
-                : "Спасибо за заказ!",
-            description:
-              currentPage === PAGE.PICK_UP
-                ? "К сожалению произошла ошибка при отправке подтверждения. Пожалуйста, свяжитесь с нами по телефону, или попробуйте оформить заказ ещё раз позже."
-                : "Ваш платёж принят, но произошла ошибка при отправке подтверждения. Для того, чтобы уточнить условия доставки, с Вами в ближайшее время свяжется наш менеджер.",
-          },
-        })
-        if (currentPage !== PAGE.PICK_UP) {
-          dispatch({ type: "EMPTY_CART" })
-        }
-      })
+      // empty the cart
+      dispatch({ type: "EMPTY_CART" })
+      // save the order to the database
+      if (currentPage === PAGE.PICK_UP) {
+        await safe(createOrder(order))
+      }
+    }
   }
 
   //   const cleanUpIPay = () => {

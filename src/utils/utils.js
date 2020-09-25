@@ -21,6 +21,7 @@ const USER = {
   ADDRESS: "_address",
   PICKUP: "_pickup",
   METRO: "_metro",
+  USERNAME: "_username"
 }
 
 Object.freeze(USER)
