@@ -98,6 +98,7 @@ const ProcessOrder = ({ location }) => {
     paymentDate,
     email,
   }) => {
+    const date = new Date(Date.now())
     const order = {
       ...state,
       _bankref: refNum,
@@ -106,6 +107,7 @@ const ProcessOrder = ({ location }) => {
       _replyto: email,
       _type: PAGE.DELIVERY,
       _orderid: uuidv4(),
+      _orderdate: date.toLocaleDateString("ru-RU"),
     }
     handleFormSubmit(order)
     // save the order to the database
@@ -185,6 +187,7 @@ const ProcessOrder = ({ location }) => {
   }
 
   const handleFormSubmit = async orderdata => {
+    const date = new Date(Date.now())
     const order =
       currentPage === PAGE.DELIVERY
         ? orderdata
@@ -192,7 +195,9 @@ const ProcessOrder = ({ location }) => {
             ...state,
             _type: PAGE.PICK_UP,
             _orderid: uuidv4(),
+            _orderdate: date.toLocaleDateString("ru-Ru"),
           }
+    console.log(order)
     // handle user form submission
     const data = makeFormData(order)
 
@@ -201,6 +206,7 @@ const ProcessOrder = ({ location }) => {
         method: "post",
         headers: {
           Accept: "application/json",
+          Referer: "https://vsebulochki.com/process-order",
         },
         url: `${process.env.GATSBY_FORMSPREE}`,
         data,
