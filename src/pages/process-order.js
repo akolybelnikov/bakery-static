@@ -21,6 +21,8 @@ import { useUserDispatch, useUserState } from "../state/user"
 import { getCurrentUser } from "../utils/auth"
 import { PAGE, USER } from "../utils/utils"
 
+axios.defaults.headers['Referer'] = "https://vsebulochki.com/process-order"
+
 const useStyles = makeStyles({
   root: {
     marginBlockEnd: "2rem",
@@ -197,7 +199,6 @@ const ProcessOrder = ({ location }) => {
             _orderid: uuidv4(),
             _orderdate: date.toLocaleDateString("ru-Ru"),
           }
-    console.log(order)
     // handle user form submission
     const data = makeFormData(order)
 
@@ -206,7 +207,6 @@ const ProcessOrder = ({ location }) => {
         method: "post",
         headers: {
           Accept: "application/json",
-          Referer: "https://vsebulochki.com/process-order",
         },
         url: `${process.env.GATSBY_FORMSPREE}`,
         data,

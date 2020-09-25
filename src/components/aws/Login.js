@@ -136,6 +136,7 @@ export default ({ onStateChange, setUsername }) => {
         const userInfo = {
           ...user.attributes,
           username: user.username,
+          roles: user.signInUserSession.idToken.payload["cognito:groups"] || []
         }
         setUser(userInfo)
         dispatch({ type: "ADD_USER", user: userInfo })

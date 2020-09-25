@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import { Flex as FlexRebass } from "rebass"
 import styled from "styled-components"
 import { getOrder, readAll } from "../../api/api"
-import { admins } from "../../config/creds"
 import { getCurrentUser, isLoggedIn } from "../../utils/auth"
 
 const Flex = styled(FlexRebass).attrs({
@@ -35,7 +34,7 @@ const Orders = () => {
 
   return (
     <>
-      {isLoggedIn() && admins.includes(user.username) ? (
+      {isLoggedIn() && user.roles.includes("admin") ? (
         <Flex>
           {orders.map(order => (
             <p key={order.ref["@ref"].id}>{order.data._orderid}</p>
