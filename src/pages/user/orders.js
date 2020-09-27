@@ -26,7 +26,7 @@ const Orders = () => {
       const res = await readAll()
       setOrders(res.data)
       const order = await getOrder(res.data[0].data._orderid)
-      console.log(order)
+      console.debug(order)
     }
 
     fetchData()

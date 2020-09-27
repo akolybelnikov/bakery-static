@@ -4,24 +4,28 @@ import Card from "@material-ui/core/Card"
 import CardContent from "@material-ui/core/CardContent"
 import CardMedia from "@material-ui/core/CardMedia"
 import IconButton from "@material-ui/core/IconButton"
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles, withStyles } from "@material-ui/core/styles"
 import Typography from "@material-ui/core/Typography"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
 import AddIcon from "@material-ui/icons/Add"
 import DeleteIcon from "@material-ui/icons/Delete"
 import RemoveIcon from "@material-ui/icons/Remove"
-import { Link } from "gatsby"
+import { Link, navigate } from "gatsby"
 import React from "react"
 import { Flex } from "rebass"
 import EmptyCart from "../components/emtpy-cart"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { useCartDispatch, useCartState } from "../state/cart"
+import { isLoggedIn } from "../utils/auth"
+import { theme as customTheme } from "../utils/styles"
 
 const useStyles = makeStyles(theme => ({
   root: {
     marginBlockEnd: "1rem",
     display: "flex",
+    minWidth: "100%",
+    justifyContent: "space-between",
   },
   buttongroup: {
     paddingBlockEnd: `.5rem`,
@@ -49,7 +53,27 @@ const useStyles = makeStyles(theme => ({
     minHeight: 150,
     minWidth: 150,
   },
+  discount: {
+    flexBasis: "60%",
+  },
+  discountButton: {
+    marginBlockEnd: "1rem",
+  },
+  strikedThrough: {
+    textDecoration: "line-through",
+    textDecorationColor: "red",
+  },
 }))
+
+const DiscountButton = withStyles(theme => ({
+  root: {
+    color: customTheme.colors.primary,
+    backgroundColor: customTheme.colors.secondary,
+    "&:hover": {
+      backgroundColor: customTheme.colors.secondaryWashed,
+    },
+  },
+}))(Button)
 
 let regexp = /[0-9]{1,5}/g
 
@@ -70,19 +94,26 @@ const calculateTotalWeight = products =>
   )
 
 const ShoppingCart = ({ location }) => {
+  const isUserLoggedIn = isLoggedIn()
+  // Shopping cart store
+  const dispatch = useCartDispatch()
+  const shoppingCart = useCartState()
   // Page title
   const pageTitle = "Корзина покупателя"
   // MaterialUI classes
   const classes = useStyles()
-  const matches = useMediaQuery("(max-width:899px)")
-  // Shopping cart store
-  const dispatch = useCartDispatch()
-  const shoppingCart = useCartState()
-  const { products } = shoppingCart
+  const matches = useMediaQuery("(max-width:767px)")
+  const { products, discounted } = shoppingCart
   const calculateTotal = () =>
     products.reduce((total, item) => (total += item.total), 0)
   const totalInCart = calculateTotal()
   const totalWeight = calculateTotalWeight(products)
+  const appliedDiscount = amount => ((amount / 100) * 90).toFixed(2)
+  const withDiscount = appliedDiscount(totalInCart)
+
+  const applyDiscount = () => {
+    isUserLoggedIn ? dispatch({ type: "APPLY_DISCOUNT" }) : navigate("/auth")
+  }
 
   return (
     <Layout location={location} title={pageTitle}>
@@ -112,7 +143,7 @@ const ShoppingCart = ({ location }) => {
               ) => {
                 return (
                   <Card className={classes.root} key={i}>
-                    <Flex flexDirection="column">
+                    <Flex flexDirection="column" flexGrow={[1]}>
                       <CardContent className={classes.content}>
                         <Typography component="h5" variant="h5" color="primary">
                           {productName}
@@ -177,7 +208,11 @@ const ShoppingCart = ({ location }) => {
                         </Flex>
                         <Flex
                           //flexDirection={["column", "row"]}
-                          justifyContent={["space-between"]}
+                          justifyContent={[
+                            "space-between",
+                            "space-around",
+                            "space-between",
+                          ]}
                           alignItems={["center"]}
                           width={[1]}
                         >
@@ -210,15 +245,57 @@ const ShoppingCart = ({ location }) => {
           <Flex
             width={[1]}
             flexDirection={["column", "row"]}
-            justifyContent="space-around"
+            justifyContent="space-between"
             my={[3]}
           >
-            <Typography component="span" variant="h6" color="primary">
+            <Typography
+              className={discounted ? classes.strikedThrough : ""}
+              component="span"
+              variant="h6"
+              color="primary"
+            >
               Общая сумма: {totalInCart} руб.
             </Typography>
             <Typography component="span" variant="h6" color="primary">
               Общий вес: {totalWeight} гр.
             </Typography>
+          </Flex>
+          {discounted && (
+            <Flex justifyContent="flex-start" width={[1]} mb={[3]}>
+              <Typography component="span" variant="h6" color="secondary">
+                Общая сумма: {withDiscount} руб.
+              </Typography>
+            </Flex>
+          )}
+          <Flex
+            justifyContent={isUserLoggedIn ? "flex-start" : "space-between"}
+            flexDirection={["column", "row"]}
+            width={[1]}
+            mb={[3]}
+          >
+            <DiscountButton
+              color="primary"
+              variant="contained"
+              disabled={discounted}
+              onClick={applyDiscount}
+              className={matches ? classes.discountButton : ""}
+            >
+              {!isUserLoggedIn
+                ? "Получить скидку"
+                : !discounted
+                ? "Приложить скидку 10%"
+                : "Скидка приложена"}
+            </DiscountButton>
+            {!isUserLoggedIn && (
+              <Typography
+                component="p"
+                className={classes.discount}
+                color="secondary"
+              >
+                Стань постоянным покупателем и получи скидку 10% на всю
+                продукцию.
+              </Typography>
+            )}
           </Flex>
           <Flex justifyContent="center" mt={[3]}>
             <Link to="/process-order">

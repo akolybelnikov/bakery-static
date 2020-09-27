@@ -4,6 +4,7 @@ import React from "react"
 import { Button, Flex as FlexRebass, Heading, Text } from "rebass"
 import styled from "styled-components"
 import { useUserDispatch } from "../../state/user"
+import { useCartDispatch } from "../../state/cart"
 import { getCurrentUser, isLoggedIn, logout } from "../../utils/auth"
 import { baseLink } from "../../utils/styles"
 
@@ -23,8 +24,10 @@ const Flex = styled(FlexRebass).attrs({
 const Profile = () => {
   const user = getCurrentUser()
   const dispatch = useUserDispatch()
+  const cartDispatch = useCartDispatch()
   const logOutCallback = () => {
     dispatch({ type: "REMOVE_USER" })
+    cartDispatch({ type: "REMOVE_DISCOUNT" })
     navigate("/")
   }
 

@@ -52,7 +52,7 @@ const ProcessOrder = ({ location }) => {
   // Shopping cart state
   const dispatch = useCartDispatch()
   const shoppingCart = useCartState()
-  const { products } = shoppingCart
+  const { products, discounted } = shoppingCart
   const dispatchUser = useUserDispatch()
   const { user } = useUserState()
 
@@ -67,11 +67,13 @@ const ProcessOrder = ({ location }) => {
         }) - ${item.total} руб.`,
       ""
     )
+
   const calculateTotal = () =>
     products.reduce((total, item) => (total += item.total), 0)
-
+  const totalInCart = calculateTotal()
+  const appliedDiscount = amount => ((amount / 100) * 90).toFixed(2)
   const description = concatItems()
-  const amount = calculateTotal()
+  const amount = !discounted ? totalInCart : appliedDiscount(totalInCart)
 
   // Local state
   const [currentPage, setCurrentPage] = useState(PAGE.DELIVERY)
@@ -245,7 +247,9 @@ const ProcessOrder = ({ location }) => {
       dispatch({ type: "EMPTY_CART" })
     }
   }
-
+  // The Sberbank UI is buggy. On some browsers the confirmation modal blocks the main app
+  // and cannot be dismissed, there's no navigation back either.
+  // One way to tackle this, is to remove the UI forcifully after a timeout
   //   const cleanUpIPay = () => {
   //     const iframe = document.getElementsByTagName("iframe")[0]
   //     const style = document.body.getAttribute("style")

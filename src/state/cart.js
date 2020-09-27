@@ -17,6 +17,7 @@ const updateItemInArray = (array, productName, updateItemCb) => {
 
 const initialState = {
   products: [],
+  discounted: false,
 }
 
 const CartStateContext = createContext(initialState)
@@ -25,6 +26,14 @@ const CartDispatchContext = createContext()
 const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer((state, action) => {
     switch (action.type) {
+      case "APPLY_DISCOUNT": {
+        const discounted = true
+        return updateObject(state, { discounted })
+      }
+      case "REMOVE_DISCOUNT": {
+        const discounted = false
+        return updateObject(state, { discounted })
+      }
       case "ADD_PRODUCT": {
         const idx = state.products.findIndex(
           product => product.productName === action.productName

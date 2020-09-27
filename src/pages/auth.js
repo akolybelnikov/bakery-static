@@ -12,7 +12,7 @@ const Authenticator = ({ location }) => {
   const pageTitle = "Вход пользователя"
   const [username, setUsername] = useState()
   // const [loading, setLoading] = React.useState(false)
-  const [authState, setState] = useState("signIn")
+  const [authState, setState] = useState("signUp")
 
   const setAuthState = newState => setState(newState)
   const userSignedUp = username => setUsername(username)
